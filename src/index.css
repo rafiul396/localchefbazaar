@@ -1,1 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Stalinist+One&display=swap');
 @import "tailwindcss";
+@plugin "daisyui";
+
+.berkshire-swash-regular {
+  font-family: "Berkshire Swash", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.oswald {
+  font-family: "Oswald", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.stalinist-one-regular {
+  font-family: "Stalinist One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
