@@ -1,6 +1,8 @@
 import React from 'react';
 import logo from '../../assets/logo.png'
 import { Link, NavLink } from 'react-router';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Navbar = () => {
     const navLinks = <>
@@ -9,8 +11,8 @@ const Navbar = () => {
         <li><NavLink>Dashboard</NavLink></li>
     </>
     return (
-        <header className='bg-[#6BCB77]'>
-            <div className="navbar shadow-sm">
+        <header className='bg-primary py-4' data-aos="fade-down">
+            <div className="container mx-auto navbar">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -39,12 +41,12 @@ const Navbar = () => {
                     </a>
                 </div>
                 <div className="navbar-center hidden lg:flex">
-                    <ul className="menu menu-horizontal px-1 text-base font-semibold space-x-10 text-[#442a00] oswald">
+                    <ul className="menu menu-horizontal px-1 text-base xl:text-lg font-semibold space-x-10 text-[#442a00] oswald">
                         {navLinks}
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <Link className="btn shadow-none text-lg ">Login</Link>
+                    <Link className="btn shadow-none text-lg bg-accent-content border-accent-content">Login</Link>
                 </div>
                 <div className="dropdown dropdown-end ml-2">
                     <div tabIndex={0} role="button" className="btn btn-ghost w-14 h-14 btn-circle avatar">

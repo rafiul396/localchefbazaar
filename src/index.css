@@ -2,7 +2,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Stalinist+One&display=swap');
 @import "tailwindcss";
-@plugin "daisyui";
+@plugin "daisyui" {
+   themes: light --default, dark --prefersdark;
+ }
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: #628141;
+  --color-secondary: #0d1b2a;
+  --color-accent: #f7f2e2;
+  --color-accent-content: #F79A19; /* for button */
+  --color-info: #777777; 
+  --color-neutral: #f5f5f5;
+  --color-info: white;
+}
 
 .berkshire-swash-regular {
   font-family: "Berkshire Swash", serif;

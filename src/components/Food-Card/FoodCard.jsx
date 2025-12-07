@@ -1,12 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 
-const MealCard = ({ meal }) => {
+const FoodCard = ({ meal }) => {
     const { chef_id, chef_name, food_image, food_name, food_price, food_rating } = meal;
     return (
-        <Link data-aos="zoom-in">
+        <Link>
             <div className="card bg-base-100 shadow-sm stalinist-one-regula">
                 <figure>
                     <img
@@ -28,4 +26,4 @@ const MealCard = ({ meal }) => {
     );
 };
 
-export default MealCard;
+export default FoodCard;

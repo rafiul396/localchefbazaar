@@ -3,6 +3,7 @@ import heroChef from '../../assets/chef.png'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { motion } from "framer-motion";
+import 'animate.css';
 
 const Hero = () => {
     useEffect(() => {
@@ -35,16 +36,16 @@ const Hero = () => {
     const parts = text.split("<br/>");
 
     return (
-        <section className='w-screen min-h-screen bg-[#f7f2e2] flex flex-col justify-center items-center pt-10 overflow-y-hidden'>
+        <section className='w-screen max-h-screen bg-accent flex flex-col items-center pt-10 overflow-y-hidden'>
             <div>
-                <h2 className='font-bold stalinist-one-regular text-lg text-red-500 text-center' data-aos="fade-down">
+                <h2 className='font-bold stalinist-one-regular text-lg text-red-500 text-center xl:text-3xl animate__animated animate__backInDown'>
                     Feed yourself with home made food
                 </h2>
                 {/* <h1 className='text-center text-7xl font-bold mt-4'>
                     Delicious home made <br /> food For today
                 </h1> */}
                 <motion.h1
-                    className="text-center text-7xl font-bold"
+                    className="text-center text-7xl xl:text-9xl font-bold text-black"
                     variants={sentence}
                     initial="hidden"
                     animate="visible"
@@ -63,7 +64,7 @@ const Hero = () => {
                     ))}
                 </motion.h1>
             </div>
-            <div className='w-96 flex justify-center' data-aos="fade-up" >
+            <div className='w-96 xl:w-[500px] flex justify-center animate__animated animate__backInUp' >
                 <img src={heroChef} alt="picture of chef" />
             </div>
         </section>
