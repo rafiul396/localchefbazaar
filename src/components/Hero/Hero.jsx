@@ -39,7 +39,7 @@ const Hero = () => {
         <section className='w-screen max-h-screen bg-accent flex flex-col items-center pt-10 overflow-y-hidden'>
             <div>
                 <h2 className='font-bold stalinist-one-regular text-lg text-red-500 text-center xl:text-3xl animate__animated animate__backInDown'>
-                    Feed yourself with home made food
+                    Treat yourself with home made food
                 </h2>
                 {/* <h1 className='text-center text-7xl font-bold mt-4'>
                     Delicious home made <br /> food For today
