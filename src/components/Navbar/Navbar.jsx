@@ -1,14 +1,14 @@
 import React from 'react';
-import logo from '../../assets/logo.png'
 import { Link, NavLink } from 'react-router';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import Logo from '../Logo/Logo';
 
 const Navbar = () => {
     const navLinks = <>
         <li><NavLink to="/">Home</NavLink></li>
         <li><NavLink to="/meals">Meals</NavLink></li>
-        <li><NavLink>Dashboard</NavLink></li>
+        <li><NavLink to="/dashboard">Dashboard</NavLink></li>
     </>
     return (
         <header className='bg-primary py-1' data-aos="fade-down">
@@ -24,21 +24,8 @@ const Navbar = () => {
                             {navLinks}
                         </ul>
                     </div>
-                    <a className='flex items-center gap-2 cursor-pointer'href='/' >
-                        <img
-                            src={logo}
-                            alt="amar kitchen logo"
-                            className='w-[80px]'
-                        />
-                        <div>
-                            <h3 className='berkshire-swash-regular font-semibold text-3xl text-[#442a00]'>
-                                Amar Kitchen
-                            </h3>
-                            <p className='text-lg text-yellow-500 oswald'>
-                                Food & Drink
-                            </p>
-                        </div>
-                    </a>
+                    {/* Logo */}
+                    <Logo />
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1 text-base xl:text-lg font-semibold space-x-10 text-[#442a00] oswald">
