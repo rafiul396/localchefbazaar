@@ -105,8 +105,8 @@ const ReviewDetails = () => {
                 >
                     Give Review
                 </button>
+                {/* Add Favorite */}
                 <button
-                    onClick={() => setOpen(true)}
                     className="btn btn-primary border-primary shadow-none py-8 px-8 rounded-xl text-lg font-semibold text-white"
                 >
                     <FaHeart />

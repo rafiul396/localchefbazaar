@@ -1,8 +1,14 @@
 import React from "react";
 import { motion } from "framer-motion";
 import ReviewDetails from "./ReviewDetails";
+import OrderPage from "../Order/OrderPage";
+import { useState } from "react";
+
+
+
 
 export default function MealDetails() {
+    const [openOrder, setOpenOrder] = useState(false);
     // Hardcoded sample data
     const food_name = "Grilled Chicken Salad";
     const food_image =
@@ -111,8 +117,10 @@ export default function MealDetails() {
                     {/* Order Button */}
                     <div className="mt-10">
                         <motion.button
+                            onClick={() => setOpenOrder(true)}
                             whileTap={{ scale: 0.95 }}
-                            className="w-full btn btn-primary border-primary shadow-none py-8 rounded-xl text-lg font-semibold text-white"
+                            className="w-full py-5 rounded-xl text-lg font-semibold text-white"
+                            style={{ backgroundColor: "#628141" }}
                         >
                             Order Now
                         </motion.button>
@@ -121,6 +129,9 @@ export default function MealDetails() {
             </div>
             {/* Review Section */}
             <ReviewDetails />
+
+            {/* Order Modal */}
+            {openOrder && (<OrderPage setOpenOrder={setOpenOrder} />)}
         </>
     );
 }
