@@ -6,8 +6,8 @@ import 'aos/dist/aos.css';
 
 const Navbar = () => {
     const navLinks = <>
-        <li><NavLink>Home</NavLink></li>
-        <li><NavLink>Meals</NavLink></li>
+        <li><NavLink to="/">Home</NavLink></li>
+        <li><NavLink to="/meals">Meals</NavLink></li>
         <li><NavLink>Dashboard</NavLink></li>
     </>
     return (
@@ -34,7 +34,7 @@ const Navbar = () => {
                             <h3 className='berkshire-swash-regular font-semibold text-3xl text-[#442a00]'>
                                 Amar Kitchen
                             </h3>
-                            <p className='text-lg text-[#d84012] oswald'>
+                            <p className='text-lg text-yellow-500 oswald'>
                                 Food & Drink
                             </p>
                         </div>

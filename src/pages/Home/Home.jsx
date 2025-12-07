@@ -5,6 +5,7 @@ import FoodCard from '../../components/Food-Card/FoodCard';
 import Meals from '../Meals/Meals';
 import MealCard from '../../components/Cards/MealCard';
 import Reviews from '../../components/Reviews/Reviews';
+import BeAChef from '../../components/Be-A-Chef/BeAChef';
 
 const mealsData = [
   {
@@ -69,7 +70,7 @@ const Home = () => {
         <section className='bg-base-100 w-full py-20 overflow-y-hidden'>
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
             {
-              mealsData.map(meal => <MealCard key={meal.chef_id} meal={meal} />)
+              mealsData.map(meal => <FoodCard key={meal.chef_id} meal={meal} />)
             }
           </div>
         </section>
@@ -77,6 +78,9 @@ const Home = () => {
         <section className='py-20 bg-accent'>
           <Reviews />
         </section>
+      <Container>
+        <BeAChef />
+      </Container>
     </>
   );
 };
