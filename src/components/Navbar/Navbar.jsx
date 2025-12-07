@@ -11,7 +11,7 @@ const Navbar = () => {
         <li><NavLink>Dashboard</NavLink></li>
     </>
     return (
-        <header className='bg-primary py-4' data-aos="fade-down">
+        <header className='bg-primary py-1' data-aos="fade-down">
             <div className="container mx-auto navbar">
                 <div className="navbar-start">
                     <div className="dropdown">
@@ -24,7 +24,7 @@ const Navbar = () => {
                             {navLinks}
                         </ul>
                     </div>
-                    <a className='flex items-center gap-2 cursor-pointer'>
+                    <a className='flex items-center gap-2 cursor-pointer'href='/' >
                         <img
                             src={logo}
                             alt="amar kitchen logo"
@@ -46,7 +46,7 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <Link className="btn shadow-none text-lg bg-accent-content border-accent-content">Login</Link>
+                    <Link className="btn shadow-none text-lg bg-accent-content border-accent-content"to="/login" >Login</Link>
                 </div>
                 <div className="dropdown dropdown-end ml-2">
                     <div tabIndex={0} role="button" className="btn btn-ghost w-14 h-14 btn-circle avatar">
