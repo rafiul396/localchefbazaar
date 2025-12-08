@@ -11,6 +11,15 @@ import AdminProfile from "../pages/Dashboard/Admin/AdminProfile";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers"
 import ManageRequests from "../pages/Dashboard/Admin/ManageRequests"
 import PlatformStats from "../pages/Dashboard/Admin/PlatformStats"
+import MyOrders from "../pages/Dashboard/User/MyOrders";
+import MyReviews from "../pages/Dashboard/User/MyReviews";
+import Favorites from "../pages/Dashboard/User/Favorites";
+import FavoriteMeal from "../pages/Dashboard/User/FavoriteMeal";
+import CreateMeal from "../pages/Dashboard/Chef/CreateMeal";
+import MyMeals from "../pages/Dashboard/Chef/MyMeals";
+import OrderPage from "../pages/Order/OrderPage";
+import OrderRequests from "../pages/Dashboard/Chef/OrderRequests";
+import FindProfile from "../pages/Dashboard/FindProfile";
 
 export const router = createBrowserRouter([
   {
@@ -45,19 +54,46 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <AdminProfile />
+        element: <FindProfile />
       },
+      // Admin Panel
       {
-        path: "/dashboard/manage-users",
+        path: "manage-users",
         element: <ManageUsers />
       },
       {
-        path: "/dashboard/manage-requests",
+        path: "manage-requests",
         element: <ManageRequests />
       },
       {
-        path: "/dashboard/platform-statistics",
+        path: "platform-statistics",
         element: <PlatformStats />
+      },
+      // Chef Panel
+      {
+        path: "create-meal",
+        element: <CreateMeal />
+      },
+      {
+        path: "my-meals",
+        element: <MyMeals />
+      },
+      {
+        path: "order-requests",
+        element: <OrderRequests />
+      },
+      // User Panel
+      {
+        path: "my-orders",
+        element: <MyOrders />
+      },
+      {
+        path : "my-reviews",
+        element: <MyReviews />
+      },
+      {
+        path: "favorite-meals",
+        element: <FavoriteMeal />
       }
     ]
   }

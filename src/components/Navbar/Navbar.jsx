@@ -25,7 +25,7 @@ const Navbar = () => {
                         </ul>
                     </div>
                     {/* Logo */}
-                    <Logo />
+                    <Logo logoSize="w-[75px]" mainTextSize="text-2xl" subTextSize="text-lg" />
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1 text-base xl:text-lg font-semibold space-x-10 text-[#442a00] oswald">

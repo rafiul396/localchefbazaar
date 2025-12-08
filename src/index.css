@@ -36,3 +36,7 @@
   font-weight: 400;
   font-style: normal;
 }
+
+.active {
+  @apply bg-primary
+}

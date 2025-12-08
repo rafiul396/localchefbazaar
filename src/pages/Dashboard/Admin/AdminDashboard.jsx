@@ -1,83 +1,152 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Logo from '../../../components/Logo/Logo';
 import { NavLink, Outlet } from 'react-router';
-import { FaRegUser, FaUsers } from 'react-icons/fa';
-import { FiBarChart2, FiClipboard, FiHeart, FiInbox, FiMessageSquare, FiShoppingBag, FiStar } from 'react-icons/fi';
+import {
+    FaHome,
+    FaUsers,
+    FaShoppingCart,
+    FaChartBar,
+    FaCog,
+    FaSignOutAlt,
+    FaBell,
+    FaSearch,
+    FaBars,
+    FaTimes,
+    FaAngleLeft,
+    FaAngleRight,
+    FaClipboardList,
+    FaRegUser,
+    FaUser
+} from 'react-icons/fa';
 
-const AdminDashboard = () => {
+function UserDashboard() {
+    const [sidebarOpen, setSidebarOpen] = useState(false);     
+    const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+
+    const menuItems = [
+        { icon: FaHome, name: "Home", active: true, route: "/" },
+        { icon: FaUser, name: "My Profile", active: true, route: "/dashboard" },
+        { icon: FaUsers, name: "Mange User", route: "manage-users" },
+        { icon: FaClipboardList, name: "Mange Request", route: "manage-requests" },
+        { icon: FaChartBar, name: "Platform Statistics", route: "platform-statistics" },
+        { icon: FaCog, name: "Settings", route: "settings" },
+    ];
+
     return (
-        <div className="drawer lg:drawer-open">
-            <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-            <div className="drawer-content">
-                {/* Navbar */}
-                <nav className="navbar w-full bg-base-300">
-                    <label htmlFor="my-drawer-4" aria-label="open sidebar" className="btn btn-square btn-ghost">
-                        {/* Sidebar toggle icon */}
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor" className="my-1.5 inline-block size-4"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path><path d="M9 4v16"></path><path d="M14 10l2 2l-2 2"></path></svg>
-                    </label>
-                    <div className="px-4">
-                        <Logo />
+        <>
+            {/* Mobile Overlay */}
+            {sidebarOpen && (
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+                    onClick={() => setSidebarOpen(false)}
+                />
+            )}
+
+            <div className="flex h-screen bg-gray-100">
+
+                {/* Sidebar */}
+                <div className={`
+          ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
+          ${sidebarCollapsed ? 'lg:w-20' : 'lg:w-64'} 
+          w-64 bg-gradient-to-b from-primary to-accent-content
+          fixed inset-y-0 left-0 z-50 transition-all duration-300 
+          lg:translate-x-0 lg:static lg:inset-0 flex flex-col
+        `}>
+
+                    {/* Logo + Toggle Button */}
+                    <div className="h-16 flex items-center justify-between px-5 bg-primary bg-opacity-20">
+                        <div className={`flex items-center text-white ${sidebarCollapsed ? 'lg:justify-center' : ''}`}>
+                            {!sidebarCollapsed && <span className="ml-3 text-xl font-bold">
+                                <Logo logoSize="w-[50px]" mainTextSize="text-lg" subTextSize="text-xs" />
+                            </span>}
+                        </div>
+
+                        <button
+                            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+                            className="hidden lg:block text-white hover:bg-[#546640]  hover:bg-opacity-20 p-2 rounded cursor-pointer"
+                        >
+                            {sidebarCollapsed ? <FaAngleRight size={20} /> : <FaAngleLeft size={20} />}
+                        </button>
+
+                        <button onClick={() => setSidebarOpen(false)} className="lg:hidden text-white">
+                            <FaTimes size={26} />
+                        </button>
                     </div>
-                </nav>
-                {/* Page content here */}
-                <Outlet />
-            </div>
 
-            <div className="drawer-side is-drawer-close:overflow-visible">
-                <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
-                <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
-                    {/* Sidebar content here */}
-                    <ul className="menu w-full grow">
-                        {/* List item */}
-                        <li>
-                            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Home" to="/">
-                                {/* Home icon */}
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor" className="my-1.5 inline-block size-4"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
-                                <span className="is-drawer-close:hidden">Home</span>
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Profile" to="/dashboard">
-                                {/* Profile icon */}
-                                <FaRegUser className="my-1.5 inline-block size-4" />
-                                <span className="is-drawer-close:hidden">My Profile</span>
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Mange User" to="/dashboard/manage-users">
-                                {/* User icon */}
-                                <FaUsers className="my-1.5 inline-block size-4" />
-                                <span className="is-drawer-close:hidden">Mange User</span>
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Mange Request" to="/dashboard/manage-requests">
-                                {/* Review icon */}
-                                <FiClipboard className="my-1.5 inline-block size-4" />
-                                <span className="is-drawer-close:hidden">Mange Request</span>
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Platform Statistics" to="/dashboard/platform-statistics">
-                                {/* Favorite icon */}
-                                <FiBarChart2 className="my-1.5 inline-block size-4" />
-                                <span className="is-drawer-close:hidden">Platform Statistics</span>
-                            </NavLink>
-                        </li>
+                    {/* Menu Items */}
+                    <nav className="flex-1 mt-8 px-3">
+                        {menuItems.map((item, i) => (
+                            <NavLink
+                                key={i}
+                                to={item.route}
+                                end={item.route === "/dashboard"} 
+                                className={`flex items-center px-3 py-3 my-1 rounded-lg text-[#442a00] hover:bg-primary hover:bg-opacity-20 transition-all`}
+                            >
+                                <item.icon size={22} />
+                                <span className={`ml-4 font-medium ${sidebarCollapsed ? 'lg:hidden' : ''}`}>
+                                    {item.name}
+                                </span>
 
-                        {/* List item */}
-                        <li>
-                            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Settings">
-                                {/* Settings icon */}
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor" className="my-1.5 inline-block size-4"><path d="M20 7h-9"></path><path d="M14 17H5"></path><circle cx="17" cy="17" r="3"></circle><circle cx="7" cy="7" r="3"></circle></svg>
-                                <span className="is-drawer-close:hidden">Settings</span>
+                                {/* Tooltip when collapsed */}
+                                {sidebarCollapsed && (
+                                    <span className="ml-4 hidden group-hover:inline-block absolute left-20 bg-gray-800 text-white text-sm px-3 py-1 rounded">
+                                        {item.name}
+                                    </span>
+                                )}
                             </NavLink>
-                        </li>
-                    </ul>
+                        ))}
+                    </nav>
+
+                    {/* Logout */}
+                    <div className="p-4 border-t border-white border-opacity-20">
+                        <a href="#" className="flex items-center text-[#442a00] hover:text-red-500 duration-300 group">
+                            <FaSignOutAlt size={22} />
+                            <span className={`ml-4 font-medium ${sidebarCollapsed ? 'lg:hidden' : ''}`}>Logout</span>
+                            {sidebarCollapsed && (
+                                <span className="ml-4 hidden group-hover:inline-block absolute left-20 bg-gray-800 text-white text-sm px-3 py-1 rounded">
+                                    Logout
+                                </span>
+                            )}
+                        </a>
+                    </div>
+                </div>
+
+                {/* Main Content */}
+                <div className="flex-1 flex-col flex-1 overflow-hidden">
+                    {/* Topbar */}
+                    <header className="bg-white shadow-sm h-16 flex items-center justify-between px-6">
+                        <button
+                            onClick={() => setSidebarOpen(true)}
+                            className="text-gray-600 lg:hidden"
+                        >
+                            <FaBars size={26} />
+                        </button>
+
+                        <h1 className="text-2xl font-bold text-gray-800">Dashboard</h1>
+
+                        <div className="flex items-center gap-4">
+                            <div className="hidden md:flex items-center bg-gray-100 rounded-lg px-4 py-2">
+                                <FaSearch className="text-gray-500" />
+                                <input type="text" placeholder="Search..." className="bg-transparent outline-none ml-2 w-48" />
+                            </div>
+                            <button className="relative">
+                                <FaBell size={24} className="text-gray-600" />
+                                <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full"></span>
+                            </button>
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold">
+                                A
+                            </div>
+                        </div>
+                    </header>
+
+                    {/* Dashboard Cards */}
+                    <main className="flex-1 overflow-y-auto p-6">
+                        <Outlet />
+                    </main>
                 </div>
             </div>
-        </div>
+        </>
     );
-};
+}
 
-export default AdminDashboard;
+export default UserDashboard;
