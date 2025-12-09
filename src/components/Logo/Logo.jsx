@@ -1,9 +1,10 @@
 import React from 'react';
 import logo from '../../assets/logo.png'
+import { Link } from 'react-router';
 
 const Logo = ({ mainTextSize, subTextSize, logoSize }) => {
     return (
-        <a className='flex items-center gap-2 cursor-pointer'href='/' >
+        <Link className='flex items-center gap-2 cursor-pointer' to='/' >
                         <img
                             src={logo}
                             alt="amar kitchen logo"
@@ -17,7 +18,7 @@ const Logo = ({ mainTextSize, subTextSize, logoSize }) => {
                                 Food & Drink
                             </p>
                         </div>
-                    </a>
+                    </Link>
     );
 };
 
