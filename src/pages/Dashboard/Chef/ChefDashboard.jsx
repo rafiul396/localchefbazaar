@@ -146,8 +146,10 @@ function UserDashboard() {
                     </header>
 
                     {/* Dashboard Cards */}
-                    <main className="flex-1 overflow-y-auto p-6">
-                        <Outlet />
+                    <main className="h-[calc(100vh-theme('spacing.16'))] flex-1 overflow-y-auto bg-gradient-to-b from-accent to-gray-100">
+                        <div className="p-4 md:p-6">
+                            <Outlet />
+                        </div>
                     </main>
                 </div>
             </div>
