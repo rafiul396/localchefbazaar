@@ -8,7 +8,7 @@ const DashboardLayout = () => {
     const admin = 'admin';
     const chef = 'chef';
     const user = 'user';
-    const userRole = chef;
+    const userRole = admin;
 
     if(userRole === admin){
         return (

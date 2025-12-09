@@ -20,7 +20,7 @@ import {
 } from 'react-icons/fa';
 
 function UserDashboard() {
-    const [sidebarOpen, setSidebarOpen] = useState(false);     
+    const [sidebarOpen, setSidebarOpen] = useState(false);
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
     const menuItems = [
@@ -42,7 +42,7 @@ function UserDashboard() {
                 />
             )}
 
-            <div className="flex h-screen bg-gray-100">
+            <div className="flex bg-gray-100">
 
                 {/* Sidebar */}
                 <div className={`
@@ -79,8 +79,9 @@ function UserDashboard() {
                             <NavLink
                                 key={i}
                                 to={item.route}
-                                end={item.route === "/dashboard"} 
+                                end={item.route === "/dashboard"}
                                 className={`flex items-center px-3 py-3 my-1 rounded-lg text-[#442a00] hover:bg-primary hover:bg-opacity-20 transition-all`}
+                                onClick={() => setSidebarOpen(false)}
                             >
                                 <item.icon size={22} />
                                 <span className={`ml-4 font-medium ${sidebarCollapsed ? 'lg:hidden' : ''}`}>
@@ -112,7 +113,7 @@ function UserDashboard() {
                 </div>
 
                 {/* Main Content */}
-                <div className="flex-1 flex-col flex-1 overflow-hidden">
+                <div className="flex-1 flex-col overflow-hidden">
                     {/* Topbar */}
                     <header className="bg-white shadow-sm h-16 flex items-center justify-between px-6">
                         <button
@@ -140,9 +141,11 @@ function UserDashboard() {
                     </header>
 
                     {/* Dashboard Cards */}
-                    <main className="flex-1 overflow-y-auto p-6">
-                        <Outlet />
-                    </main>
+                    <div className="h-[calc(100vh-theme('spacing.16'))] flex-1 overflow-y-auto bg-gradient-to-b from-accent to-gray-100">
+                        <div className="p-4 md:p-6">
+                            <Outlet />   {/* <-- এই জায়গায় তোমার সব পেজ আসবে আর শুধু এখানে স্ক্রল হবে */}
+                        </div>
+                    </div>
                 </div>
             </div>
         </>

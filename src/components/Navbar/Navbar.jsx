@@ -6,9 +6,9 @@ import Logo from '../Logo/Logo';
 
 const Navbar = () => {
     const navLinks = <>
-        <li><NavLink to="/">Home</NavLink></li>
-        <li><NavLink to="/meals">Meals</NavLink></li>
-        <li><NavLink to="/dashboard">Dashboard</NavLink></li>
+        <li><NavLink to="/" className="border-2 border-primary hover:border-2 hover:border-[#442a00] duration-200">Home</NavLink></li>
+        <li><NavLink to="/meals" className="border-2 border-primary hover:border-2 hover:border-[#442a00] duration-200">Meals</NavLink></li>
+        <li><NavLink to="/dashboard" className="border-2 border-primary hover:border-2 hover:border-[#442a00] duration-200">Dashboard</NavLink></li>
     </>
     return (
         <header className='bg-primary py-1' data-aos="fade-down">
