@@ -141,11 +141,11 @@ function UserDashboard() {
                     </header>
 
                     {/* Dashboard Cards */}
-                    <div className="h-[calc(100vh-theme('spacing.16'))] flex-1 overflow-y-auto bg-gradient-to-b from-accent to-gray-100">
+                    <main className="h-[calc(100vh-theme('spacing.16'))] flex-1 overflow-y-auto bg-gradient-to-b from-accent to-gray-100">
                         <div className="p-4 md:p-6">
-                            <Outlet />   {/* <-- এই জায়গায় তোমার সব পেজ আসবে আর শুধু এখানে স্ক্রল হবে */}
+                            <Outlet />
                         </div>
-                    </div>
+                    </main>
                 </div>
             </div>
         </>

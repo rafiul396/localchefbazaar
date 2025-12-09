@@ -15,8 +15,8 @@
   /* --color-accent-content: #F79A19;  */
   --color-accent-content: #ff8400; /* for button */
   --color-info: #777777; 
+  --color-info-content: #442a00; 
   --color-neutral: #f5f5f5;
-  --color-info: white;
 }
 
 .berkshire-swash-regular {

@@ -64,7 +64,7 @@ const ManageRequests = () => {
                         <p className="text-center">Actions</p>
                     </div>
 
-                    <div className="overflow-y-auto" style={{ maxHeight: 'calc(100vh - 220px)' }}>
+                    <div className="overflow-y-auto">
                         <div className="divide-y divide-gray-200">
 
                             {requests.map((req) => {
