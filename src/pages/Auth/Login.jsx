@@ -1,7 +1,38 @@
 import React, { useState } from 'react';
+import useAuth from "../../hooks/useAuth";
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
+import toast from 'react-hot-toast';
 
 const Login = () => {
     const [showPass, setShowPass] = useState(false);
+    const { login, setSubmissionLoader } = useAuth();
+    const navigate = useNavigate();
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm();
+
+    const handleLogin = async (data) => {        
+        const { email, password } = data;
+        try {
+            setSubmissionLoader(true)
+            
+            // login function
+            await login(email, password)
+            navigate("/")
+            toast.success("Login seccessful")
+            setSubmissionLoader(false)
+        } catch (err) {
+            setSubmissionLoader(false)
+            console.log(err?.message)
+            if(err?.message === "Firebase: Error (auth/invalid-credential)."){
+                toast.error("Email or password is invalid")
+            }
+        }
+    }
 
     return (
         <div className="w-full min-h-screen bg-[#FCFCFC] dark:bg-[#1C1C1C]">
@@ -27,7 +58,7 @@ const Login = () => {
                     Login to Your Account
                 </h2>
 
-                <form className="space-y-5">
+                <form onSubmit={handleSubmit(handleLogin)} className="space-y-5">
 
                     <div>
                         <label className="text-sm text-gray-600 dark:text-gray-300">Email
@@ -37,6 +68,12 @@ const Login = () => {
                                 className="w-full mt-1 px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 
                                   bg-gray-50 dark:bg-[#2A2A2A] text-gray-800 dark:text-gray-200 focus:ring-2 
                                   focus:ring-[#FF6F61] outline-none"
+                                {...register('email', {
+                                    required: "Email is required to login", pattern: {
+                                        value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                        message: "Please enter a valid email address"
+                                    }
+                                })}
                             />
                         </label>
                     </div>
@@ -50,6 +87,7 @@ const Login = () => {
                                     className="w-full mt-1 px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 
                                       bg-gray-50 dark:bg-[#2A2A2A] text-gray-800 dark:text-gray-200 focus:ring-2 
                                       focus:ring-[#FF6F61] outline-none"
+                                    {...register("password")}
                                 />
                                 <span
                                     onClick={() => setShowPass(!showPass)}

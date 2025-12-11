@@ -1,15 +1,80 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { useForm } from "react-hook-form";
+import { Link, useLocation, useNavigate } from "react-router";
+import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
+import { imgUploader } from "../../utils";
 
 const Register = () => {
+    const {
+        register,
+        handleSubmit,
+        watch,
+        setValue,
+        formState: { errors }
+    } = useForm();
     const [preview, setPreview] = useState(null);
     const [showPass, setShowPass] = useState(false);
     const [showConfirmPass, setShowConfirmPass] = useState(false);
+    const navigate = useNavigate();
+    const location = useLocation()
+    const from = location.state || '/'
+
+    const { createUser, updateUserProfile, signInWithGoogle, setSubmissionLoader } = useAuth()
+
 
     const handleImage = (e) => {
         const file = e.target.files[0];
         if (file) setPreview(URL.createObjectURL(file));
     };
+
+    const handleRegister = async (data) => {
+        setSubmissionLoader(true)
+        const { name, email, password, userPhoto } = data;
+        const profileImg = userPhoto
+
+        try {
+            // This image uploader comes from utils js file
+            if (profileImg) {
+                const profileURL = await imgUploader(profileImg)
+                const updatedData = {
+                    displayName: name,
+                    photoURL: profileURL
+                }
+
+                // Create User
+                await createUser(email, password)
+
+                // update user
+                await updateUserProfile(updatedData)
+
+                navigate(from, { replace: true })
+                toast.success('Signup Successful')
+                setSubmissionLoader(false)
+                return
+            }
+
+            const updatedData = {
+                displayName: name
+            }
+
+            // Create User
+            await createUser(email, password)
+
+            // update user
+            await updateUserProfile(updatedData)
+
+            navigate(from, { replace: true })
+            toast.success('Signup Successful')
+            setSubmissionLoader(false)
+
+        } catch (err) {
+            setSubmissionLoader(false)
+            console.log(err)
+            toast.error(err?.message)
+
+        }
+    }
 
     return (
         <div className="w-full min-h-screen bg-[#FCFCFC] dark:bg-[#1C1C1C]">
@@ -38,7 +103,7 @@ const Register = () => {
                             Registration Form
                         </h2>
 
-                        <form className="space-y-4">
+                        <form onSubmit={handleSubmit(handleRegister)} className="space-y-4">
 
                             <div>
                                 <label className="text-sm text-gray-600 dark:text-gray-300">Full Name
@@ -47,21 +112,36 @@ const Register = () => {
                                         className="w-full mt-1 px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 
                                   bg-gray-50 dark:bg-[#2A2A2A] text-gray-800 dark:text-gray-200 focus:ring-2 
                                   focus:ring-[#FF6F61] outline-none"
+                                        {...register('name', {
+                                            required: "Name is required"
+                                        })}
                                     />
                                 </label>
-
+                                {
+                                    errors.name && <p className="text-red-500 text-red-500 text-xs mt-2">{errors.name.message}</p>
+                                }
                             </div>
 
                             <div>
-                                <label className="text-sm text-gray-600 dark:text-gray-300">Email
+                                <label className="text-sm text-gray-600 dark:text-gray-300">
+                                    Email
                                     <input
                                         type="email"
                                         placeholder="example@mail.com"
                                         className="w-full mt-1 px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 
                                   bg-gray-50 dark:bg-[#2A2A2A] text-gray-800 dark:text-gray-200 focus:ring-2 
                                   focus:ring-[#FF6F61] outline-none"
+                                        {...register("email", {
+                                            required: "Email is required", pattern: {
+                                                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                                message: "Please enter a valid email address"
+                                            }
+                                        })}
                                     />
                                 </label>
+                                {
+                                    errors.email && <p className="text-red-500 text-xs mt-2">{errors.email.message}</p>
+                                }
                             </div>
 
                             <div>
@@ -72,8 +152,14 @@ const Register = () => {
                                         className="w-full mt-1 px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 
                                   bg-gray-50 dark:bg-[#2A2A2A] text-gray-800 dark:text-gray-200 focus:ring-2 
                                   focus:ring-[#FF6F61] outline-none"
+                                        {...register('address', {
+                                            required: "Address is required"
+                                        })}
                                     />
                                 </label>
+                                {
+                                    errors.address && <p className="text-red-500 text-xs mt-2">{errors.address.message}</p>
+                                }
                             </div>
 
                             {/* Image Upload */}
@@ -82,8 +168,13 @@ const Register = () => {
                                     Profile Image
                                     <input
                                         type="file"
-                                        accept="image/*"
-                                        onChange={handleImage}
+                                        onChange={(e) => {
+                                            const file = e.target.files[0];
+                                            if (file) {
+                                                setPreview(URL.createObjectURL(file));
+                                                setValue("userPhoto", file);
+                                            }
+                                        }}
                                         className="w-full mt-1 px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 
                                       bg-gray-50 dark:bg-[#2A2A2A] text-gray-800 dark:text-gray-200 focus:ring-2 
                                       focus:ring-[#FF6F61] outline-none"
@@ -101,6 +192,12 @@ const Register = () => {
                                             className="w-full mt-1 px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 
                                       bg-gray-50 dark:bg-[#2A2A2A] text-gray-800 dark:text-gray-200 focus:ring-2 
                                       focus:ring-[#FF6F61] outline-none"
+                                            {...register("password", {
+                                                required: "You need a strong password", minLength: {
+                                                    value: 8,
+                                                    message: "Password must be at least 8 characters"
+                                                }
+                                            })}
                                         />
                                         <span
                                             onClick={() => setShowPass(!showPass)}
@@ -110,6 +207,9 @@ const Register = () => {
                                         </span>
                                     </div>
                                 </label>
+                                {errors.password && (
+                                    <p className="text-red-500 text-xs mt-2">{errors.password.message}</p>
+                                )}
                             </div>
 
                             {/* Confirm */}
@@ -122,6 +222,11 @@ const Register = () => {
                                             className="w-full mt-1 px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 
                                       bg-gray-50 dark:bg-[#2A2A2A] text-gray-800 dark:text-gray-200 focus:ring-2 
                                       focus:ring-[#FF6F61] outline-none"
+                                            {...register("confirmPassword", {
+                                                required: "Please confirm your password",
+                                                validate: (value) =>
+                                                    value === watch("password") || "Passwords do not match"
+                                            })}
                                         />
                                         <span
                                             onClick={() => setShowConfirmPass(!showConfirmPass)}
@@ -131,6 +236,9 @@ const Register = () => {
                                         </span>
                                     </div>
                                 </label>
+                                {errors.confirmPassword && (
+                                    <p className="text-red-500 text-xs mt-2">{errors.confirmPassword.message}</p>
+                                )}
                             </div>
 
                             <button className="w-full btn shadow-none border-none bg-primary text-white rounded-lg text-lg font-semibold transition">

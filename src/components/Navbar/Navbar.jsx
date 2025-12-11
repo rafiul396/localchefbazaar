@@ -3,13 +3,20 @@ import { Link, NavLink } from 'react-router';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Logo from '../Logo/Logo';
+import useAuth from '../../hooks/useAuth';
+import demoProfile from '../../assets/profile.png'
 
 const Navbar = () => {
+    const { user, logOut } = useAuth();
+
     const navLinks = <>
         <li><NavLink to="/" className="border-2 border-primary hover:border-2 hover:border-[#442a00] duration-200">Home</NavLink></li>
         <li><NavLink to="/meals" className="border-2 border-primary hover:border-2 hover:border-[#442a00] duration-200">Meals</NavLink></li>
-        <li><NavLink to="/dashboard" className="border-2 border-primary hover:border-2 hover:border-[#442a00] duration-200">Dashboard</NavLink></li>
+        {
+            user && <li><NavLink to="/dashboard" className="border-2 border-primary hover:border-2 hover:border-[#442a00] duration-200">Dashboard</NavLink></li>
+        }
     </>
+
     return (
         <header className='bg-primary py-1' data-aos="fade-down">
             <div className="container mx-auto navbar">
@@ -32,31 +39,27 @@ const Navbar = () => {
                         {navLinks}
                     </ul>
                 </div>
-                <div className="navbar-end">
-                    <Link className="btn shadow-none text-lg bg-accent-content border-accent-content"to="/login" >Login</Link>
-                </div>
-                <div className="dropdown dropdown-end ml-2">
-                    <div tabIndex={0} role="button" className="btn btn-ghost w-14 h-14 btn-circle avatar">
-                        <div className="bg-red-400 rounded-full">
-                            <img
-                                alt="Tailwind CSS Navbar component"
-                                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                            />
+                {
+                    user ? (
+                        <div className="dropdown dropdown-end ml-2 navbar-end space-x-2">
+                            <button className="btn shadow-none text-lg bg-accent-content border-accent-content" onClick={logOut} >
+                                Logout
+                            </button>
+                            <div tabIndex={0} role="button" className="btn btn-ghost w-14 h-14 btn-circle avatar">
+                                <div className="bg-red-400 rounded-full">
+                                    <img
+                                        alt="profile photo"
+                                        src={user.photoURL ? user?.photoURL : demoProfile}
+                                    />
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <ul
-                        tabIndex="-1"
-                        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                        <li>
-                            <a className="justify-between">
-                                Profile
-                                <span className="badge">New</span>
-                            </a>
-                        </li>
-                        <li><a>Settings</a></li>
-                        <li><a>Logout</a></li>
-                    </ul>
-                </div>
+                    ) : (
+                        <div className="navbar-end">
+                            <Link className="btn shadow-none text-lg bg-accent-content border-accent-content" to="/login" >Login</Link>
+                        </div>
+                    )
+                }
             </div>
         </header>
     );

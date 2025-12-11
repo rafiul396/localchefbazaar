@@ -12,10 +12,10 @@ const Logo = ({ mainTextSize, subTextSize, logoSize }) => {
                         />
                         <div>
                             <h3 className={`berkshire-swash-regular font-semibold ${mainTextSize} text-[#442a00]`}>
-                                Amar Kitchen
+                                GhorerChef
                             </h3>
                             <p className={`${subTextSize} text-yellow-500 oswald`}>
-                                Food & Drink
+                                Fresh Food & Drink
                             </p>
                         </div>
                     </Link>
