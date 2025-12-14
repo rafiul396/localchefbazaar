@@ -1,35 +1,22 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const ManageUsers = () => {
-
-  // Dummy users for design purpose
-  const users = [
-    {
-      name: "Sarah Ahmed",
-      email: "sarah@gmail.com",
-      role: "user",
-      status: "active",
-    },
-    {
-      name: "Chef Rahim",
-      email: "rahimchef@gmail.com",
-      role: "chef",
-      status: "active",
-    },
-    {
-      name: "Admin Akash",
-      email: "akashadmin@gmail.com",
-      role: "admin",
-      status: "active",
-    },
-    {
-      name: "John Doe",
-      email: "johndoe@gmail.com",
-      role: "user",
-      status: "fraud",
+  const axiosSecure = useAxiosSecure();
+  // all users data
+  const { data: users, isLoading } = useQuery({
+    queryKey: ['users'],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users`);
+      return res.data;
     }
-  ];
+  })
+
+  if(isLoading){
+    return <h1>Users...</h1>
+  }
 
   return (
     <div>
@@ -42,9 +29,9 @@ const ManageUsers = () => {
       </div>
 
       {/* Table Card */}
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }} 
-        animate={{ opacity: 1, y: 0 }} 
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
         className="w-full mx-auto bg-white rounded-2xl shadow-lg border border-gray-100 p-6"
       >
@@ -66,57 +53,57 @@ const ManageUsers = () => {
                 <tr key={index} className="hover:bg-gray-50">
 
                   {/* Name */}
-                  <td className="py-4 font-medium">{user.name}</td>
+                  <td className="py-4 font-medium">{user.userName}</td>
 
                   {/* Email */}
-                  <td>{user.email}</td>
+                  <td>{user.userEmail}</td>
 
                   {/* Role Badge */}
                   <td>
-                    <span 
+                    <span
                       className={`px-3 py-1 rounded-full text-xs font-semibold 
-                      ${user.role === "admin" 
-                        ? "bg-purple-100 text-purple-700" 
-                        : user.role === "chef" 
-                        ? "bg-green-100 text-green-700" 
-                        : "bg-blue-100 text-blue-700"
-                      }`}
+                      ${user.userRole === "admin"
+                          ? "bg-purple-100 text-purple-700"
+                          : user.role === "chef"
+                            ? "bg-green-100 text-green-700"
+                            : "bg-blue-100 text-blue-700"
+                        }`}
                     >
-                      {user.role}
+                      {user.userRole}
                     </span>
                   </td>
 
                   {/* Status Badge */}
                   <td>
-                    <span 
+                    <span
                       className={`px-3 py-1 rounded-full text-xs font-semibold 
-                      ${user.status === "fraud"
-                        ? "bg-red-100 text-red-700"
-                        : "bg-emerald-100 text-emerald-700"
-                      }`}
+                      ${user.userStatus === "fraud"
+                          ? "bg-red-100 text-red-700"
+                          : "bg-emerald-100 text-emerald-700"
+                        }`}
                     >
-                      {user.status}
+                      {user.userStatus}
                     </span>
                   </td>
 
                   {/* Action Button */}
                   <td className="text-center">
                     {user.role === "admin" ? (
-                      <button 
-                        disabled 
+                      <button
+                        disabled
                         className="btn btn-sm opacity-40 cursor-not-allowed"
                       >
                         Make Fraud
                       </button>
                     ) : user.status === "fraud" ? (
-                      <button 
-                        disabled 
+                      <button
+                        disabled
                         className="btn btn-sm bg-red-500/20 text-red-500 border-none cursor-not-allowed"
                       >
                         Already Fraud
                       </button>
                     ) : (
-                      <button 
+                      <button
                         className="btn btn-sm bg-red-500 hover:bg-red-600 text-white border-red-500 shadow-none"
                       >
                         Make Fraud

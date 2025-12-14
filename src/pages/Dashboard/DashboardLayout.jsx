@@ -3,24 +3,46 @@ import Dashboard from './Dashboard';
 import AdminDashboard from './Admin/AdminDashboard';
 import ChefDashboard from './Chef/ChefDashboard';
 import UserDashboard from './User/UserDashboard';
+import useAuth from '../../hooks/useAuth'
+import { useQuery } from '@tanstack/react-query';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const DashboardLayout = () => {
+    const axiosSecure = useAxiosSecure()
+    const { user, loading } = useAuth();
+    const { data, isLoading } = useQuery({
+        queryKey: ['user', user?.email],
+        enabled: !!user?.email,
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/users/${user?.email}`);
+            return res.data;
+        }
+    })
+
+    if (loading || isLoading) {
+        return (
+            <div className="min-h-screen flex justify-center items-center">
+                <span className="loading loading-spinner loading-lg text-primary"></span>
+            </div>
+        );
+    }
+
     const admin = 'admin';
     const chef = 'chef';
-    const user = 'user';
-    const userRole = chef;
+    const normal = 'user';
+    const userRole = data?.userRole;
 
-    if(userRole === admin){
+    if (admin === userRole) {
         return (
             <AdminDashboard />
         )
     }
-    if(userRole === chef){
+    if (chef === userRole) {
         return (
             <ChefDashboard />
         )
     }
-    if(userRole === user){
+    if (normal === userRole) {
         return (
             <UserDashboard />
         )
