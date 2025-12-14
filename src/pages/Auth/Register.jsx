@@ -4,8 +4,10 @@ import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 import { imgUploader } from "../../utils";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Register = () => {
+    const axiosSecure = useAxiosSecure();
     const {
         register,
         handleSubmit,
@@ -48,10 +50,20 @@ const Register = () => {
                 // update user
                 await updateUserProfile(updatedData)
 
-                navigate(from, { replace: true })
-                toast.success('Signup Successful')
-                setSubmissionLoader(false)
-                return
+                const usersCollection = {
+                    userName: name,
+                    userEmail: email,
+                    userPhoto: profileURL,
+                }
+
+                //Post user data in mongodb database
+                const res = await axiosSecure.post("/users", usersCollection)
+                if (res.data.insertedId) {
+                    navigate(from, { replace: true })
+                    toast.success('Signup Successful')
+                    setSubmissionLoader(false)
+                    return
+                }
             }
 
             const updatedData = {
@@ -64,9 +76,21 @@ const Register = () => {
             // update user
             await updateUserProfile(updatedData)
 
-            navigate(from, { replace: true })
-            toast.success('Signup Successful')
-            setSubmissionLoader(false)
+            const usersCollection = {
+                userName: name,
+                userEmail: email,
+                userPhoto: "",
+            }
+
+            //Post user data in mongodb database
+            const res = await axiosSecure.post("/users", usersCollection)
+            if (res.data.insertedId) {
+                navigate(from, { replace: true })
+                toast.success('Signup Successful')
+                setSubmissionLoader(false)
+            }
+
+
 
         } catch (err) {
             setSubmissionLoader(false)
