@@ -1,16 +1,84 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FiUpload } from "react-icons/fi";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useForm } from "react-hook-form";
+import useAuth from "../../../hooks/useAuth";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { imgUploader } from "../../../utils";
 
 const CreateMeal = () => {
     const [imagePreview, setImagePreview] = useState(null);
+    const { user, loading } = useAuth();
+    const axiosSecure = useAxiosSecure();
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        reset,
+        setError,
+        clearErrors,
+        formState: { errors }
+    } = useForm();
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
-        if (file) {
-            setImagePreview(URL.createObjectURL(file));
+
+        if (!file) {
+            setError("foodImg", { message: "Food image is required" });
+            return;
         }
+
+        setImagePreview(URL.createObjectURL(file));
+        setValue("foodImg", file);
+        clearErrors("foodImg");
     };
+
+
+    const mutation = useMutation({
+        mutationFn: async (mealsInfo) => {
+            const res = await axiosSecure.post("/meals", mealsInfo);
+            return res.data;
+        },
+        onSuccess: () => {
+            toast.success("Meal created successfully 🍽️");
+            reset();
+            setImagePreview(null);
+        },
+        onError: (error) => {
+            toast.error(
+                error?.response?.data?.message || "Failed to create meal ❌"
+            );
+        },
+    });
+
+    const handleMeal = async (data) => {
+        const { foodName, chefName, price, rating, foodMetarials, estimatedDeliveryTime, chefExperience, chefId, userEmail, foodImg } = data;
+        if (!foodImg) {
+            setError("foodImg", { message: "Food image is required" });
+            return;
+        }
+        const ingredients = foodMetarials.split(",").map(item => item.trim());
+        const foodImage = await imgUploader(foodImg)
+        const mealsData = {
+            foodName,
+            chefName,
+            foodImage,
+            price,
+            rating,
+            ingredients,
+            estimatedDeliveryTime,
+            chefExperience,
+            chefId,
+            userEmail
+        }
+        mutation.mutate(mealsData)
+    }
+
+    if (loading) {
+        return <h1>Meals...</h1>
+    }
 
     return (
         <div>
@@ -24,33 +92,46 @@ const CreateMeal = () => {
             </motion.h1>
 
             <div className="max-w-4xl mx-auto bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
-                <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <form onSubmit={handleSubmit(handleMeal)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                    {/* Food Name */}
                     <div>
                         <label className="block text-gray-700 font-semibold mb-1">
                             Food Name
                         </label>
                         <input
                             type="text"
-                            required
                             className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                            placeholder="e.g. Grilled Chicken Salad"
+                            {...register("foodName", {
+                                required: "Food name is required",
+                            })}
                         />
+                        {errors.foodName && (
+                            <p className="text-red-500 text-sm mt-1">
+                                {errors.foodName.message}
+                            </p>
+                        )}
                     </div>
 
-                    {/* Chef Name */}
                     <div>
                         <label className="block text-gray-700 font-semibold mb-1">
                             Chef Name
                         </label>
                         <input
                             type="text"
-                            required
                             className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                            placeholder="e.g. Chef Rahim"
+                            {...register("chefName", {
+                                required: "Chef name is required",
+                            })}
                         />
+                        {errors.chefName && (
+                            <p className="text-red-500 text-sm mt-1">
+                                {errors.chefName.message}
+                            </p>
+                        )}
                     </div>
 
-                    {/* Food Image Upload */}
                     <div className="col-span-1 md:col-span-2">
                         <label className="block text-gray-700 font-semibold mb-1">
                             Upload Food Image
@@ -78,21 +159,32 @@ const CreateMeal = () => {
                                 />
                             )}
                         </div>
+                        {errors.foodImg && (
+                            <p className="text-red-500 text-sm mt-2">
+                                {errors.foodImg.message}
+                            </p>
+                        )}
                     </div>
 
-                    {/* Price */}
                     <div>
                         <label className="block text-gray-700 font-semibold mb-1">
                             Price (৳)
                         </label>
                         <input
                             type="number"
-                            required
                             className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                            placeholder="e.g. 250"
+                            {...register("price", {
+                                required: "Price is required",
+                            })}
                         />
+                        {errors.price && (
+                            <p className="text-red-500 text-sm mt-1">
+                                {errors.price.message}
+                            </p>
+                        )}
                     </div>
 
-                    {/* Rating */}
                     <div>
                         <label className="block text-gray-700 font-semibold mb-1">
                             Rating
@@ -102,12 +194,21 @@ const CreateMeal = () => {
                             min="0"
                             max="5"
                             step="0.1"
-                            required
+                            placeholder="e.g. 4.5"
                             className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                            {...register("rating", {
+                                required: "Rating is required",
+                                min: { value: 0, message: "Rating cannot be negative" },
+                                max: { value: 5, message: "Rating cannot exceed 5" },
+                            })}
                         />
+                        {errors.rating && (
+                            <p className="text-red-500 text-sm mt-1">
+                                {errors.rating.message}
+                            </p>
+                        )}
                     </div>
 
-                    {/* Estimated Delivery Time */}
                     <div>
                         <label className="block text-gray-700 font-semibold mb-1">
                             Estimated Delivery Time
@@ -115,12 +216,18 @@ const CreateMeal = () => {
                         <input
                             type="text"
                             placeholder="e.g. 30 minutes"
-                            required
                             className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                            {...register("estimatedDeliveryTime", {
+                                required: "Delivery time is required",
+                            })}
                         />
+                        {errors.estimatedDeliveryTime && (
+                            <p className="text-red-500 text-sm mt-1">
+                                {errors.estimatedDeliveryTime.message}
+                            </p>
+                        )}
                     </div>
 
-                    {/* Chef Experience */}
                     <div>
                         <label className="block text-gray-700 font-semibold mb-1">
                             Chef Experience
@@ -128,25 +235,37 @@ const CreateMeal = () => {
                         <input
                             type="text"
                             placeholder="e.g. 5 years experience"
-                            required
                             className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                            {...register("chefExperience", {
+                                required: "Chef experience is required",
+                            })}
                         />
+                        {errors.chefExperience && (
+                            <p className="text-red-500 text-sm mt-1">
+                                {errors.chefExperience.message}
+                            </p>
+                        )}
                     </div>
 
-                    {/* Ingredients */}
                     <div className="col-span-1 md:col-span-2">
                         <label className="block text-gray-700 font-semibold mb-1">
                             Ingredients
                         </label>
                         <textarea
-                            required
                             rows={4}
                             placeholder="List ingredients separated by commas"
                             className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                            {...register("foodMetarials", {
+                                required: "Ingredients are required",
+                            })}
                         ></textarea>
+                        {errors.foodMetarials && (
+                            <p className="text-red-500 text-sm mt-1">
+                                {errors.foodMetarials.message}
+                            </p>
+                        )}
                     </div>
 
-                    {/* Chef ID */}
                     <div>
                         <label className="block text-gray-700 font-semibold mb-1">
                             Chef ID
@@ -156,10 +275,10 @@ const CreateMeal = () => {
                             readOnly
                             value="chef_123456"
                             className="w-full px-4 py-3 rounded-xl bg-gray-100 border border-gray-300 outline-none"
+                            {...register("chefId")}
                         />
                     </div>
 
-                    {/* User Email */}
                     <div>
                         <label className="block text-gray-700 font-semibold mb-1">
                             User Email
@@ -167,19 +286,25 @@ const CreateMeal = () => {
                         <input
                             type="email"
                             readOnly
-                            value="user@example.com"
+                            value={user?.email}
                             className="w-full px-4 py-3 rounded-xl bg-gray-100 border border-gray-300 outline-none"
+                            {...register("userEmail")}
                         />
                     </div>
 
-                    {/* Submit Button */}
                     <div className="col-span-1 md:col-span-2">
                         <motion.button
                             whileTap={{ scale: 0.96 }}
-                            className="w-full bg-primary hover:bg-primary/90 text-white py-4 rounded-xl text-lg font-semibold shadow-md"
+                            disabled={mutation.isLoading}
+                            className={`w-full py-4 rounded-xl text-lg font-semibold shadow-md
+                            ${mutation.isLoading
+                                    ? "bg-gray-400 cursor-not-allowed"
+                                    : "bg-primary hover:bg-primary/90 text-white"
+                                }`}
                         >
-                            Submit Meal
+                            {mutation.isLoading ? "Submitting..." : "Submit Meal"}
                         </motion.button>
+
                     </div>
                 </form>
             </div>

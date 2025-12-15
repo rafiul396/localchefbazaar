@@ -6,6 +6,7 @@ import UserDashboard from './User/UserDashboard';
 import useAuth from '../../hooks/useAuth'
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import { Toaster } from 'react-hot-toast';
 
 const DashboardLayout = () => {
     const axiosSecure = useAxiosSecure()
@@ -34,17 +35,26 @@ const DashboardLayout = () => {
 
     if (admin === userRole) {
         return (
-            <AdminDashboard />
+            <>
+                <AdminDashboard />
+                <Toaster />
+            </>
         )
     }
     if (chef === userRole) {
         return (
-            <ChefDashboard />
+            <>
+                <ChefDashboard />
+                <Toaster />
+            </>
         )
     }
     if (normal === userRole) {
         return (
-            <UserDashboard />
+            <>
+                <UserDashboard />
+                <Toaster />
+            </>
         )
     }
 };
