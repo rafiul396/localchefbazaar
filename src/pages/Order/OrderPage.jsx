@@ -1,7 +1,73 @@
-import React from 'react';
+import React from "react";
 import { motion } from "framer-motion";
+import useAuth from "../../hooks/useAuth";
+import { useForm } from "react-hook-form";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import toast from "react-hot-toast";
+import { useMutation } from "@tanstack/react-query";
+import Swal from "sweetalert2";
 
-const OrderPage = ({ setOpenOrder }) => {
+const OrderPage = ({ onClose, meal }) => {
+    const { user } = useAuth()
+    const axiosSecure = useAxiosSecure();
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm({
+        defaultValues: {
+            mealName: meal?.foodName,
+            foodPrice: meal?.price,
+            chefId: meal?.chefId,
+            userEmail: user?.email,
+            orderStatus: "pending",
+            orderTime: new Date().toLocaleString(),
+        },
+    })
+
+    const orderMutation = useMutation({
+        mutationFn: async (orderData) => {
+            const res = await axiosSecure.post("/orders", orderData);
+            return res.data;
+        },
+        onSuccess: () => {
+            toast.success("Order placed successfully 🍽️");
+            reset();
+            onClose();
+        },
+        onError: () => {
+            toast.error("Failed to place order ❌");
+        },
+    });
+
+    const onSubmit = (data) => {
+        const orderInfo = {
+            ...data,
+            foodId: meal._id,
+            paymentStatus: "Pending"
+        };
+
+        const totalPrice = Number(data.foodPrice * data.quantity)
+
+        console.log(orderInfo);
+
+        Swal.fire({
+            title: `Your total price is ${totalPrice}`,
+            text: `Do you want to confirm the order?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                orderMutation.mutate(orderInfo);
+            }
+        });
+
+    };
+
     return (
         <div className="fixed inset-0 backdrop-blur-xl bg-white/60 flex justify-center items-center z-50 px-4">
             <motion.div
@@ -10,12 +76,13 @@ const OrderPage = ({ setOpenOrder }) => {
                 transition={{ duration: 0.3 }}
                 className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-xl"
             >
-                <div className='flex justify-between items-center'>
-                    <h2 className="text-2xl font-bold mb-4 text-primary">
+                {/* Header */}
+                <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-2xl font-bold text-primary">
                         Confirm Your Order
                     </h2>
                     <button
-                        onClick={() => setOpenOrder(false)}
+                        onClick={onClose}
                         className="text-gray-400 hover:text-gray-600 text-xl cursor-pointer"
                     >
                         ✕
@@ -23,63 +90,136 @@ const OrderPage = ({ setOpenOrder }) => {
                 </div>
 
                 {/* Form */}
-                <form className="space-y-4">
-                    <input
-                        className="w-full border rounded-lg px-4 py-2"
-                        readOnly
-                    />
-                    <input
-                        className="w-full border rounded-lg px-4 py-2"
-                        readOnly
-                    />
-                    <input
-                        className="w-full border rounded-lg px-4 py-2"
-                        placeholder="Quantity"
-                        type="number"
-                        min="1"
-                        required
-                    />
-                    <input
-                        className="w-full border rounded-lg px-4 py-2"
-                        readOnly
-                    />
-                    <input
-                        className="w-full border rounded-lg px-4 py-2"
-                        placeholder="Your Email"
-                        type="email"
-                        required
-                    />
-                    <textarea
-                        className="w-full border rounded-lg px-4 py-2"
-                        placeholder="Your Address"
-                        required
-                    ></textarea>
-                    <input
-                        className="w-full border rounded-lg px-4 py-2"
-                        value="Pending"
-                        readOnly
-                    />
-                    <input
-                        className="w-full border rounded-lg px-4 py-2"
-                        value={new Date().toLocaleString()}
-                        readOnly
-                    />
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
+                    {/* Food Name */}
+                    <div>
+                        <label className="block text-sm font-semibold text-gray-700 mb-1">
+                            Food Name
+                        </label>
+                        <input
+                            className="w-full border rounded-lg px-4 py-2 
+                         focus:border-green-600 focus:ring-2 focus:ring-green-200 outline-none"
+                            readOnly
+                            {...register("mealName")}
+                        />
+                    </div>
+
+                    {/* Price */}
+                    <div>
+                        <label className="block text-sm font-semibold text-gray-700 mb-1">
+                            Price
+                        </label>
+                        <input
+                            className="w-full border rounded-lg px-4 py-2 
+                         focus:border-green-600 focus:ring-2 focus:ring-green-200 outline-none"
+                            readOnly
+                            {...register("foodPrice")}
+                        />
+                    </div>
+
+                    {/* Quantity */}
+                    <div>
+                        <label className="block text-sm font-semibold text-gray-700 mb-1">
+                            Quantity
+                        </label>
+                        <input
+                            className="w-full border rounded-lg px-4 py-2 
+                         focus:border-green-600 focus:ring-2 focus:ring-green-200 outline-none"
+                            type="number"
+                            min="1"
+                            placeholder="Enter quantity"
+                            {...register("quantity", {
+                                required: "Quantity is required",
+                                min: { value: 1, message: "Minimum 1 item required" },
+                            })}
+                        />
+                        {errors.quantity && (
+                            <p className="text-red-500 text-sm mt-1">
+                                {errors.quantity.message}
+                            </p>
+                        )}
+                    </div>
+
+                    {/* Chef ID */}
+                    <div>
+                        <label className="block text-sm font-semibold text-gray-700 mb-1">
+                            Chef ID
+                        </label>
+                        <input
+                            className="w-full border rounded-lg px-4 py-2 
+                         focus:border-green-600 focus:ring-2 focus:ring-green-200 outline-none"
+                            readOnly
+                            {...register("chefId")}
+                        />
+                    </div>
+
+                    {/* User Email */}
+                    <div>
+                        <label className="block text-sm font-semibold text-gray-700 mb-1">
+                            Your Email
+                        </label>
+                        <input
+                            className="w-full border rounded-lg px-4 py-2 
+                         focus:border-green-600 focus:ring-2 focus:ring-green-200 outline-none"
+                            readOnly
+                            {...register("userEmail")}
+                        />
+                    </div>
+
+                    {/* Address */}
+                    <div>
+                        <label className="block text-sm font-semibold text-gray-700 mb-1">
+                            Delivery Address
+                        </label>
+                        <textarea
+                            className="w-full border rounded-lg px-4 py-2 
+                         focus:border-green-600 focus:ring-2 focus:ring-green-200 outline-none"
+                            placeholder="Enter your delivery address"
+                            {...register("userAddress", {
+                                required: "Address is required",
+                            })}
+                        ></textarea>
+                        {errors.userAddress && (
+                            <p className="text-red-500 text-sm mt-1">
+                                {errors.userAddress.message}
+                            </p>
+                        )}
+                    </div>
+
+                    {/* Order Status */}
+                    <div>
+                        <label className="block text-sm font-semibold text-gray-700 mb-1">
+                            Order Status
+                        </label>
+                        <input
+                            className="w-full border rounded-lg px-4 py-2 bg-gray-100"
+                            readOnly
+                            {...register("orderStatus")}
+                        />
+                    </div>
+
+                    {/* Order Time */}
+                    <div>
+                        <label className="block text-sm font-semibold text-gray-700 mb-1">
+                            Order Time
+                        </label>
+                        <input
+                            className="w-full border rounded-lg px-4 py-2 bg-gray-100"
+                            readOnly
+                            {...register("orderTime")}
+                        />
+                    </div>
+
+                    {/* Submit */}
                     <button
                         type="submit"
-                        className="w-full py-3 rounded-lg text-white font-semibold text-lg"
+                        className="w-full py-3 rounded-lg text-white font-semibold text-lg hover:opacity-90 cursor-pointer"
                         style={{ backgroundColor: "#ff8400" }}
                     >
                         Confirm Order
                     </button>
                 </form>
-
-                {/* <button
-                    onClick={() => setOpenOrder(false)}
-                    className="w-full py-3 rounded-lg text-white font-semibold text-lg bg-red-500"
-                >
-                    Cancel
-                </button> */}
             </motion.div>
         </div>
     );

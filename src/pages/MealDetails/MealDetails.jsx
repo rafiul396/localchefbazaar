@@ -14,7 +14,7 @@ export default function MealDetails() {
     const [openOrder, setOpenOrder] = useState(false);
     const axiosSecure = useAxiosSecure();
     const { mealId } = useParams();
-    const { data, isLoading } = useQuery({
+    const { data, isLoading, refetch } = useQuery({
         queryKey: ["meal", mealId],
         queryFn: async () => {
             const res = await axiosSecure.get(`/meals/${mealId}`);
@@ -118,9 +118,9 @@ export default function MealDetails() {
                     {/* Order Button */}
                     <div className="mt-10">
                         <motion.button
-                            onClick={() => setOpenOrder(true)}
+                            onClick={() => setOpenOrder(data)}
                             whileTap={{ scale: 0.95 }}
-                            className="w-full py-5 rounded-xl text-lg font-semibold text-white"
+                            className="w-full py-5 rounded-xl text-lg font-semibold text-white cursor-pointer"
                             style={{ backgroundColor: "#628141" }}
                         >
                             Order Now
@@ -132,7 +132,9 @@ export default function MealDetails() {
             <ReviewDetails />
 
             {/* Order Modal */}
-            {openOrder && (<OrderPage setOpenOrder={setOpenOrder} />)}
+            {openOrder && (<OrderPage meal={openOrder}
+          onClose={() => setOpenOrder(null)}
+          refetch={refetch}  />)}
         </>
     );
 }

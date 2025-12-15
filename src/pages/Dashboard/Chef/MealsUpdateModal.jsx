@@ -60,7 +60,7 @@ const MealsUpdateModal = ({ meal, onClose, refetch }) => {
         </h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
- 
+
           <div>
             <label className="font-semibold text-sm">Food Name</label>
             <input

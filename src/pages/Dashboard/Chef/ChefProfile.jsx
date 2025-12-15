@@ -69,8 +69,8 @@ const ChefProfile = () => {
                         }
                     />
 
-                    {user.userRole === "chef" && (
-                        <InfoCard label="Chef ID" value={user.chefId} />
+                    {data.userRole === "chef" && (
+                        <InfoCard label="Chef ID" value={'ch-12'} />
                     )}
                 </div>
 
