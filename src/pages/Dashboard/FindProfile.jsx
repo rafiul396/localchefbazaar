@@ -2,24 +2,48 @@ import React from 'react';
 import AdminProfile from './Admin/AdminProfile';
 import ChefProfile from './Chef/ChefProfile';
 import UserProfile from './User/UserProfile';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import useAuth from '../../hooks/useAuth';
+import { useQuery } from '@tanstack/react-query';
 
 const FindProfile = () => {
+    const axiosSecure = useAxiosSecure()
+    const { user, loading } = useAuth();
+    const { data, isLoading } = useQuery({
+        queryKey: ['user', user?.email],
+        enabled: !!user?.email,
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/users/${user?.email}`);
+            return res.data;
+        }
+    })
+
+    if (loading || isLoading) {
+        return (
+            <div className="min-h-screen flex justify-center items-center">
+                <span className="loading loading-spinner loading-lg text-primary"></span>
+            </div>
+        );
+    }
+
+
+
     const admin = 'admin';
     const chef = 'chef';
-    const user = 'user';
-    const userRole = chef;
+    const normal = 'user';
+    const userRole = data?.userRole;
 
-    if(userRole === admin){
+    if (userRole === admin) {
         return (
             <AdminProfile />
         )
     }
-    if(userRole === chef){
+    if (userRole === chef) {
         return (
             <ChefProfile />
         )
     }
-    if(userRole === user){
+    if (userRole === normal) {
         return (
             <UserProfile />
         )

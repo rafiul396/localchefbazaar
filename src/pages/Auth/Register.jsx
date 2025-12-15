@@ -32,7 +32,7 @@ const Register = () => {
 
     const handleRegister = async (data) => {
         setSubmissionLoader(true)
-        const { name, email, password, userPhoto } = data;
+        const { name, email, password, userPhoto, address } = data;
         const profileImg = userPhoto
 
         try {
@@ -80,6 +80,7 @@ const Register = () => {
                 userName: name,
                 userEmail: email,
                 userPhoto: "",
+                userAddress: address
             }
 
             //Post user data in mongodb database

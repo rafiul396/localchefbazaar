@@ -3,7 +3,7 @@ import Dashboard from './Dashboard';
 import AdminDashboard from './Admin/AdminDashboard';
 import ChefDashboard from './Chef/ChefDashboard';
 import UserDashboard from './User/UserDashboard';
-import useAuth from '../../hooks/useAuth'
+import useAuth from '../../hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { Toaster } from 'react-hot-toast';
@@ -28,6 +28,8 @@ const DashboardLayout = () => {
         );
     }
 
+    
+    
     const admin = 'admin';
     const chef = 'chef';
     const normal = 'user';

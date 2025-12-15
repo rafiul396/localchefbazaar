@@ -1,17 +1,30 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaUserShield, FaUserTie, FaUserEdit } from "react-icons/fa";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAuth from "../../../hooks/useAuth";
 
 const ChefProfile = () => {
-    const user = {
-        name: "Md. Arif Hasan",
-        email: "arif@example.com",
-        image: "https://randomuser.me/api/portraits/men/41.jpg",
-        address: "Uttara, Dhaka",
-        role: "chef", // user / chef / admin
-        status: "active", // active / fraud
-        chefId: "C101",
-    };
+    const axiosSecure = useAxiosSecure()
+    const { user, loading } = useAuth();
+
+    const { data, isLoading } = useQuery({
+        queryKey: ['user', user?.email],
+        enabled: !!user?.email,
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/users/${user?.email}`);
+            return res.data;
+        }
+    })
+
+    if (loading || isLoading) {
+        return (
+            <div className="min-h-screen flex justify-center items-center">
+                <span className="loading loading-spinner loading-lg text-primary"></span>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-accent to-gray-100 py-12 px-4">
@@ -24,39 +37,39 @@ const ChefProfile = () => {
                 {/* Header */}
                 <div className="flex items-center gap-6 border-b pb-6">
                     <img
-                        src={user.image}
-                        alt={user.name}
+                        src={data.userPhoto}
+                        alt={data.userName}
                         className="w-24 h-24 rounded-2xl shadow-md object-cover"
                     />
 
                     <div>
                         <h1 className="text-2xl font-semibold text-gray-900">
-                            {user.name}
+                            {data.userName}
                         </h1>
-                        <p className="text-gray-500">{user.email}</p>
+                        <p className="text-gray-500">{data.userEmail}</p>
                     </div>
                 </div>
 
                 {/* Info Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
-                    <InfoCard label="Address" value={user.address} />
-                    <InfoCard label="Role" value={user.role.toUpperCase()} />
+                    <InfoCard label="Address" value={data.userAddress} />
+                    <InfoCard label="Role" value={data.userRole.toUpperCase()} />
 
                     <InfoCard
                         label="Status"
                         value={
                             <span
-                                className={`font-semibold ${user.status === "active"
-                                        ? "text-green-600"
-                                        : "text-red-600"
+                                className={`font-semibold ${data.userStatus === "active"
+                                    ? "text-green-600"
+                                    : "text-red-600"
                                     }`}
                             >
-                                {user.status}
+                                {data.userStatus}
                             </span>
                         }
                     />
 
-                    {user.role === "chef" && (
+                    {user.userRole === "chef" && (
                         <InfoCard label="Chef ID" value={user.chefId} />
                     )}
                 </div>
@@ -65,7 +78,7 @@ const ChefProfile = () => {
                 <div className="mt-10 flex flex-col sm:flex-row gap-4">
                     <motion.button
                         whileTap={{ scale: 0.95 }}
-                        className="flex items-center justify-center gap-2 w-full bg-gray-800 hover:bg-gray-900 text-white py-3 rounded-xl shadow-md"
+                        className="flex items-center justify-center gap-2 w-full bg-primary text-white py-3 rounded-xl shadow-md cursor-pointer"
                     >
                         <FaUserShield />
                         Be an Admin
