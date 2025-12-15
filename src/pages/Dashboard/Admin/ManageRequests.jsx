@@ -1,18 +1,37 @@
 import React from "react";
 import { motion } from "framer-motion";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 const ManageRequests = () => {
     const axiosSecure = useAxiosSecure();
-    const {data: requests, isLoading} = useQuery({
+    const { data: requests, isLoading } = useQuery({
         queryKey: ["requests"],
         queryFn: async () => {
             const res = await axiosSecure.get("/requests")
             return res.data
         }
     })
-    
+
+    const queryClient = useQueryClient();
+
+    const acceptMutation = useMutation({
+        mutationFn: (id) => axiosSecure.patch(`/requests/accept/${id}`),
+        onSuccess: () => {
+            toast.success("Request approved");
+            queryClient.invalidateQueries(["requests"]);
+        },
+    });
+
+    const rejectMutation = useMutation({
+        mutationFn: (id) => axiosSecure.patch(`/requests/reject/${id}`),
+        onSuccess: () => {
+            toast.error("Request rejected");
+            queryClient.invalidateQueries(["requests"]);
+        },
+    });
+
     if (isLoading) {
         return (
             <div className="min-h-screen flex justify-center items-center">
@@ -88,13 +107,13 @@ const ManageRequests = () => {
                                         <div className="md:hidden">
                                             <p className="text-xs font-semibold text-gray-500">Status</p>
                                             <p className={`capitalize font-bold mt-1 ${req.requestStatus === "pending" ? "text-yellow-600" :
-                                                    req.requestStatus === "approved" ? "text-green-600" : "text-red-600"
+                                                req.requestStatus === "approved" ? "text-green-600" : "text-red-600"
                                                 }`}>
                                                 {req.requestStatus}
                                             </p>
                                         </div>
                                         <p className={`hidden md:block capitalize font-bold ${req.requestStatus === "pending" ? "text-yellow-600" :
-                                                req.requestStatus === "approved" ? "text-green-600" : "text-red-600"
+                                            req.requestStatus === "approved" ? "text-green-600" : "text-red-600"
                                             }`}>
                                             {req.requestStatus}
                                         </p>
@@ -110,9 +129,10 @@ const ManageRequests = () => {
                                         <div className="flex gap-3 md:justify-center mt-4 md:mt-0">
                                             <button
                                                 disabled={isDisabled}
+                                                onClick={() => acceptMutation.mutate(req._id)}
                                                 className={`cursor-pointer px-6 py-2.5 rounded-lg font-medium text-sm shadow transition w-full md:w-auto ${isDisabled
-                                                        ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-                                                        : "bg-green-600 hover:bg-green-700 text-white"
+                                                    ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                                                    : "bg-green-600 hover:bg-green-700 text-white"
                                                     }`}
                                             >
                                                 Accept
@@ -120,9 +140,10 @@ const ManageRequests = () => {
 
                                             <button
                                                 disabled={isDisabled}
+                                                onClick={() => rejectMutation.mutate(req._id)}
                                                 className={`cursor-pointer px-6 py-2.5 rounded-lg font-medium text-sm shadow transition w-full md:w-auto ${isDisabled
-                                                        ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-                                                        : "bg-red-600 hover:bg-red-700 text-white"
+                                                    ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                                                    : "bg-red-600 hover:bg-red-700 text-white"
                                                     }`}
                                             >
                                                 Reject
