@@ -1,99 +1,29 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaCheckCircle, FaClock, FaTruck, FaMoneyBill } from "react-icons/fa";
+import useAuth from "../../../hooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const MyOrders = () => {
     // SAMPLE STATIC DATA — replace with MongoDB data
-    const orders = [
-        {
-            id: "ORD-001",
-            foodName: "Grilled Chicken Salad",
-            price: 280,
-            quantity: 2,
-            deliveryTime: "45 min",
-            chefName: "Chef Rahim",
-            chefId: "C101",
-            orderStatus: "preparing", // pending | preparing | delivered
-            paymentStatus: "pending", // pending | paid
-        },
-        {
-            id: "ORD-002",
-            foodName: "Beef Tehari",
-            price: 320,
-            quantity: 1,
-            deliveryTime: "30 min",
-            chefName: "Chef Anika",
-            chefId: "C102",
-            orderStatus: "pending",
-            paymentStatus: "pending",
-        },
-        {
-            id: "ORD-003",
-            foodName: "Pasta Alfredo",
-            price: 320,
-            quantity: 1,
-            deliveryTime: "50 min",
-            chefName: "Chef Hasan",
-            chefId: "C102",
-            orderStatus: "delivered",
-            paymentStatus: "paid",
-        },
-        {
-            id: "ORD-003",
-            foodName: "Pasta Alfredo",
-            price: 320,
-            quantity: 1,
-            deliveryTime: "50 min",
-            chefName: "Chef Hasan",
-            chefId: "C102",
-            orderStatus: "delivered",
-            paymentStatus: "paid",
-        },
-        {
-            id: "ORD-003",
-            foodName: "Pasta Alfredo",
-            price: 320,
-            quantity: 1,
-            deliveryTime: "50 min",
-            chefName: "Chef Hasan",
-            chefId: "C102",
-            orderStatus: "delivered",
-            paymentStatus: "paid",
-        },
-        {
-            id: "ORD-003",
-            foodName: "Pasta Alfredo",
-            price: 320,
-            quantity: 1,
-            deliveryTime: "50 min",
-            chefName: "Chef Hasan",
-            chefId: "C102",
-            orderStatus: "delivered",
-            paymentStatus: "paid",
-        },
-        {
-            id: "ORD-003",
-            foodName: "Pasta Alfredo",
-            price: 320,
-            quantity: 1,
-            deliveryTime: "50 min",
-            chefName: "Chef Hasan",
-            chefId: "C102",
-            orderStatus: "delivered",
-            paymentStatus: "paid",
-        },
-        {
-            id: "ORD-003",
-            foodName: "Pasta Alfredo",
-            price: 320,
-            quantity: 1,
-            deliveryTime: "50 min",
-            chefName: "Chef Hasan",
-            chefId: "C102",
-            orderStatus: "delivered",
-            paymentStatus: "paid",
-        },
-    ];
+    const axiosSecure = useAxiosSecure()
+    const {user, loading} = useAuth()
+    const {data: orders, isLoading} = useQuery({
+        queryKey: ["orders", user?.email],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/orders?email=${user?.email}`)
+            return res.data
+        }
+    })
+
+    if (loading || isLoading) {
+        return (
+            <div className="min-h-screen flex justify-center items-center">
+                <span className="loading loading-spinner loading-lg text-primary"></span>
+            </div>
+        );
+    }
 
     const getStatusColor = (status) => {
         switch (status) {
@@ -110,7 +40,6 @@ const MyOrders = () => {
 
     return (
         <div>
-            {/* PAGE TITLE */}
             <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -120,22 +49,19 @@ const MyOrders = () => {
                 My Orders
             </motion.h1>
 
-            {/* ORDERS GRID */}
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {orders.map((order) => (
                     <motion.div
-                        key={order.id}
+                        key={order._id}
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ duration: 0.3 }}
                         className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition"
                     >
-                        {/* FOOD NAME */}
                         <h2 className="text-xl font-semibold text-gray-900 mb-2">
-                            {order.foodName}
+                            {order.mealName}
                         </h2>
 
-                        {/* ORDER STATUS */}
                         <div className="flex items-center gap-2 mb-3">
                             <span
                                 className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(
@@ -145,7 +71,6 @@ const MyOrders = () => {
                                 {order.orderStatus}
                             </span>
 
-                            {/* Payment Status */}
 
                         </div>
 
@@ -159,20 +84,17 @@ const MyOrders = () => {
                             <p className="flex items-center gap-2">
                                 <FaClock className="text-primary" />{" "}
                                 <span>
-                                    <strong>Delivery Time:</strong> {order.deliveryTime}
+                                    <strong>Delivery Time:</strong> {order.orderTime}
                                 </span>
                             </p>
-
-                            <p className="mt-3 font-semibold text-gray-800">Chef Details:</p>
                             <p>
-                                <strong>Name:</strong> {order.chefName}
+                                <strong>Chef Name:</strong> {order.chefName}
                             </p>
                             <p>
                                 <strong>Chef ID:</strong> {order.chefId}
                             </p>
                         </div>
 
-                        {/* PAY BUTTON LOGIC */}
                         {order.orderStatus !== "pending" &&
                             order.paymentStatus === "pending" && (
                                 <button

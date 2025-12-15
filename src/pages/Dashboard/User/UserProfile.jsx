@@ -3,11 +3,42 @@ import { motion } from "framer-motion";
 import { FaUserShield, FaUserTie, FaUserEdit } from "react-icons/fa";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 const UserProfile = () => {
     const axiosSecure = useAxiosSecure()
     const { user, loading } = useAuth();
+
+    const chefRequestMutation = useMutation({
+        mutationFn: async (requestType) => {
+            const res = await axiosSecure.post("/requests", requestType);
+            return res.data;
+        },
+        onSuccess: () => {
+            toast.success("Request sent successfully ✅");
+        },
+        onError: (err) => {
+            toast.error(
+                err?.response?.data?.message || "Request already pending ❌"
+            );
+        },
+    });
+
+    const adminRequestMutation = useMutation({
+        mutationFn: async (requestType) => {
+            const res = await axiosSecure.post("/requests", requestType);
+            return res.data;
+        },
+        onSuccess: () => {
+            toast.success("Request sent successfully ✅");
+        },
+        onError: (err) => {
+            toast.error(
+                err?.response?.data?.message || "Request already pending ❌"
+            );
+        },
+    });
 
     const { data, isLoading } = useQuery({
         queryKey: ['user', user?.email],
@@ -17,6 +48,23 @@ const UserProfile = () => {
             return res.data;
         }
     })
+
+    const handleChefRequest = () => {
+        chefRequestMutation.mutate({
+            userName: user.displayName,
+            userEmail: user.email,
+            requestType: "chef",
+        });
+    };
+
+    const handleAdminRequest = () => {
+        adminRequestMutation.mutate({
+            userName: user.displayName,
+            userEmail: user.email,
+            requestType: "admin",
+        });
+    }
+
 
     if (loading || isLoading) {
         return (
@@ -60,8 +108,8 @@ const UserProfile = () => {
                         value={
                             <span
                                 className={`font-semibold ${data.userStatus === "active"
-                                        ? "text-green-600"
-                                        : "text-red-600"
+                                    ? "text-green-600"
+                                    : "text-red-600"
                                     }`}
                             >
                                 {data.userStatus}
@@ -77,6 +125,7 @@ const UserProfile = () => {
                 {/* Actions */}
                 <div className="mt-10 flex flex-col sm:flex-row gap-4">
                     <motion.button
+                        onClick={handleChefRequest}
                         whileTap={{ scale: 0.95 }}
                         className="flex items-center justify-center gap-2 w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-xl shadow-md"
                     >
@@ -85,6 +134,7 @@ const UserProfile = () => {
                     </motion.button>
 
                     <motion.button
+                    onClick={handleAdminRequest}
                         whileTap={{ scale: 0.95 }}
                         className="flex items-center justify-center gap-2 w-full bg-gray-800 hover:bg-gray-900 text-white py-3 rounded-xl shadow-md"
                     >

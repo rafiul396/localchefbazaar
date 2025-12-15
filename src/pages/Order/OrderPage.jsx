@@ -45,7 +45,8 @@ const OrderPage = ({ onClose, meal }) => {
         const orderInfo = {
             ...data,
             foodId: meal._id,
-            paymentStatus: "Pending"
+            paymentStatus: "Pending",
+            chefName: meal.chefName
         };
 
         const totalPrice = Number(data.foodPrice * data.quantity)
@@ -76,7 +77,6 @@ const OrderPage = ({ onClose, meal }) => {
                 transition={{ duration: 0.3 }}
                 className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-xl"
             >
-                {/* Header */}
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-2xl font-bold text-primary">
                         Confirm Your Order
@@ -89,10 +89,8 @@ const OrderPage = ({ onClose, meal }) => {
                     </button>
                 </div>
 
-                {/* Form */}
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
-                    {/* Food Name */}
                     <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-1">
                             Food Name
@@ -105,7 +103,6 @@ const OrderPage = ({ onClose, meal }) => {
                         />
                     </div>
 
-                    {/* Price */}
                     <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-1">
                             Price
@@ -118,7 +115,6 @@ const OrderPage = ({ onClose, meal }) => {
                         />
                     </div>
 
-                    {/* Quantity */}
                     <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-1">
                             Quantity
@@ -141,7 +137,6 @@ const OrderPage = ({ onClose, meal }) => {
                         )}
                     </div>
 
-                    {/* Chef ID */}
                     <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-1">
                             Chef ID
@@ -154,7 +149,6 @@ const OrderPage = ({ onClose, meal }) => {
                         />
                     </div>
 
-                    {/* User Email */}
                     <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-1">
                             Your Email
@@ -167,7 +161,6 @@ const OrderPage = ({ onClose, meal }) => {
                         />
                     </div>
 
-                    {/* Address */}
                     <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-1">
                             Delivery Address
@@ -187,7 +180,6 @@ const OrderPage = ({ onClose, meal }) => {
                         )}
                     </div>
 
-                    {/* Order Status */}
                     <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-1">
                             Order Status
@@ -199,7 +191,6 @@ const OrderPage = ({ onClose, meal }) => {
                         />
                     </div>
 
-                    {/* Order Time */}
                     <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-1">
                             Order Time
@@ -211,7 +202,6 @@ const OrderPage = ({ onClose, meal }) => {
                         />
                     </div>
 
-                    {/* Submit */}
                     <button
                         type="submit"
                         className="w-full py-3 rounded-lg text-white font-semibold text-lg hover:opacity-90 cursor-pointer"
