@@ -1,13 +1,29 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaUserShield, FaUserTie, FaUserEdit } from "react-icons/fa";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const ChefProfile = () => {
     const axiosSecure = useAxiosSecure()
     const { user, loading } = useAuth();
+
+    const adminRequestMutation = useMutation({
+        mutationFn: async (requestType) => {
+            const res = await axiosSecure.post("/requests", requestType);
+            return res.data;
+        },
+        onSuccess: () => {
+            toast.success("Request sent successfully ✅");
+        },
+        onError: (err) => {
+            toast.error(
+                err?.response?.data?.message || "Request already pending ❌"
+            );
+        },
+    });
 
     const { data, isLoading } = useQuery({
         queryKey: ['user', user?.email],
@@ -17,6 +33,14 @@ const ChefProfile = () => {
             return res.data;
         }
     })
+
+    const handleAdminRequest = () => {
+        adminRequestMutation.mutate({
+            userName: user.displayName,
+            userEmail: user.email,
+            requestType: "admin",
+        });
+    }
 
     if (loading || isLoading) {
         return (
@@ -77,6 +101,7 @@ const ChefProfile = () => {
                 {/* Actions */}
                 <div className="mt-10 flex flex-col sm:flex-row gap-4">
                     <motion.button
+                        onClick={handleAdminRequest}
                         whileTap={{ scale: 0.95 }}
                         className="flex items-center justify-center gap-2 w-full bg-primary text-white py-3 rounded-xl shadow-md cursor-pointer"
                     >

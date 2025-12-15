@@ -127,7 +127,7 @@ const UserProfile = () => {
                     <motion.button
                         onClick={handleChefRequest}
                         whileTap={{ scale: 0.95 }}
-                        className="flex items-center justify-center gap-2 w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-xl shadow-md"
+                        className="flex items-center justify-center gap-2 w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-xl shadow-md cursor-pointer"
                     >
                         <FaUserTie />
                         Be a Chef
@@ -136,7 +136,7 @@ const UserProfile = () => {
                     <motion.button
                     onClick={handleAdminRequest}
                         whileTap={{ scale: 0.95 }}
-                        className="flex items-center justify-center gap-2 w-full bg-gray-800 hover:bg-gray-900 text-white py-3 rounded-xl shadow-md"
+                        className="flex items-center justify-center gap-2 w-full bg-gray-800 hover:bg-gray-900 text-white py-3 rounded-xl shadow-md cursor-pointer"
                     >
                         <FaUserShield />
                         Be an Admin
