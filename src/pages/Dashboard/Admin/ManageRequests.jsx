@@ -1,41 +1,25 @@
 import React from "react";
 import { motion } from "framer-motion";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const ManageRequests = () => {
-    const requests = [
-        {
-            id: 1,
-            userName: "Sarah Khan",
-            email: "sarah@example.com",
-            requestType: "chef",
-            requestStatus: "pending",
-            requestTime: "Jan 12, 2025",
-        },
-        {
-            id: 2,
-            userName: "Rifat Hossain",
-            email: "rifat@example.com",
-            requestType: "admin",
-            requestStatus: "approved",
-            requestTime: "Jan 10, 2025",
-        },
-        {
-            id: 3,
-            userName: "Maya Chowdhury",
-            email: "maya@example.com",
-            requestType: "chef",
-            requestStatus: "rejected",
-            requestTime: "Jan 08, 2025",
-        },
-        {
-            id: 4,
-            userName: "Abir Chowdhury",
-            email: "maya@example.com",
-            requestType: "chef",
-            requestStatus: "rejected",
-            requestTime: "Jan 08, 2025",
-        },
-    ];
+    const axiosSecure = useAxiosSecure();
+    const {data: requests, isLoading} = useQuery({
+        queryKey: ["requests"],
+        queryFn: async () => {
+            const res = await axiosSecure.get("/requests")
+            return res.data
+        }
+    })
+    
+    if (isLoading) {
+        return (
+            <div className="min-h-screen flex justify-center items-center">
+                <span className="loading loading-spinner loading-lg text-primary"></span>
+            </div>
+        );
+    }
 
     return (
         <div>
@@ -85,9 +69,9 @@ const ManageRequests = () => {
                                         {/* Email */}
                                         <div className="md:hidden">
                                             <p className="text-xs font-semibold text-gray-500">Email</p>
-                                            <p className="text-gray-600 break-all text-sm mt-1">{req.email}</p>
+                                            <p className="text-gray-600 break-all text-sm mt-1">{req.userEmail}</p>
                                         </div>
-                                        <p className="hidden md:block text-gray-600 break-all">{req.email}</p>
+                                        <p className="hidden md:block text-gray-600 break-all">{req.userEmail}</p>
 
                                         {/* Type */}
                                         <div className="md:hidden">
@@ -126,7 +110,7 @@ const ManageRequests = () => {
                                         <div className="flex gap-3 md:justify-center mt-4 md:mt-0">
                                             <button
                                                 disabled={isDisabled}
-                                                className={`px-6 py-2.5 rounded-lg font-medium text-sm shadow transition w-full md:w-auto ${isDisabled
+                                                className={`cursor-pointer px-6 py-2.5 rounded-lg font-medium text-sm shadow transition w-full md:w-auto ${isDisabled
                                                         ? "bg-gray-300 text-gray-600 cursor-not-allowed"
                                                         : "bg-green-600 hover:bg-green-700 text-white"
                                                     }`}
@@ -136,7 +120,7 @@ const ManageRequests = () => {
 
                                             <button
                                                 disabled={isDisabled}
-                                                className={`px-6 py-2.5 rounded-lg font-medium text-sm shadow transition w-full md:w-auto ${isDisabled
+                                                className={`cursor-pointer px-6 py-2.5 rounded-lg font-medium text-sm shadow transition w-full md:w-auto ${isDisabled
                                                         ? "bg-gray-300 text-gray-600 cursor-not-allowed"
                                                         : "bg-red-600 hover:bg-red-700 text-white"
                                                     }`}
