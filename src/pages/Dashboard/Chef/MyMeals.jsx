@@ -1,34 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaTrash, FaEdit } from "react-icons/fa";
+import useAuth from "../../../hooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
+import MealsUpdateModal from "./MealsUpdateModal";
 
 const MyMeals = () => {
+  const [selectedMeal, setSelectedMeal] = useState(null);
   // Sample meals (replace with MongoDB data)
-  const meals = [
-    {
-      _id: "1",
-      foodName: "Grilled Chicken Salad",
-      foodImage: "https://images.unsplash.com/photo-1551183053-bf91a1d81141",
-      price: 280,
-      rating: 4.7,
-      ingredients: ["Chicken", "Lettuce", "Olive Oil"],
-      estimatedDeliveryTime: "30 minutes",
-      chefName: "Chef Rahim",
-      chefId: "C101",
-    },
-    {
-      _id: "2",
-      foodName: "Beef Tehari",
-      foodImage:
-        "https://punguskitchen.com/wp-content/uploads/2025/03/Tehari-is-a-fragrant-and-flavorful-rice-dish-made-with-beef-aromatic-spices_pungus-kitchen-4.jpg",
-      price: 320,
-      rating: 4.8,
-      ingredients: ["Beef", "Rice", "Spices"],
-      estimatedDeliveryTime: "40 minutes",
-      chefName: "Chef Rahim",
-      chefId: "C101",
-    },
-  ];
+  const { user, loading } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const { data: meals, isLoading, refetch } = useQuery({
+    queryKey: ["meals", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/meals?email=${user?.email}`)
+      return res.data
+    }
+  })
+
+  const handleDeleteMeal = async (id) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    // Cancel করলে এখানেই return
+    if (!result.isConfirmed) return;
+
+    try {
+      const res = await axiosSecure.delete(`/meals/${id}`);
+
+      if (res.data.deletedCount > 0 || res.data.success) {
+        toast.success("Meal deleted successfully 🍽️");
+        refetch(); // UI instant update
+      }
+
+    } catch (error) {
+      toast.error("Failed to delete meal ❌");
+    }
+  };
+
+
+  if (loading || isLoading) {
+    return <h1>Meals...</h1>
+  }
 
   return (
     <div>
@@ -41,6 +64,7 @@ const MyMeals = () => {
       >
         My Meals
       </motion.h1>
+      <p className="font-semibold mb-4 text-xl">Total Meals : {meals.length}</p>
 
       {/* Meals Grid */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -101,11 +125,13 @@ const MyMeals = () => {
 
               {/* Buttons */}
               <div className="flex justify-between mt-4">
-                <button className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-info-content px-4 py-2 rounded-lg text-sm shadow-md transition cursor-pointer">
+                <button onClick={() => handleDeleteMeal(meal._id)} className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-info-content px-4 py-2 rounded-lg text-sm shadow-md transition cursor-pointer">
                   <FaTrash /> Delete
                 </button>
 
-                <button className="flex items-center gap-2 bg-primary text-info-content px-4 py-2 rounded-lg text-sm shadow-md transition cursor-pointer">
+                <button
+                onClick={() => setSelectedMeal(meal)}
+                className="flex items-center gap-2 bg-primary text-info-content px-4 py-2 rounded-lg text-sm shadow-md transition cursor-pointer">
                   <FaEdit /> Update
                 </button>
               </div>
@@ -113,6 +139,13 @@ const MyMeals = () => {
           </motion.div>
         ))}
       </div>
+      {selectedMeal && (
+        <MealsUpdateModal
+          meal={selectedMeal}
+          onClose={() => setSelectedMeal(null)}
+          refetch={refetch}
+        />
+      )}
     </div>
   );
 }
