@@ -130,9 +130,9 @@ const ManageRequests = () => {
                                             <button
                                                 disabled={isDisabled}
                                                 onClick={() => acceptMutation.mutate(req._id)}
-                                                className={`cursor-pointer px-6 py-2.5 rounded-lg font-medium text-sm shadow transition w-full md:w-auto ${isDisabled
+                                                className={` px-6 py-2.5 rounded-lg font-medium text-sm shadow transition w-full md:w-auto ${isDisabled
                                                     ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-                                                    : "bg-green-600 hover:bg-green-700 text-white"
+                                                    : "bg-green-600 hover:bg-green-700 text-white cursor-pointer"
                                                     }`}
                                             >
                                                 Accept
@@ -141,9 +141,9 @@ const ManageRequests = () => {
                                             <button
                                                 disabled={isDisabled}
                                                 onClick={() => rejectMutation.mutate(req._id)}
-                                                className={`cursor-pointer px-6 py-2.5 rounded-lg font-medium text-sm shadow transition w-full md:w-auto ${isDisabled
+                                                className={` px-6 py-2.5 rounded-lg font-medium text-sm shadow transition w-full md:w-auto ${isDisabled
                                                     ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-                                                    : "bg-red-600 hover:bg-red-700 text-white"
+                                                    : "bg-red-600 hover:bg-red-700 text-white cursor-pointer"
                                                     }`}
                                             >
                                                 Reject

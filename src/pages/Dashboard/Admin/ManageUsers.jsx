@@ -1,12 +1,13 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
   // all users data
-  const { data: users, isLoading } = useQuery({
+  const { data: users, isLoading, refetch } = useQuery({
     queryKey: ['users'],
     queryFn: async () => {
       const res = await axiosSecure.get(`/users`);
@@ -14,7 +15,29 @@ const ManageUsers = () => {
     }
   })
 
-  if(isLoading){
+  const queryClient = useQueryClient();
+
+  const fraudMutation = useMutation({
+    mutationFn: async (id) => {
+      const res = await axiosSecure.patch(`/users/fraud/${id}`);
+      return res.data;
+    },
+    onSuccess: () => {
+      toast.success("User marked as Fraud ❌");
+      queryClient.invalidateQueries(["users"]); // instant UI update
+    },
+    onError: (err) => {
+      toast.error(err?.response?.data?.message || "Action failed");
+    },
+  });
+
+  const handleMakeFraud = (id) => {
+    fraudMutation.mutate(id);
+    refetch()
+  };
+
+
+  if (isLoading) {
     return <h1>Users...</h1>
   }
 
@@ -103,8 +126,13 @@ const ManageUsers = () => {
                         Already Fraud
                       </button>
                     ) : (
-                      <button
-                        className="btn btn-sm bg-red-500 hover:bg-red-600 text-white border-red-500 shadow-none"
+                      user.userRole !== "admin" && <button
+                        disabled={user.userStatus === "fraud"}
+                        onClick={() => handleMakeFraud(user._id)}
+                        className={`px-6 py-2.5 rounded-lg font-medium text-sm shadow transition w-full md:w-auto ${user.userStatus === "fraud"
+                          ? "bg-gray-300 text-gray-600 cursor-no-drop"
+                          : "bg-red-600 hover:bg-red-700 text-white cursor-pointer"
+                          }`}
                       >
                         Make Fraud
                       </button>
