@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from "react";
 
 
-const ReviewDetails = ({ mealId, user }) => {
+const ReviewDetails = ({ mealId, user, mealName }) => {
     const [open, setOpen] = useState(false);
     const axiosSecure = useAxiosSecure();
     const { data: reviews = [], isLoading, refetch } = useQuery({
@@ -57,7 +57,7 @@ const ReviewDetails = ({ mealId, user }) => {
                                             <h3 className="text-lg font-semibold text-gray-900">
                                                 {review.reviewerName}
                                             </h3>
-                                            <p className="text-sm text-gray-500">{review.createdAt}</p>
+                                            <p className="text-sm text-gray-500">{new Date(review.createdAt).toDateString()}</p>
                                         </div>
 
                                         <div className="flex items-center mt-1">
@@ -96,7 +96,7 @@ const ReviewDetails = ({ mealId, user }) => {
 
             {/* Modal */}
             {
-                open && <ReviewModal setOpen={setOpen} user={user} mealId={mealId} refetch={refetch} />
+                open && <ReviewModal setOpen={setOpen} user={user} mealId={mealId} refetch={refetch} mealName={mealName} />
             }
         </div>
     );

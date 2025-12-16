@@ -1,56 +1,86 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaTrash, FaEdit } from "react-icons/fa";
+import useAuth from "../../../hooks/useAuth";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import useUser from "../../../hooks/useUser";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 
 const MyReviews = () => {
+  const { userData } = useUser()
+  const axiosSecure = useAxiosSecure()
   // SAMPLE DATA
-  const [reviews, setReviews] = useState([
-    {
-      id: 1,
-      mealName: "Grilled Chicken Salad",
-      rating: 5,
-      comment: "Absolutely delicious and fresh!",
-      date: "2025-02-10",
-    },
-    {
-      id: 2,
-      mealName: "Beef Tehari",
-      rating: 4,
-      comment: "Great taste, packing could be better.",
-      date: "2025-01-12",
-    },
-  ]);
+  const [reviews, setReviews] = useState([]);
 
-  const [editModal, setEditModal] = useState(null);
-  const [deleteModal, setDeleteModal] = useState(null);
+  const { data, refetch } = useQuery({
+    queryKey: ["revews", userData?.userEmail],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/reviews?email=${userData?.userEmail}`)
+      setReviews(res.data)
+    }
+  })
+
+  const updateReviewMutation = useMutation({
+    mutationFn: async ({ id, data }) => {
+      const res = await axiosSecure.patch(`/reviews/${id}`, data);
+      return res.data;
+    },
+    onSuccess: () => {
+      toast.success("Review updated ⭐");
+      refetch();
+    },
+    onError: () => {
+      toast.error("Failed to update review ❌");
+    },
+  });
+
+  const queryClient = useQueryClient();
+
+  const deleteReviewMutation = useMutation({
+    mutationFn: async (reviewId) => {
+      const res = await axiosSecure.delete(
+        `/reviews/${reviewId}?email=${reviewId}`
+      );
+      return res.data;
+    },
+    onSuccess: () => {
+      toast.success("Review deleted successfully 🗑️");
+      setDeleteModal(null)
+      queryClient.invalidateQueries(["reviews"]);
+    },
+    onError: () => {
+      toast.error("Failed to delete review ❌");
+    },
+  });
+
+  const [editModal, setEditModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
   const [updatedData, setUpdatedData] = useState({ rating: 0, comment: "" });
 
   // Update Review Submit
-  const handleUpdate = () => {
-    setReviews((prev) =>
-      prev.map((item) =>
-        item.id === editModal ? { ...item, ...updatedData } : item
-      )
-    );
-    setEditModal(null);
+  const handleUpdate = (id, updated) => {
+    updateReviewMutation.mutate(id, updated);
+    console.log(updated);
+    setEditModal(false)
   };
 
-  // Delete Review
-  const handleDelete = () => {
-    setReviews((prev) => prev.filter((item) => item.id !== deleteModal));
-    setDeleteModal(null);
-  };
+  console.log(editModal);
+  
 
   return (
     <div>
-      <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-        My Reviews
-      </h1>
+      <div className="mb-4">
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+          My Reviews
+        </h1>
+        <p className="text-xl font-semibold">Total Reviews: {reviews.length}</p>
+      </div>
 
       <div className="space-y-6">
         {reviews.map((review) => (
           <motion.div
-            key={review.id}
+            key={review._id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
@@ -62,7 +92,7 @@ const MyReviews = () => {
                 {review.mealName}
               </h2>
               <p className="text-gray-500 text-sm">
-                {new Date(review.date).toDateString()}
+                {new Date(review.createdAt).toDateString()}
               </p>
             </div>
 
@@ -88,7 +118,7 @@ const MyReviews = () => {
                     rating: review.rating,
                     comment: review.comment,
                   });
-                  setEditModal(review.id);
+                  setEditModal(review._id);
                 }}
                 className="flex items-center gap-2 bg-primary text-info-content px-4 py-2 rounded-lg text-sm shadow cursor-pointer"
               >
@@ -96,7 +126,7 @@ const MyReviews = () => {
               </button>
 
               <button
-                onClick={() => setDeleteModal(review.id)}
+                onClick={() => setDeleteModal(review._id)}
                 className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-info-content px-4 py-2 rounded-lg text-sm shadow cursor-pointer"
               >
                 <FaTrash /> Delete
@@ -106,7 +136,7 @@ const MyReviews = () => {
         ))}
       </div>
 
-      {/* ================= UPDATE MODAL ================= */}
+      {/* update modal */}
       <AnimatePresence>
         {editModal && (
           <motion.div
@@ -133,7 +163,7 @@ const MyReviews = () => {
                 onChange={(e) =>
                   setUpdatedData({ ...updatedData, rating: e.target.value })
                 }
-                className="w-full border rounded-lg px-3 py-2 mt-1 mb-4"
+                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none"
               />
 
               {/* Comment */}
@@ -143,20 +173,20 @@ const MyReviews = () => {
                 onChange={(e) =>
                   setUpdatedData({ ...updatedData, comment: e.target.value })
                 }
-                className="w-full border rounded-lg px-3 py-2 mt-1 h-28"
+                className="w-full border rounded-lg px-3 py-2 mt-1 h-28 focus:ring-2 focus:ring-primary focus:border-primary outline-none"
               ></textarea>
 
               {/* Buttons */}
               <div className="flex justify-end gap-3 mt-6">
                 <button
                   onClick={() => setEditModal(null)}
-                  className="px-4 py-2 bg-gray-200 rounded-lg text-gray-700"
+                  className="px-4 py-2 bg-gray-200 rounded-lg text-gray-700 cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
-                  onClick={handleUpdate}
-                  className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg"
+                  onClick={() => handleUpdate(editModal, updatedData)}
+                  className="px-4 py-2 bg-primary text-white rounded-lg cursor-pointer"
                 >
                   Save Changes
                 </button>
@@ -166,7 +196,7 @@ const MyReviews = () => {
         )}
       </AnimatePresence>
 
-      {/* ================= DELETE MODAL ================= */}
+      {/* Delete modal */}
       <AnimatePresence>
         {deleteModal && (
           <motion.div
@@ -190,13 +220,13 @@ const MyReviews = () => {
               <div className="flex justify-end gap-3">
                 <button
                   onClick={() => setDeleteModal(null)}
-                  className="px-4 py-2 bg-gray-200 rounded-lg"
+                  className="px-4 py-2 bg-gray-200 rounded-lg cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
-                  onClick={handleDelete}
-                  className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg"
+                  onClick={() => deleteReviewMutation.mutate(deleteModal)}
+                  className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg cursor-pointer"
                 >
                   Delete
                 </button>

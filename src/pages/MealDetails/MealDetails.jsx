@@ -53,7 +53,7 @@ export default function MealDetails() {
                 >
                     <img
                         src={data?.foodImage}
-                        alt={data?.footName}
+                        alt={data?.foodName}
                         className="w-full h-full object-cover rounded-b-3xl shadow-lg"
                     />
                 </motion.div>
@@ -137,7 +137,7 @@ export default function MealDetails() {
                 </div>
             </div>
             {/* Review Section */}
-            <ReviewDetails mealId={mealId} user={user} />
+            <ReviewDetails mealId={mealId} user={user} mealName={data?.foodName} />
 
             {/* Order Modal */}
             {openOrder && (<OrderPage meal={openOrder}

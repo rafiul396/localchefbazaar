@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useUser from "../../hooks/useUser";
 
-const ReviewModal = ({ setOpen, mealId, user, refetch }) => {
+const ReviewModal = ({ setOpen, mealId, user, refetch, mealName }) => {
   const axiosSecure = useAxiosSecure();
   const {userData} = useUser();
 
@@ -34,6 +34,7 @@ const ReviewModal = ({ setOpen, mealId, user, refetch }) => {
   const onSubmit = (data) => {
     const reviewInfo = {
       foodId: mealId,
+      mealName,
       reviewerEmail: user?.email,
       reviewerName: userData?.userName,
       reviewerImage: userData?.userPhoto,
