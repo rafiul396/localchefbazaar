@@ -20,6 +20,8 @@ import MyMeals from "../pages/Dashboard/Chef/MyMeals";
 import OrderPage from "../pages/Order/OrderPage";
 import OrderRequests from "../pages/Dashboard/Chef/OrderRequests";
 import FindProfile from "../pages/Dashboard/FindProfile";
+import AuthProvider from "../context/AuthProvider";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -36,7 +38,9 @@ export const router = createBrowserRouter([
       },
       {
         path: "/meals/:mealId",
-        element: <MealDetails />
+        element: <PrivateRoute>
+          <MealDetails />
+        </PrivateRoute>
       },
       {
         path: "/login",
@@ -88,7 +92,7 @@ export const router = createBrowserRouter([
         element: <MyOrders />
       },
       {
-        path : "my-reviews",
+        path: "my-reviews",
         element: <MyReviews />
       },
       {

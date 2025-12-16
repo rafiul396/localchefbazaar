@@ -137,7 +137,7 @@ export default function MealDetails() {
                 </div>
             </div>
             {/* Review Section */}
-            <ReviewDetails />
+            <ReviewDetails mealId={mealId} user={user} />
 
             {/* Order Modal */}
             {openOrder && (<OrderPage meal={openOrder}

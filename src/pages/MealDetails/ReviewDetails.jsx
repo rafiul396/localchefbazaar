@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { FaHeart } from "react-icons/fa";
+import ReviewModal from "../MealDetails/ReviewModal"
 
-const ReviewDetails = () => {
+
+const ReviewDetails = ({ mealId, user }) => {
     const [open, setOpen] = useState(false);
     const [reviewForm, setReviewForm] = useState({
         reviewer_name: "",
@@ -33,26 +35,7 @@ const ReviewDetails = () => {
         }
     ];
 
-    // Handle form input
-    const handleChange = (e) => {
-        setReviewForm({ ...reviewForm, [e.target.name]: e.target.value });
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        console.log("Submitted Review:", reviewForm);
-
-        // Close modal
-        setOpen(false);
-
-        // Reset form
-        setReviewForm({
-            reviewer_name: "",
-            rating: 5,
-            comment: ""
-        });
-    };
+    
 
     return (
         <div className="max-w-4xl mx-auto px-5 py-14">
@@ -115,73 +98,9 @@ const ReviewDetails = () => {
             </div>
 
             {/* Modal */}
-            {open && (
-                <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 px-4">
-                    <div className="bg-white w-full max-w-lg rounded-2xl shadow-xl p-6 animate-fadeIn">
-
-                        <div className="flex justify-between items-center mb-4">
-                            <h3 className="text-xl font-semibold text-gray-800">Write a Review</h3>
-                            <button
-                                onClick={() => setOpen(false)}
-                                className="text-gray-400 hover:text-gray-600 text-xl cursor-pointer"
-                            >
-                                ✕
-                            </button>
-                        </div>
-
-                        <form onSubmit={handleSubmit} className="space-y-4">
-
-                            {/* Name */}
-                            <input
-                                type="text"
-                                name="reviewer_name"
-                                value={reviewForm.reviewer_name}
-                                onChange={handleChange}
-                                placeholder="Your name"
-                                required
-                                className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-200 outline-none"
-                            />
-
-                            {/* Rating */}
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">
-                                    Rating
-                                </label>
-                                <select
-                                    name="rating"
-                                    value={reviewForm.rating}
-                                    onChange={handleChange}
-                                    className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-200 outline-none"
-                                >
-                                    {[5, 4, 3, 2, 1].map((r) => (
-                                        <option key={r} value={r}>
-                                            {r} Stars
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-
-                            {/* Comment */}
-                            <textarea
-                                name="comment"
-                                value={reviewForm.comment}
-                                onChange={handleChange}
-                                placeholder="Write your review..."
-                                rows="4"
-                                required
-                                className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-200 outline-none"
-                            />
-
-                            <button
-                                type="submit"
-                                className="w-full btn btn-primary border-primary shadow-none py-8 rounded-xl text-lg font-semibold text-white"
-                            >
-                                Submit Review
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            )}
+            {
+                open && <ReviewModal setOpen={setOpen} user={user} mealId={mealId}  />
+            }
         </div>
     );
 };
