@@ -1,41 +1,30 @@
-import React, { useState } from 'react';
 import { FaHeart } from "react-icons/fa";
 import ReviewModal from "../MealDetails/ReviewModal"
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import { useQuery } from '@tanstack/react-query';
+import { useState } from "react";
 
 
 const ReviewDetails = ({ mealId, user }) => {
     const [open, setOpen] = useState(false);
-    const [reviewForm, setReviewForm] = useState({
-        reviewer_name: "",
-        rating: 5,
-        comment: ""
+    const axiosSecure = useAxiosSecure();
+    const { data: reviews = [], isLoading, refetch } = useQuery({
+        queryKey: ["reviews", mealId],
+        enabled: !!mealId,
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/reviews?foodId=${mealId}`);
+            return res.data;
+        },
     });
 
-    const reviews = [
-        {
-            reviewer_name: "Sarah Akter",
-            reviewer_image: "https://randomuser.me/api/portraits/women/44.jpg",
-            rating: 5,
-            comment: "The food tasted absolutely delicious! It felt like pure homemade comfort.",
-            date: "Jan 12, 2025"
-        },
-        {
-            reviewer_name: "Rahim Uddin",
-            reviewer_image: "https://randomuser.me/api/portraits/men/32.jpg",
-            rating: 4,
-            comment: "Great taste, fresh ingredients, fast delivery! Will order again.",
-            date: "Feb 03, 2025"
-        },
-        {
-            reviewer_name: "Maya Chowdhury",
-            reviewer_image: "https://randomuser.me/api/portraits/women/68.jpg",
-            rating: 5,
-            comment: "Amazing quality and well-packed. Chef’s cooking was outstanding.",
-            date: "Feb 10, 2025"
-        }
-    ];
 
-    
+    if (isLoading) {
+        return (
+            <div className="min-h-screen flex justify-center items-center">
+                <span className="loading loading-spinner loading-lg text-primary"></span>
+            </div>
+        );
+    }
 
     return (
         <div className="max-w-4xl mx-auto px-5 py-14">
@@ -44,41 +33,49 @@ const ReviewDetails = ({ mealId, user }) => {
             </h2>
 
             {/* Reviews List */}
-            <div className="space-y-6">
-                {reviews.map((review, index) => (
-                    <div
-                        key={index}
-                        className="bg-white p-5 rounded-2xl shadow-md border border-gray-100"
-                    >
-                        <div className="flex gap-4 items-start">
-                            <img
-                                src={review.reviewer_image}
-                                alt={review.reviewer_name}
-                                className="w-14 h-14 rounded-full object-cover shadow-sm"
-                            />
-
-                            <div className="flex-1">
-                                <div className="flex justify-between">
-                                    <h3 className="text-lg font-semibold text-gray-900">
-                                        {review.reviewer_name}
-                                    </h3>
-                                    <p className="text-sm text-gray-500">{review.date}</p>
-                                </div>
-
-                                <div className="flex items-center mt-1">
-                                    {Array.from({ length: review.rating }).map((_, i) => (
-                                        <span key={i} className="text-yellow-500 text-lg">★</span>
-                                    ))}
-                                </div>
-
-                                <p className="text-gray-700 mt-2 text-sm leading-relaxed">
-                                    {review.comment}
-                                </p>
-                            </div>
-                        </div>
+            {
+                reviews.length === 0 ? (
+                    <div className='flex justify-center items-center p-4 bg-gray-200 rounded-2xl'>
+                        <h3 className='text-2xl'>No reviews yet.</h3>
                     </div>
-                ))}
-            </div>
+                ) : (
+                    <div className="space-y-6">
+                        {reviews.map((review, index) => (
+                            <div
+                                key={index}
+                                className="bg-white p-5 rounded-2xl shadow-md border border-gray-100"
+                            >
+                                <div className="flex gap-4 items-start">
+                                    <img
+                                        src={review?.reviewerImage}
+                                        alt={review?.reviewerName}
+                                        className="w-14 h-14 rounded-full object-cover shadow-sm"
+                                    />
+
+                                    <div className="flex-1">
+                                        <div className="flex justify-between">
+                                            <h3 className="text-lg font-semibold text-gray-900">
+                                                {review.reviewerName}
+                                            </h3>
+                                            <p className="text-sm text-gray-500">{review.createdAt}</p>
+                                        </div>
+
+                                        <div className="flex items-center mt-1">
+                                            {Array.from({ length: review.rating }).map((_, i) => (
+                                                <span key={i} className="text-yellow-500 text-lg">★</span>
+                                            ))}
+                                        </div>
+
+                                        <p className="text-gray-700 mt-2 text-sm leading-relaxed">
+                                            {review.comment}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )
+            }
 
             {/* Give Review Button */}
             <div className="mt-8 flex justify-between">
@@ -99,7 +96,7 @@ const ReviewDetails = ({ mealId, user }) => {
 
             {/* Modal */}
             {
-                open && <ReviewModal setOpen={setOpen} user={user} mealId={mealId}  />
+                open && <ReviewModal setOpen={setOpen} user={user} mealId={mealId} refetch={refetch} />
             }
         </div>
     );

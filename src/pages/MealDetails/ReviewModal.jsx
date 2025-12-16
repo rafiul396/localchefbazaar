@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useUser from "../../hooks/useUser";
 
-const ReviewModal = ({ setOpen, mealId, user }) => {
+const ReviewModal = ({ setOpen, mealId, user, refetch }) => {
   const axiosSecure = useAxiosSecure();
   const {userData} = useUser();
 
@@ -16,7 +16,6 @@ const ReviewModal = ({ setOpen, mealId, user }) => {
     formState: { errors },
   } = useForm();
 
-  // 🔁 POST review
   const reviewMutation = useMutation({
     mutationFn: async (reviewData) => {
       const res = await axiosSecure.post("/reviews", reviewData);
@@ -27,14 +26,15 @@ const ReviewModal = ({ setOpen, mealId, user }) => {
       reset();
       setOpen(false);
     },
-    onError: () => {
-      toast.error("Failed to submit review ❌");
+    onError: (err) => {
+      toast.error(err?.response?.data?.message || "Failed to submit review ❌");
     },
   });
 
   const onSubmit = (data) => {
     const reviewInfo = {
       foodId: mealId,
+      reviewerEmail: user?.email,
       reviewerName: userData?.userName,
       reviewerImage: userData?.userPhoto,
       rating: Number(data.rating),
@@ -105,10 +105,11 @@ const ReviewModal = ({ setOpen, mealId, user }) => {
 
           <button
             type="submit"
+            onClick={refetch()}
             disabled={reviewMutation.isLoading}
             className="w-full btn btn-primary border-primary shadow-none py-6 rounded-xl text-lg font-semibold text-white"
           >
-            {reviewMutation.isLoading ? "Submitting..." : "Submit Review"}
+            Submit Review
           </button>
         </form>
       </div>
