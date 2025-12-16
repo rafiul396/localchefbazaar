@@ -6,11 +6,13 @@ import { useState } from "react";
 import { useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAuth from "../../hooks/useAuth";
 
 
 
 
 export default function MealDetails() {
+    const { user, loading } = useAuth();
     const [openOrder, setOpenOrder] = useState(false);
     const axiosSecure = useAxiosSecure();
     const { mealId } = useParams();
@@ -20,9 +22,18 @@ export default function MealDetails() {
             const res = await axiosSecure.get(`/meals/${mealId}`);
             return res.data;
         }
-    })   
-    
-    if (isLoading) {
+    })
+
+    const { data: customer, isLoading: customerLoading } = useQuery({
+        queryKey: ['user', user?.email],
+        enabled: !!user?.email,
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/users/${user?.email}`);
+            return res.data;
+        }
+    })
+
+    if (loading || isLoading || customerLoading) {
         return (
             <div className="min-h-screen flex justify-center items-center">
                 <span className="loading loading-spinner loading-lg text-primary"></span>
@@ -33,7 +44,7 @@ export default function MealDetails() {
     return (
         <>
             <div className="min-h-screen bg-gray-50 pb-16">
-                {/* Top Section */}
+
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -47,10 +58,10 @@ export default function MealDetails() {
                     />
                 </motion.div>
 
-                {/* Content */}
+
                 <div className="max-w-4xl mx-auto px-5 mt-8">
 
-                    {/* Title + Price */}
+
                     <div className="flex justify-between items-center">
                         <h1 className="text-3xl md:text-4xl font-bold text-primary berkshire-swash-regular">
                             {data?.foodName}
@@ -60,7 +71,7 @@ export default function MealDetails() {
                         </span>
                     </div>
 
-                    {/* Rating */}
+
                     <div className="flex items-center gap-2 mt-2">
                         <span className="text-yellow-500 text-xl">★</span>
                         <p className="text-gray-700 text-sm font-medium">
@@ -68,7 +79,7 @@ export default function MealDetails() {
                         </p>
                     </div>
 
-                    {/* Chef Info */}
+
                     <div className="mt-6 bg-white p-5 rounded-2xl shadow-md border border-gray-100">
                         <h2 className="text-lg font-semibold mb-2">Prepared by</h2>
                         <p className="text-xl font-bold text-gray-800">{data?.chefName}</p>
@@ -83,7 +94,6 @@ export default function MealDetails() {
                         </p>
                     </div>
 
-                    {/* Ingredients */}
                     <div className="mt-6 bg-white p-5 rounded-2xl shadow-md border border-gray-100">
                         <h2 className="text-lg font-semibold mb-3">Ingredients</h2>
 
@@ -96,7 +106,6 @@ export default function MealDetails() {
                         </ul>
                     </div>
 
-                    {/* Delivery Info */}
                     <div className="mt-6 bg-white p-5 rounded-2xl shadow-md border border-gray-100">
                         <h2 className="text-lg font-semibold mb-3">Delivery Information</h2>
 
@@ -115,13 +124,12 @@ export default function MealDetails() {
                         </p>
                     </div>
 
-                    {/* Order Button */}
                     <div className="mt-10">
                         <motion.button
+                            disabled={customer?.userStatus === "fraud"}
                             onClick={() => setOpenOrder(data)}
                             whileTap={{ scale: 0.95 }}
-                            className="w-full py-5 rounded-xl text-lg font-semibold text-white cursor-pointer"
-                            style={{ backgroundColor: "#628141" }}
+                            className={`w-full py-5 rounded-xl text-lg font-semibold text-white ${customer?.userStatus === "fraud" ? "bg-gray-300 text-gray-600 cursor-no-drop" : "bg-primary text-white cursor-pointer"}`}
                         >
                             Order Now
                         </motion.button>
@@ -133,8 +141,8 @@ export default function MealDetails() {
 
             {/* Order Modal */}
             {openOrder && (<OrderPage meal={openOrder}
-          onClose={() => setOpenOrder(null)}
-          refetch={refetch}  />)}
+                onClose={() => setOpenOrder(null)}
+                refetch={refetch} />)}
         </>
     );
 }

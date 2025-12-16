@@ -4,7 +4,7 @@ import { FiUpload } from "react-icons/fi";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { imgUploader } from "../../../utils";
 
@@ -21,6 +21,15 @@ const CreateMeal = () => {
         clearErrors,
         formState: { errors }
     } = useForm();
+
+    const { data: customer, isLoading } = useQuery({
+        queryKey: ['user', user?.email],
+        enabled: !!user?.email,
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/users/${user?.email}`);
+            return res.data;
+        }
+    })
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -76,7 +85,7 @@ const CreateMeal = () => {
         mutation.mutate(mealsData)
     }
 
-    if (loading) {
+    if (loading || isLoading) {
         return <h1>Meals...</h1>
     }
 
@@ -294,13 +303,13 @@ const CreateMeal = () => {
 
                     <div className="col-span-1 md:col-span-2">
                         <motion.button
+                            disabled={customer.userStatus === "fraud"}
                             whileTap={{ scale: 0.96 }}
-                            disabled={mutation.isLoading}
                             className={`w-full py-4 rounded-xl text-lg font-semibold shadow-md
                             ${mutation.isLoading
                                     ? "bg-gray-400 cursor-not-allowed"
-                                    : "bg-primary hover:bg-primary/90 text-white"
-                                }`}
+                                    : " text-white"
+                                } ${customer.userStatus === "fraud" ? "bg-gray-300 text-gray-600 cursor-no-drop" : "bg-primary text-white cursor-pointer bg-primary hover:bg-primary/90"}`}
                         >
                             {mutation.isLoading ? "Submitting..." : "Submit Meal"}
                         </motion.button>
