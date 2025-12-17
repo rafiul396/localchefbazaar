@@ -40,8 +40,7 @@ const ReviewDetails = ({ mealId, user, mealName, data }) => {
             chefName: data?.chefName,
             price: data?.price,
         };
-        console.log(favoriteInfo);
-
+        
         favoriteMutation.mutate(favoriteInfo);
     };
 
