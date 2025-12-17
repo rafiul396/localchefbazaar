@@ -5,6 +5,7 @@ import 'aos/dist/aos.css';
 
 const FoodCard = ({ meal }) => {
     const { foodName, foodImage, price, rating, _id } = meal;
+
     return (
         <Link to={`/meals/${_id}`} data-aos="zoom-in">
             <div className="card bg-base-100 shadow-sm stalinist-one-regula">

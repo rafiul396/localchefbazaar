@@ -8,10 +8,12 @@ import Reviews from '../../components/Reviews/Reviews';
 import BeAChef from '../../components/Be-A-Chef/BeAChef';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
+import TopRatedMeals from '../../components/Food-Card/TopRatedMeals';
 
 
 const Home = () => {
   const axiosSecure = useAxiosSecure()
+  // 6 top rated meals
   const { data: mealsData, isLoading } = useQuery({
     queryKey: ["homeMeals"],
     queryFn: async () => {
@@ -20,31 +22,23 @@ const Home = () => {
     }
   });
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex justify-center items-center">
-        <span className="loading loading-spinner loading-lg text-primary"></span>
-      </div>
-    );
-  }
-
-  console.log(mealsData);
-
-
+  //all reviews
+  const { data: reviews = [], isLoading: reviewsLoading } = useQuery({
+    queryKey: ["allReviews"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/reviews/all");
+      return res.data;
+    },
+  });
+  
   return (
     <>
       <Hero />
       <Container>
-        <section className='bg-base-100 w-full py-20 overflow-y-hidden'>
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-            {
-              mealsData?.map(meal => <FoodCard key={meal._id} meal={meal} />)
-            }
-          </div>
-        </section>
+        <TopRatedMeals mealsData={mealsData} isLoading={isLoading} />
       </Container>
       <section className='py-20 bg-accent'>
-        <Reviews />
+        <Reviews reviews={reviews} reviewsLoading={reviewsLoading} />
       </section>
       <Container>
         <BeAChef />

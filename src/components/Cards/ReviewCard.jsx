@@ -3,8 +3,9 @@ import { FaUserCircle } from 'react-icons/fa';
 import { motion } from "framer-motion";
 
 const ReviewCard = ({ review }) => {
-    const { text } = review;
-
+    const { comment, reviewerName, reviewerImage, createdAt } = review;
+    // console.log(review);
+    
     return (
         <motion.div
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
@@ -15,13 +16,13 @@ const ReviewCard = ({ review }) => {
                        p-6 w-48 md:w-72 lg:w-80 h-fit text-center shadow-lg"
         >
             {/* Quote Icon */}
-            <div className="text-teal-300 text-4xl mb-4">
+            {/* <div className="text-teal-300 text-4xl mb-4">
                 <FaUserCircle />
-            </div>
+            </div> */}
 
             {/* Review Text */}
-            <p className="text-gray-600 text-sm md:text-base leading-relaxed mb-6">
-                {text}
+            <p className="text-gray-600 text-sm md:text-base leading-relaxed mb-2">
+                {comment}
             </p>
 
             {/* Divider */}
@@ -29,10 +30,10 @@ const ReviewCard = ({ review }) => {
 
             {/* Profile Section */}
             <div className="flex items-center gap-3 justify-center">
-                <img className="w-10 h-10 rounded-full bg-teal-900" src="#" alt="" />
+                <img className="w-10 h-10 rounded-full bg-teal-900" src={reviewerImage} alt={reviewerName} />
                 <div>
-                    <h3 className="font-semibold text-gray-800">userName</h3>
-                    <p className="text-sm text-gray-500">date</p>
+                    <h3 className="font-semibold text-gray-800">{reviewerName}</h3>
+                    <p className="text-sm text-gray-500">{new Date(createdAt).toDateString()}</p>
                 </div>
             </div>
         </motion.div>
