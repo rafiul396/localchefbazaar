@@ -27,7 +27,6 @@ const ReviewDetails = ({ mealId, user, mealName, data }) => {
         },
     });
 
-    console.log(favorites);
     
 
     const favoriteMutation = useMutation({

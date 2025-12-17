@@ -1,17 +1,19 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaUserShield, FaUserTie, FaUserEdit } from "react-icons/fa";
+import useUser from "../../../hooks/useUser";
 
 const AdminProfile = () => {
-    const user = {
-        name: "Md. Arif Hasan",
-        email: "arif@example.com",
-        image: "https://randomuser.me/api/portraits/men/41.jpg",
-        address: "Uttara, Dhaka",
-        role: "admin", // user / chef / admin
-        status: "active", // active / fraud
-        chefId: "C101",
-    };
+    const {userData: user} = useUser();
+    // const user = {
+    //     name: "Md. Arif Hasan",
+    //     email: "arif@example.com",
+    //     image: "https://randomuser.me/api/portraits/men/41.jpg",
+    //     address: "Uttara, Dhaka",
+    //     role: "admin", // user / chef / admin
+    //     status: "active", // active / fraud
+    //     chefId: "C101",
+    // };
 
     return (
         <div>
@@ -24,34 +26,34 @@ const AdminProfile = () => {
                 {/* Header */}
                 <div className="flex items-center gap-6 border-b pb-6">
                     <img
-                        src={user.image}
-                        alt={user.name}
+                        src={user.userPhoto}
+                        alt={user.userName}
                         className="w-24 h-24 rounded-2xl shadow-md object-cover"
                     />
 
                     <div>
                         <h1 className="text-2xl font-semibold text-gray-900">
-                            {user.name}
+                            {user.userName}
                         </h1>
-                        <p className="text-gray-500">{user.email}</p>
+                        <p className="text-gray-500">{user.userEmail}</p>
                     </div>
                 </div>
 
                 {/* Info Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
-                    <InfoCard label="Address" value={user.address} />
-                    <InfoCard label="Role" value={user.role.toUpperCase()} />
+                    <InfoCard label="Address" value={user.userAddress} />
+                    <InfoCard label="Role" value={user.userRole.toUpperCase()} />
 
                     <InfoCard
                         label="Status"
                         value={
                             <span
-                                className={`font-semibold ${user.status === "active"
+                                className={`font-semibold ${user.userStatus === "active"
                                         ? "text-green-600"
                                         : "text-red-600"
                                     }`}
                             >
-                                {user.status}
+                                {user.userStatus}
                             </span>
                         }
                     />
