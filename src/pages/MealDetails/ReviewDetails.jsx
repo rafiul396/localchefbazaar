@@ -1,11 +1,12 @@
 import { FaHeart } from "react-icons/fa";
 import ReviewModal from "../MealDetails/ReviewModal"
 import useAxiosSecure from '../../hooks/useAxiosSecure';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 
-const ReviewDetails = ({ mealId, user, mealName }) => {
+const ReviewDetails = ({ mealId, user, mealName, data }) => {
     const [open, setOpen] = useState(false);
     const axiosSecure = useAxiosSecure();
     const { data: reviews = [], isLoading, refetch } = useQuery({
@@ -16,6 +17,33 @@ const ReviewDetails = ({ mealId, user, mealName }) => {
             return res.data;
         },
     });
+
+    const favoriteMutation = useMutation({
+        mutationFn: async (favData) => {
+            const res = await axiosSecure.post("/favorites", favData);
+            return res.data;
+        },
+        onSuccess: () => {
+            toast.success("Added to favorite ❤️");
+        },
+        onError: (err) => {
+            toast.error(err?.response?.data?.message || "Already in favorite");
+        },
+    });
+
+    const handleFavorite = () => {
+        const favoriteInfo = {
+            userEmail: user?.email,
+            mealId,
+            mealName: data?.foodName,
+            chefId: data?.chefId,
+            chefName: data?.chefName,
+            price: data?.price,
+        };
+        console.log(favoriteInfo);
+
+        favoriteMutation.mutate(favoriteInfo);
+    };
 
 
     if (isLoading) {
@@ -87,6 +115,7 @@ const ReviewDetails = ({ mealId, user, mealName }) => {
                 </button>
                 {/* Add Favorite */}
                 <button
+                    onClick={handleFavorite}
                     className="btn btn-primary border-primary shadow-none py-8 px-8 rounded-xl text-lg font-semibold text-white"
                 >
                     <FaHeart />
