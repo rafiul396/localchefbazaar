@@ -18,6 +18,18 @@ const ReviewDetails = ({ mealId, user, mealName, data }) => {
         },
     });
 
+    const { data: favorites = [], isLoading: favoriteLoading, refetch: favoriteFetch } = useQuery({
+        queryKey: ["favorites"],
+        enabled: !!mealId,
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/favorites/count?mealId=${mealId}`);
+            return res.data;
+        },
+    });
+
+    console.log(favorites);
+    
+
     const favoriteMutation = useMutation({
         mutationFn: async (favData) => {
             const res = await axiosSecure.post("/favorites", favData);
@@ -25,6 +37,7 @@ const ReviewDetails = ({ mealId, user, mealName, data }) => {
         },
         onSuccess: () => {
             toast.success("Added to favorite ❤️");
+            favoriteFetch();
         },
         onError: (err) => {
             toast.error(err?.response?.data?.message || "Already in favorite");
@@ -40,12 +53,12 @@ const ReviewDetails = ({ mealId, user, mealName, data }) => {
             chefName: data?.chefName,
             price: data?.price,
         };
-        
+
         favoriteMutation.mutate(favoriteInfo);
     };
 
 
-    if (isLoading) {
+    if (isLoading || favoriteLoading) {
         return (
             <div className="min-h-screen flex justify-center items-center">
                 <span className="loading loading-spinner loading-lg text-primary"></span>
@@ -59,7 +72,6 @@ const ReviewDetails = ({ mealId, user, mealName, data }) => {
                 Customer Reviews
             </h2>
 
-            {/* Reviews List */}
             {
                 reviews.length === 0 ? (
                     <div className='flex justify-center items-center p-4 bg-gray-200 rounded-2xl'>
@@ -114,11 +126,13 @@ const ReviewDetails = ({ mealId, user, mealName, data }) => {
                 </button>
                 {/* Add Favorite */}
                 <button
-                    onClick={handleFavorite}
+                    onClick={() => {
+                        handleFavorite()
+                    }}
                     className="btn btn-primary border-primary shadow-none py-8 px-8 rounded-xl text-lg font-semibold text-white"
                 >
                     <FaHeart />
-                    Add to Favorite
+                    Add to Favorite ({favorites.count ? favorites.count : "0"})
                 </button>
             </div>
 
