@@ -4,20 +4,20 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 const FoodCard = ({ meal }) => {
-    const { chef_id, chef_name, food_image, food_name, food_price, food_rating } = meal;
+    const { foodName, foodImage, price, rating, _id } = meal;
     return (
-        <Link to="/meals/meal-details" data-aos="zoom-in">
+        <Link to={`/meals/${_id}`} data-aos="zoom-in">
             <div className="card bg-base-100 shadow-sm stalinist-one-regula">
                 <figure>
                     <img
-                        src={food_image}
-                        alt="Shoes"
+                        src={foodImage}
+                        alt={foodName}
                         className='w-full h-72 object-cover' />
                 </figure>
                 <div className='p-4 space-y-4'>
                     <div className='w-full flex justify-between items-center'>
-                        <h2 className="card-title">{food_name}</h2>
-                        <p className='font-semibold'>৳{food_price}</p>
+                        <h2 className="card-title">{foodName}</h2>
+                        <p className='font-semibold'>৳{price}</p>
                     </div>
                     <div className="card-actions justify-end">
                         <button className="btn btn-primary w-full border-primary shadow-none">Order Now</button>

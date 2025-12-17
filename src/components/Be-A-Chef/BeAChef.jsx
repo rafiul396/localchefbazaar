@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { motion } from "framer-motion";
+import { Link } from 'react-router';
 
 const BeAChef = () => {
      const [open, setOpen] = useState(false);
@@ -77,15 +78,15 @@ const BeAChef = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3">
-              <button
-                onClick={() => setOpen(true)}
+              <Link
+                to="/dashboard"
                 className="inline-flex items-center justify-center rounded-full bg-accent-content hover:bg-accent duration-200 text-primary px-6 py-3 text-sm font-semibold shadow-md focus:outline-none cursor-pointer"
               >
                 Apply as a Chef
-              </button>
+              </Link>
 
               <a
-                href="/how-it-works"
+                href="#"
                 className="inline-flex items-center justify-center rounded-full border border-accent-content text-accent-content px-5 py-3 text-sm font-medium shadow-sm"
               >
                 How it works

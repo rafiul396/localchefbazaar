@@ -65,7 +65,7 @@ import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const Meals = () => {
     const axiosSecure = useAxiosSecure()
-    const {data: mealsData, isLoading} = useQuery({
+    const {data: mealsData = [], isLoading} = useQuery({
         queryKey: ["meals"],
         queryFn: async () => {
             const res = await axiosSecure.get("/meals")
