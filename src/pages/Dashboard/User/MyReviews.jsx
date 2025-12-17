@@ -22,8 +22,8 @@ const MyReviews = () => {
   })
 
   const updateReviewMutation = useMutation({
-    mutationFn: async ({ id, data }) => {
-      const res = await axiosSecure.patch(`/reviews/${id}`, data);
+    mutationFn: async ({ id, updated }) => {
+      const res = await axiosSecure.patch(`/reviews/${id}`, updated);
       return res.data;
     },
     onSuccess: () => {
@@ -60,13 +60,10 @@ const MyReviews = () => {
 
   // Update Review Submit
   const handleUpdate = (id, updated) => {
-    updateReviewMutation.mutate(id, updated);
+    updateReviewMutation.mutate({ id, updated });
     console.log(updated);
     setEditModal(false)
   };
-
-  console.log(editModal);
-  
 
   return (
     <div>
