@@ -54,6 +54,7 @@ const Register = () => {
                     userName: name,
                     userEmail: email,
                     userPhoto: profileURL,
+                    userAddress: address
                 }
 
                 //Post user data in mongodb database
