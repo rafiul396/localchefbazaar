@@ -22,6 +22,8 @@ import OrderRequests from "../pages/Dashboard/Chef/OrderRequests";
 import FindProfile from "../pages/Dashboard/FindProfile";
 import AuthProvider from "../context/AuthProvider";
 import PrivateRoute from "./PrivateRoute";
+import PaymentSuc from "../payment/PaymentSuc";
+import PaymentCan from "../payment/PaymentCan";
 
 export const router = createBrowserRouter([
   {
@@ -98,6 +100,14 @@ export const router = createBrowserRouter([
       {
         path: "favorite-meals",
         element: <FavoriteMeal />
+      },
+      {
+        path: "payment-success",
+        element: <PaymentSuc />
+      },
+      {
+        path: "payment-cancel",
+        element: <PaymentCan />
       }
     ]
   }

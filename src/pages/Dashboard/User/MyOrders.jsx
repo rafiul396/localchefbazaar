@@ -14,9 +14,7 @@ const MyOrders = () => {
             const res = await axiosSecure.get(`/orders?email=${user?.email}`)
             return res.data
         }
-    })
-
-
+    });
 
     const getStatusColor = (status) => {
         switch (status) {
@@ -39,6 +37,25 @@ const MyOrders = () => {
         );
     }
 
+    const handlePayment = async (order) => {
+        const paymentInfo = {
+            mealId: order._id,
+            mealName: order.mealName,
+            quantity: Number(order.quantity),
+            chefName: order.chefName,
+            chefId: order.chefId,
+            price: order.price,
+            customer: {
+                name: user?.displayName,
+                email: user?.email,
+                image: user?.photoURL
+            }
+        }
+        const {data} = await axiosSecure.post('/create-checkout-session', paymentInfo)
+        window.location.assign(data.url)
+    }
+
+
     return (
         <div>
             <motion.h1
@@ -53,23 +70,23 @@ const MyOrders = () => {
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {orders.map((order) => (
                     <motion.div
-                        key={order._id}
+                        key={order?._id}
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ duration: 0.3 }}
                         className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition"
                     >
                         <h2 className="text-xl font-semibold text-gray-900 mb-2">
-                            {order.mealName}
+                            {order?.mealName}
                         </h2>
 
                         <div className="flex items-center gap-2 mb-3">
                             <span
                                 className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(
-                                    order.orderStatus
+                                    order?.orderStatus
                                 )}`}
                             >
-                                {order.orderStatus}
+                                {order?.orderStatus}
                             </span>
 
 
@@ -77,30 +94,30 @@ const MyOrders = () => {
 
                         <div className="space-y-2 text-sm text-gray-700">
                             <p>
-                                <strong>Price:</strong> ৳{order.price}
+                                <strong>Price:</strong> ৳{order?.price}
                             </p>
                             <p>
-                                <strong>Quantity:</strong> {order.quantity}
+                                <strong>Quantity:</strong> {order?.quantity}
                             </p>
                             <p className="flex items-center gap-2">
                                 <FaClock className="text-primary" />{" "}
                                 <span>
-                                    <strong>Delivery Time:</strong> {order.orderTime}
+                                    <strong>Delivery Time:</strong> {order?.orderTime}
                                 </span>
                             </p>
                             <p>
-                                <strong>Chef Name:</strong> {order.chefName}
+                                <strong>Chef Name:</strong> {order?.chefName}
                             </p>
                             <p>
-                                <strong>Chef ID:</strong> {order.chefId}
+                                <strong>Chef ID:</strong> {order?.chefId}
                             </p>
                         </div>
 
                         {order.orderStatus === "accepted" &&
                             order.paymentStatus === "pending" && (
                                 <button
+                                    onClick={() => handlePayment(order)}
                                     className="w-full bg-primary hover:bg-green-700 text-white py-3 rounded-xl mt-6 flex items-center justify-center gap-2 font-semibold transition cursor-pointer"
-                                    onClick={() => console.log("Redirect to Stripe")}
                                 >
                                     <FaMoneyBill /> Pay Now
                                 </button>
