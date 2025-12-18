@@ -58,8 +58,8 @@ const ManageRequests = () => {
                 <div className="bg-white shadow-xl rounded-2xl border border-gray-100 overflow-hidden">
 
                     {/* Desktop Header */}
-                    <div className="hidden md:grid grid-cols-6 bg-gray-100 py-4 px-6 text-sm font-semibold text-gray-700 uppercase tracking-wider">
-                        <p>User</p>
+                    <div className="hidden md:grid grid-cols-6 bg-gray-100 py-4 px-6 text-sm font-semibold text-gray-700 uppercase tracking-wider text-center">
+                        <p>Name</p>
                         <p>Email</p>
                         <p>Type</p>
                         <p>Status</p>
@@ -80,17 +80,17 @@ const ManageRequests = () => {
                                     >
                                         {/* User */}
                                         <div className="md:hidden">
-                                            <p className="text-xs font-semibold text-gray-500">User</p>
+                                            <p className="text-xs font-semibold text-gray-500">Name</p>
                                             <p className="font-medium text-gray-900 mt-1">{req.userName}</p>
                                         </div>
-                                        <p className="hidden md:block font-medium text-gray-900">{req.userName}</p>
+                                        <p className="hidden md:block font-medium text-gray-900 text-center">{req.userName}</p>
 
                                         {/* Email */}
                                         <div className="md:hidden">
                                             <p className="text-xs font-semibold text-gray-500">Email</p>
                                             <p className="text-gray-600 break-all text-sm mt-1">{req.userEmail}</p>
                                         </div>
-                                        <p className="hidden md:block text-gray-600 break-all">{req.userEmail}</p>
+                                        <p className="hidden md:block text-gray-600 break-all text-center">{req.userEmail}</p>
 
                                         {/* Type */}
                                         <div className="md:hidden">
@@ -99,7 +99,7 @@ const ManageRequests = () => {
                                                 {req.requestType}
                                             </p>
                                         </div>
-                                        <p className={`hidden md:block capitalize font-bold ${req.requestType === "chef" ? "text-green-600" : "text-indigo-600"}`}>
+                                        <p className={`hidden md:block capitalize font-bold ${req.requestType === "chef" ? "text-green-600" : "text-indigo-600"} text-center`}>
                                             {req.requestType}
                                         </p>
 
@@ -114,16 +114,16 @@ const ManageRequests = () => {
                                         </div>
                                         <p className={`hidden md:block capitalize font-bold ${req.requestStatus === "pending" ? "text-yellow-600" :
                                             req.requestStatus === "approved" ? "text-green-600" : "text-red-600"
-                                            }`}>
+                                            } text-center`}>
                                             {req.requestStatus}
                                         </p>
 
                                         {/* Time */}
                                         <div className="md:hidden">
                                             <p className="text-xs font-semibold text-gray-500">Time</p>
-                                            <p className="text-gray-500 text-sm mt-1">{req.requestTime}</p>
+                                            <p className="text-gray-500 text-sm mt-1">{new Date(req.requestTime).toDateString()}</p>
                                         </div>
-                                        <p className="hidden md:block text-gray-500">{req.requestTime}</p>
+                                        <p className="hidden md:block text-gray-500 text-center">{new Date(req.requestTime).toDateString()}</p>
 
                                         {/* Actions */}
                                         <div className="flex gap-3 md:justify-center mt-4 md:mt-0">
