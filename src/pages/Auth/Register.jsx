@@ -22,13 +22,7 @@ const Register = () => {
     const location = useLocation()
     const from = location.state || '/'
 
-    const { createUser, updateUserProfile, signInWithGoogle, setSubmissionLoader } = useAuth()
-
-
-    const handleImage = (e) => {
-        const file = e.target.files[0];
-        if (file) setPreview(URL.createObjectURL(file));
-    };
+    const { createUser, updateUserProfile, setSubmissionLoader } = useAuth()
 
     const handleRegister = async (data) => {
         setSubmissionLoader(true)

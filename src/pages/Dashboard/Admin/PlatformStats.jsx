@@ -11,24 +11,62 @@ import {
     Legend,
     Cell
 } from "recharts";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const PlatformStats = () => {
-    // Example data (you will replace with API data)
-    const totalPayments = 128400;
-    const totalUsers = 4520;
-    const ordersPending = 87;
-    const ordersDelivered = 1294;
+    const axiosSecure = useAxiosSecure();
+
+    const { data: payment, isLoading } = useQuery({
+        queryKey: ["payments"],
+        queryFn: async () => {
+            const res = await axiosSecure.get("/payments");
+            return res.data; // { payments, totalAmount }
+        },
+    });
+
+    // all users data
+    const { data: users, isLoading: userLoading, refetch } = useQuery({
+        queryKey: ['users'],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/users`);
+            return res.data;
+        }
+    })
+
+    //get total pending or delivered order
+    const { data: orderCounts, isLoading: pdOrders } = useQuery({
+        queryKey: ["orderStatusCount"],
+        queryFn: async () => {
+            const res = await axiosSecure.get("/orders/status-count");
+            return res.data;
+        }
+    });
+
+
+    if (isLoading || userLoading || pdOrders) {
+        return <h1>Payment Statistics...</h1>
+    }
+    
+    const { totalAmount } = payment
+    const { pending, delivered, accepted, cancelled } = orderCounts
+
+    const totalPayments = totalAmount;
+    const totalUsers = users.length;
+    const ordersPending = orderCounts.pending;
+    const ordersDelivered = orderCounts.delivered;
+    const totalOrders = pending + delivered + accepted + cancelled;
 
     const paymentData = [
-        { name: "Pending", amount: ordersPending },
-        { name: "Delivered", amount: ordersDelivered },
+        { name: "Payments", amount: totalAmount },
+        { name: "Orders", amount: totalOrders },
     ];
 
-    const pieData = [
-        { name: "Total Users", value: totalUsers },
-        { name: "Orders Delivered", value: ordersDelivered },
-        { name: "Pending Orders", value: ordersPending },
-    ];
+    // const pieData = [
+    //     { name: "Total Users", value: totalUsers },
+    //     { name: "Orders Delivered", value: ordersDelivered },
+    //     { name: "Pending Orders", value: ordersPending },
+    // ];
 
     const COLORS = ["#628141", "#ff8400", "#e6ccb2"];
 
@@ -58,7 +96,8 @@ const PlatformStats = () => {
                         <p className="text-3xl font-bold text-green-600 mt-2">{ordersDelivered}</p>
                     </div>
                 </div>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                 {/* className="grid grid-cols-1 lg:grid-cols-2 gap-8" */}
+                <div>
 
                     {/* Bar Chart */}
                     <div className="bg-white rounded-2xl shadow-lg p-6 border border-accent-content">
@@ -76,7 +115,7 @@ const PlatformStats = () => {
                     </div>
 
                     {/* Pie Chart */}
-                    <div className="bg-white rounded-2xl shadow-lg p-6 border border-accent-content">
+                    {/* <div className="bg-white rounded-2xl shadow-lg p-6 border border-accent-content">
                         <h2 className="text-xl font-semibold mb-6">Platform Composition</h2>
                         <div className="w-full h-80">
                             <ResponsiveContainer width="100%" height="100%">
@@ -98,7 +137,7 @@ const PlatformStats = () => {
                                 </PieChart>
                             </ResponsiveContainer>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
 
                 {/* মোবাইলে লাস্ট চার্ট যেন কাটা না যায় না */}
