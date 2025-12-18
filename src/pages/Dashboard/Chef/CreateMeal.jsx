@@ -282,7 +282,7 @@ const CreateMeal = () => {
                         <input
                             type="text"
                             readOnly
-                            value="chef_123456"
+                            value={customer?.chefId}
                             className="w-full px-4 py-3 rounded-xl bg-gray-100 border border-gray-300 outline-none"
                             {...register("chefId")}
                         />

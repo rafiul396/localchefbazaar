@@ -45,7 +45,7 @@ const OrderPage = ({ onClose, meal }) => {
         const orderInfo = {
             ...data,
             foodId: meal._id,
-            paymentStatus: "Pending",
+            paymentStatus: "pending",
             chefName: meal.chefName
         };
 

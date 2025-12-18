@@ -1,62 +1,62 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaCheck, FaTimes, FaTruck } from "react-icons/fa";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useUser from "../../../hooks/useUser";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 const OrderRequests = () => {
+  const axiosSecure = useAxiosSecure()
+  const { userData, userLoading } = useUser()
+  const { data: orders = [], isLoading, refetch } = useQuery({
+    queryKey: ["chefOrders", userData?.chefId],
+    enabled: !!userData?.chefId,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/orders/chef?chefId=${userData?.chefId}`);
+      return res.data;
+    }
+  });
 
-  // STATIC ORDER DATA (you can replace later with API)
-  const userChefId = "chef-101"; // logged-in chef ID
+  const queryClient = useQueryClient();
 
-  const orders = [
-    {
-      _id: "1",
-      foodName: "Grilled Chicken Salad",
-      price: 280,
-      quantity: 2,
-      orderStatus: "pending",
-      userEmail: "john@example.com",
-      userAddress: "Uttara, Dhaka",
-      orderTime: "2025-02-12 10:30 AM",
-      paymentStatus: "pending",
-      chefId: "chef-101",
+  const statusMutation = useMutation({
+    mutationFn: async ({ id, status }) => {
+      const res = await axiosSecure.patch(`/orders/${id}/status`, { status });
+      return res.data;
     },
-    {
-      _id: "2",
-      foodName: "Beef Tehari",
-      price: 350,
-      quantity: 1,
-      orderStatus: "accepted",
-      userEmail: "sara@example.com",
-      userAddress: "Banani, Dhaka",
-      orderTime: "2025-02-11 09:00 PM",
-      paymentStatus: "pending",
-      chefId: "chef-101",
+    onSuccess: () => {
+      toast.success("Order status updated ✅");
+      queryClient.invalidateQueries(["chefOrders"]);
     },
-    {
-      _id: "3",
-      foodName: "Pasta Alfredo",
-      price: 300,
-      quantity: 1,
-      orderStatus: "delivered",
-      userEmail: "michael@example.com",
-      userAddress: "Mirpur, Dhaka",
-      orderTime: "2025-02-10 07:20 PM",
-      paymentStatus: "paid",
-      chefId: "chef-101",
-    },
-    {
-      _id: "4",
-      foodName: "Vegetable Khichuri",
-      price: 180,
-      quantity: 3,
-      orderStatus: "cancelled",
-      userEmail: "rahim@example.com",
-      userAddress: "Dhanmondi, Dhaka",
-      orderTime: "2025-02-09 12:10 PM",
-      paymentStatus: "pending",
-      chefId: "chef-101",
-    },
-  ];
+    onError: () => {
+      toast.error("Failed to update order ❌");
+    }
+  });
+
+  const handleCancel = (id) => {
+    statusMutation.mutate({ id, status: "cancelled" });
+    refetch()
+  };
+
+  const handleAccept = (id) => {
+    statusMutation.mutate({ id, status: "accepted" });
+    refetch()
+  };
+
+  const handleDeliver = (id) => {
+    statusMutation.mutate({ id, status: "delivered" });
+    refetch()
+  };
+
+
+  if (userLoading || isLoading) {
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <span className="loading loading-spinner loading-lg text-primary"></span>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-accent to-gray-100 px-4 md:px-6 py-12 inter">
@@ -73,7 +73,6 @@ const OrderRequests = () => {
       {/* Order Cards */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {orders
-          .filter((order) => order.chefId === userChefId)
           .map((order) => {
             const isCancelled = order.orderStatus === "cancelled";
             const isAccepted = order.orderStatus === "accepted";
@@ -91,7 +90,7 @@ const OrderRequests = () => {
                 {/* Food Name + Price */}
                 <div className="flex justify-between">
                   <h2 className="text-xl font-semibold text-gray-900">
-                    {order.foodName}
+                    {order.mealName}
                   </h2>
                   <span className="text-lg font-bold text-primary">
                     ৳{order.price}
@@ -108,15 +107,14 @@ const OrderRequests = () => {
                 <p className="text-sm">
                   Status:{" "}
                   <span
-                    className={`font-semibold ${
-                      isCancelled
-                        ? "text-red-600"
-                        : isDelivered
+                    className={`font-semibold ${isCancelled
+                      ? "text-red-600"
+                      : isDelivered
                         ? "text-green-700"
                         : isAccepted
-                        ? "text-indigo-600"
-                        : "text-yellow-600"
-                    }`}
+                          ? "text-indigo-600"
+                          : "text-yellow-600"
+                      }`}
                   >
                     {order.orderStatus}
                   </span>
@@ -126,11 +124,10 @@ const OrderRequests = () => {
                 <p className="text-sm">
                   Payment:{" "}
                   <span
-                    className={`font-semibold ${
-                      order.paymentStatus === "paid"
-                        ? "text-green-700"
-                        : "text-red-500"
-                    }`}
+                    className={`font-semibold ${order.paymentStatus === "paid"
+                      ? "text-green-700"
+                      : "text-red-500"
+                      }`}
                   >
                     {order.paymentStatus}
                   </span>
@@ -157,12 +154,12 @@ const OrderRequests = () => {
                   {/* Cancel */}
                   <button
                     disabled={!isPending}
+                    onClick={() => handleCancel(order._id)}
                     className={`
                       flex items-center gap-2 w-full justify-center px-4 py-2 rounded-lg text-sm font-medium shadow-md transition
-                      ${
-                        !isPending
-                          ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                          : "bg-red-500 hover:bg-red-600 text-white"
+                      ${!isPending
+                        ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                        : "bg-red-500 hover:bg-red-600 text-white cursor-pointer"
                       }`}
                   >
                     <FaTimes /> Cancel
@@ -171,12 +168,12 @@ const OrderRequests = () => {
                   {/* Accept */}
                   <button
                     disabled={!isPending}
+                    onClick={() => handleAccept(order._id)}
                     className={`
                       flex items-center gap-2 w-full justify-center px-4 py-2 rounded-lg text-sm font-medium shadow-md transition
-                      ${
-                        !isPending
-                          ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                          : "bg-green-600 hover:bg-green-700 text-white"
+                      ${!isPending
+                        ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                        : "bg-green-600 hover:bg-green-700 text-white cursor-pointer"
                       }`}
                   >
                     <FaCheck /> Accept
@@ -185,12 +182,12 @@ const OrderRequests = () => {
                   {/* Deliver */}
                   <button
                     disabled={!isAccepted}
+                    onClick={() => handleDeliver(order._id)}
                     className={`
                       flex items-center gap-2 w-full justify-center px-4 py-2 rounded-lg text-sm font-medium shadow-md transition
-                      ${
-                        !isAccepted
-                          ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                          : "bg-primary hover:bg-[#4f6a32] text-white"
+                      ${!isAccepted
+                        ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                        : "bg-primary hover:bg-[#4f6a32] text-white cursor-pointer"
                       }`}
                   >
                     <FaTruck /> Deliver

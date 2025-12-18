@@ -6,10 +6,9 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const MyOrders = () => {
-    // SAMPLE STATIC DATA — replace with MongoDB data
     const axiosSecure = useAxiosSecure()
-    const {user, loading} = useAuth()
-    const {data: orders, isLoading} = useQuery({
+    const { user, loading } = useAuth()
+    const { data: orders, isLoading } = useQuery({
         queryKey: ["orders", user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/orders?email=${user?.email}`)
@@ -17,13 +16,7 @@ const MyOrders = () => {
         }
     })
 
-    if (loading || isLoading) {
-        return (
-            <div className="min-h-screen flex justify-center items-center">
-                <span className="loading loading-spinner loading-lg text-primary"></span>
-            </div>
-        );
-    }
+
 
     const getStatusColor = (status) => {
         switch (status) {
@@ -37,6 +30,14 @@ const MyOrders = () => {
                 return "";
         }
     };
+
+    if (loading || isLoading) {
+        return (
+            <div className="min-h-screen flex justify-center items-center">
+                <span className="loading loading-spinner loading-lg text-primary"></span>
+            </div>
+        );
+    }
 
     return (
         <div>
@@ -95,10 +96,10 @@ const MyOrders = () => {
                             </p>
                         </div>
 
-                        {order.orderStatus !== "pending" &&
+                        {order.orderStatus === "accepted" &&
                             order.paymentStatus === "pending" && (
                                 <button
-                                    className="w-full bg-primary hover:bg-green-700 text-white py-3 rounded-xl mt-6 flex items-center justify-center gap-2 font-semibold transition"
+                                    className="w-full bg-primary hover:bg-green-700 text-white py-3 rounded-xl mt-6 flex items-center justify-center gap-2 font-semibold transition cursor-pointer"
                                     onClick={() => console.log("Redirect to Stripe")}
                                 >
                                     <FaMoneyBill /> Pay Now
@@ -114,6 +115,11 @@ const MyOrders = () => {
                         {order.orderStatus === "pending" && (
                             <div className="mt-6 flex items-center justify-center gap-2 text-green-600 font-semibold">
                                 <FaCheckCircle /> Payment unlocks after order acceptance
+                            </div>
+                        )}
+                        {order.orderStatus === "cancelled" && (
+                            <div className="mt-6 flex items-center justify-center gap-2 text-green-600 font-semibold">
+                                <FaCheckCircle /> This order was cancelled by the chef
                             </div>
                         )}
                     </motion.div>
