@@ -62,15 +62,16 @@ const PlatformStats = () => {
     const totalOrders = pending + delivered + accepted + cancelled;
 
     const paymentData = [
-        { name: "Payments", amount: totalAmount },
-        { name: "Orders", amount: totalOrders },
+        { name: "Payments", total: totalAmount },
+        { name: "Orders", total: totalOrders },
     ];
 
-    // const pieData = [
-    //     { name: "Total Users", value: totalUsers },
-    //     { name: "Orders Delivered", value: ordersDelivered },
-    //     { name: "Pending Orders", value: ordersPending },
-    // ];
+    const pieData = [
+        { name: "Total Pending Orders", value: pending },
+        { name: "Total Accepted Orders", value: accepted },
+        { name: "Total Cancelled", value: cancelled },
+        { name: "Total Delivered orders", value: delivered },
+    ];
 
     const COLORS = ["#628141", "#ff8400", "#e6ccb2"];
 
@@ -102,7 +103,7 @@ const PlatformStats = () => {
                     </div>
                 </div>
                  {/* className="grid grid-cols-1 lg:grid-cols-2 gap-8" */}
-                <div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
                     {/* Bar Chart */}
                     <div className="bg-white rounded-2xl shadow-lg p-6 border border-accent-content">
@@ -113,14 +114,14 @@ const PlatformStats = () => {
                                     <XAxis dataKey="name" />
                                     <YAxis />
                                     <Tooltip />
-                                    <Bar dataKey="amount" fill="#628141" radius={[8, 8, 0, 0, 0]} />
+                                    <Bar dataKey="total" fill="#628141" radius={[8, 8, 0, 0, 0]} />
                                 </BarChart>
                             </ResponsiveContainer>
                         </div>
                     </div>
 
                     {/* Pie Chart */}
-                    {/* <div className="bg-white rounded-2xl shadow-lg p-6 border border-accent-content">
+                    <div className="bg-white rounded-2xl shadow-lg p-6 border border-accent-content">
                         <h2 className="text-xl font-semibold mb-6">Platform Composition</h2>
                         <div className="w-full h-80">
                             <ResponsiveContainer width="100%" height="100%">
@@ -132,7 +133,7 @@ const PlatformStats = () => {
                                         cy="50%"
                                         outerRadius={110}
                                         dataKey="value"
-                                        label={({ name, value }) => `${name}: ${value} BDT`}
+                                        label={({ name, value }) => `${name}: ${value}`}
                                     >
                                         {pieData.map((e, i) => (
                                             <Cell key={i} fill={["#628141", "#f59e0b", "#ef4444", "#3b82f6"][i]} />
@@ -142,7 +143,7 @@ const PlatformStats = () => {
                                 </PieChart>
                             </ResponsiveContainer>
                         </div>
-                    </div> */}
+                    </div>
                 </div>
 
                 {/* মোবাইলে লাস্ট চার্ট যেন কাটা না যায় না */}
