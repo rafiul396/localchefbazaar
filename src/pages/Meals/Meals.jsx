@@ -83,6 +83,7 @@ const Meals = () => {
 
     return (
         <section>
+            <title>Meals | GhorerChef</title>
             <Container>
                 <section className='bg-base-100 w-full py-20 overflow-y-hidden'>
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>

@@ -51,8 +51,6 @@ const OrderPage = ({ onClose, meal }) => {
 
         const totalPrice = Number(data.foodPrice * data.quantity)
 
-        console.log(orderInfo);
-
         Swal.fire({
             title: `Your total price is ${totalPrice}`,
             text: `Do you want to confirm the order?`,

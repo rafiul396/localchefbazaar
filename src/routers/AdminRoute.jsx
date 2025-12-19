@@ -13,9 +13,7 @@ const AdminRoute = ({ children }) => {
             </div>
         );
     }
-
-    console.log(userData);
-    
+   
 
     if (userData.userRole !== 'admin') {
         return (

@@ -43,6 +43,7 @@ export default function MealDetails() {
 
     return (
         <>
+        <title>Meal's Details | GhorerChef</title>
             <div className="min-h-screen bg-gray-50 pb-16">
 
                 <motion.div

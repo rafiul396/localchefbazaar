@@ -27,11 +27,13 @@ import PaymentCan from "../payment/PaymentCan";
 import AdminRoute from "./AdminRoute";
 import ChefRoute from "./ChefRoute";
 import UserRoute from "./UserRoute";
+import Errorpage from "../components/ErrorPage/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
+    errorElement: <Errorpage />,
     children: [
       {
         index: true,
@@ -55,6 +57,10 @@ export const router = createBrowserRouter([
         path: "/register",
         element: <Register />
       },
+      {
+        path: "/*",
+        element: <Errorpage />
+      }
     ]
   },
   {

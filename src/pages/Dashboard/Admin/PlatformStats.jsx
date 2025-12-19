@@ -72,6 +72,7 @@ const PlatformStats = () => {
 
     return (
         <div>
+            <title>Platform Statistics | GhorerChef</title>
             <div className="px-4 md:px-8 py-12 pb-32">
 
                 {/* Title */}

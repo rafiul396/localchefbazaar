@@ -42,6 +42,7 @@ const ManageRequests = () => {
 
     return (
         <div>
+            <title>Manage Request | GhorerChef</title>
             <div className="w-full px-4 md:px-6 pt-12 pb-24 md:pb-12 mx-auto">
 
                 {/* Title */}

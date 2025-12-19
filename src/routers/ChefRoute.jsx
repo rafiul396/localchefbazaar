@@ -11,10 +11,7 @@ const ChefRoute = ({ children }) => {
                 <span className="loading loading-spinner loading-lg text-primary"></span>
             </div>
         );
-    }
-
-    console.log(userData);
-    
+    }    
 
     if (userData.userRole !== 'chef') {
         return (

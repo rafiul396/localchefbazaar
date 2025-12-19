@@ -38,6 +38,7 @@ const DashboardLayout = () => {
     if (admin === userRole) {
         return (
             <>
+            <title>Admin | GhorerChef</title>
                 <AdminDashboard />
                 <Toaster />
             </>
@@ -46,6 +47,7 @@ const DashboardLayout = () => {
     if (chef === userRole) {
         return (
             <>
+            <title>Chef | GhorerChef</title>
                 <ChefDashboard />
                 <Toaster />
             </>
@@ -54,6 +56,7 @@ const DashboardLayout = () => {
     if (normal === userRole) {
         return (
             <>
+            <title>User | GhorerChef</title>
                 <UserDashboard />
                 <Toaster />
             </>

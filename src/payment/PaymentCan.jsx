@@ -2,6 +2,8 @@ import { FaTimesCircle } from "react-icons/fa";
 import { Link } from "react-router";
 const PaymentCan = () => {
   return (
+    <>
+    <title>Payment Cancelled | GhorerChef</title>
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br">
       <div className="bg-white max-w-md w-full rounded-3xl shadow-2xl p-8 text-center">
         
@@ -33,6 +35,7 @@ const PaymentCan = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

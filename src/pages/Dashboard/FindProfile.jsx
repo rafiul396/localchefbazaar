@@ -35,17 +35,28 @@ const FindProfile = () => {
 
     if (userRole === admin) {
         return (
-            <AdminProfile />
+            <>
+            <title>My Profile | GhorerChef</title>
+                <AdminProfile />
+            </>
         )
     }
     if (userRole === chef) {
         return (
-            <ChefProfile />
+            <>
+            <title>My Profile | GhorerChef</title>
+                <ChefProfile />
+            </>
+            
         )
     }
     if (userRole === normal) {
         return (
-            <UserProfile />
+            <>
+            <title>My Profile | GhorerChef</title>
+                <UserProfile />
+            </>
+            
         )
     }
 };

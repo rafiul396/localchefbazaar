@@ -61,12 +61,12 @@ const MyReviews = () => {
   // Update Review Submit
   const handleUpdate = (id, updated) => {
     updateReviewMutation.mutate({ id, updated });
-    console.log(updated);
     setEditModal(false)
   };
 
   return (
     <div>
+      <title>My Reviews | GhorerChef</title>
       <div className="mb-4">
         <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
           My Reviews

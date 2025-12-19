@@ -13,9 +13,6 @@ const UserRoute = ({ children }) => {
         );
     }
 
-    console.log(userData);
-    
-
     if (userData.userRole !== 'user') {
         return (
             <Navigate

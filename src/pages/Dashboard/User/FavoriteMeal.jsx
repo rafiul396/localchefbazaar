@@ -39,7 +39,9 @@ const FavoriteMeal = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-accent to-gray-100 px-4 md:px-8 py-12 inter">
+    <>
+    <title>Favorite Meals | GhorerChef</title>
+      <div className="min-h-screen bg-gradient-to-b from-accent to-gray-100 px-4 md:px-8 py-12 inter">
       <motion.h1
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -112,6 +114,7 @@ const FavoriteMeal = () => {
         </div>
       </div>
     </div>
+    </>
   );
 }
 export default FavoriteMeal;

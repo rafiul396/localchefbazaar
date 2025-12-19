@@ -33,6 +33,7 @@ const Home = () => {
   
   return (
     <>
+    <title>Home | GhorerChef</title>
       <Hero />
       <Container>
         <TopRatedMeals mealsData={mealsData} isLoading={isLoading} />

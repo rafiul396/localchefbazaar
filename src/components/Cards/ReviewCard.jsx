@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 
 const ReviewCard = ({ review }) => {
     const { comment, reviewerName, reviewerImage, createdAt } = review;
-    // console.log(review);
     
     return (
         <motion.div

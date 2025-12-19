@@ -17,7 +17,7 @@ const Root = () => {
         });
     }, []);
 
-    if(submissionLoader){
+    if (submissionLoader) {
         return <h1>Sub...</h1>
     }
 

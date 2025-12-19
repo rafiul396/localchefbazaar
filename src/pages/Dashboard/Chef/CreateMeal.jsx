@@ -91,6 +91,7 @@ const CreateMeal = () => {
 
     return (
         <div>
+            <title>Create Meal | GhorerChef</title>
             <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}

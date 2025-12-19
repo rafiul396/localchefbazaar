@@ -16,7 +16,10 @@ const PaymentSuc = () => {
     }, [sessionId, axiosSecure])
 
     return (
-        <div className="min-h-screen flex items-center justify-center">
+        <>
+        <title>Payment Success | GhorerChef</title>
+
+            <div className="min-h-screen flex items-center justify-center">
             <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -57,6 +60,7 @@ const PaymentSuc = () => {
                 </div>
             </motion.div>
         </div>
+        </>
     );
 };
 

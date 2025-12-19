@@ -59,145 +59,148 @@ const OrderRequests = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-accent to-gray-100 px-4 md:px-6 py-12 inter">
-      {/* Page Title */}
-      <motion.h1
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="text-3xl md:text-4xl font-bold text-gray-900 mb-10"
-      >
-        Order Requests
-      </motion.h1>
+    <>
+      <title>Order Requests | GhorerChef</title>
+      <div className="min-h-screen bg-gradient-to-b from-accent to-gray-100 px-4 md:px-6 py-12 inter">
+        {/* Page Title */}
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="text-3xl md:text-4xl font-bold text-gray-900 mb-10"
+        >
+          Order Requests
+        </motion.h1>
 
-      {/* Order Cards */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {orders
-          .map((order) => {
-            const isCancelled = order.orderStatus === "cancelled";
-            const isAccepted = order.orderStatus === "accepted";
-            const isDelivered = order.orderStatus === "delivered";
-            const isPending = order.orderStatus === "pending";
+        {/* Order Cards */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {orders
+            .map((order) => {
+              const isCancelled = order.orderStatus === "cancelled";
+              const isAccepted = order.orderStatus === "accepted";
+              const isDelivered = order.orderStatus === "delivered";
+              const isPending = order.orderStatus === "pending";
 
-            return (
-              <motion.div
-                key={order._id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-                className="bg-white border border-gray-200 shadow-lg rounded-2xl p-6 space-y-4 hover:shadow-xl transition-all"
-              >
-                {/* Food Name + Price */}
-                <div className="flex justify-between">
-                  <h2 className="text-xl font-semibold text-gray-900">
-                    {order.mealName}
-                  </h2>
-                  <span className="text-lg font-bold text-primary">
-                    ৳{order.price}
-                  </span>
-                </div>
+              return (
+                <motion.div
+                  key={order._id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4 }}
+                  className="bg-white border border-gray-200 shadow-lg rounded-2xl p-6 space-y-4 hover:shadow-xl transition-all"
+                >
+                  {/* Food Name + Price */}
+                  <div className="flex justify-between">
+                    <h2 className="text-xl font-semibold text-gray-900">
+                      {order.mealName}
+                    </h2>
+                    <span className="text-lg font-bold text-primary">
+                      ৳{order.price}
+                    </span>
+                  </div>
 
-                {/* Quantity */}
-                <p className="text-sm text-gray-700">
-                  Quantity:{" "}
-                  <span className="font-semibold">{order.quantity}</span>
-                </p>
+                  {/* Quantity */}
+                  <p className="text-sm text-gray-700">
+                    Quantity:{" "}
+                    <span className="font-semibold">{order.quantity}</span>
+                  </p>
 
-                {/* Order Status */}
-                <p className="text-sm">
-                  Status:{" "}
-                  <span
-                    className={`font-semibold ${isCancelled
-                      ? "text-red-600"
-                      : isDelivered
+                  {/* Order Status */}
+                  <p className="text-sm">
+                    Status:{" "}
+                    <span
+                      className={`font-semibold ${isCancelled
+                        ? "text-red-600"
+                        : isDelivered
+                          ? "text-green-700"
+                          : isAccepted
+                            ? "text-indigo-600"
+                            : "text-yellow-600"
+                        }`}
+                    >
+                      {order.orderStatus}
+                    </span>
+                  </p>
+
+                  {/* Payment */}
+                  <p className="text-sm">
+                    Payment:{" "}
+                    <span
+                      className={`font-semibold ${order.paymentStatus === "paid"
                         ? "text-green-700"
-                        : isAccepted
-                          ? "text-indigo-600"
-                          : "text-yellow-600"
-                      }`}
-                  >
-                    {order.orderStatus}
-                  </span>
-                </p>
+                        : "text-red-500"
+                        }`}
+                    >
+                      {order.paymentStatus}
+                    </span>
+                  </p>
 
-                {/* Payment */}
-                <p className="text-sm">
-                  Payment:{" "}
-                  <span
-                    className={`font-semibold ${order.paymentStatus === "paid"
-                      ? "text-green-700"
-                      : "text-red-500"
-                      }`}
-                  >
-                    {order.paymentStatus}
-                  </span>
-                </p>
+                  {/* User Email */}
+                  <p className="text-sm text-gray-700 break-all">
+                    User Email: <span className="font-semibold">{order.userEmail}</span>
+                  </p>
 
-                {/* User Email */}
-                <p className="text-sm text-gray-700 break-all">
-                  User Email: <span className="font-semibold">{order.userEmail}</span>
-                </p>
+                  {/* Address */}
+                  <p className="text-sm text-gray-700">
+                    Address:{" "}
+                    <span className="font-semibold">{order.userAddress}</span>
+                  </p>
 
-                {/* Address */}
-                <p className="text-sm text-gray-700">
-                  Address:{" "}
-                  <span className="font-semibold">{order.userAddress}</span>
-                </p>
+                  {/* Order Time */}
+                  <p className="text-xs text-gray-500">
+                    Ordered At: {order.orderTime}
+                  </p>
 
-                {/* Order Time */}
-                <p className="text-xs text-gray-500">
-                  Ordered At: {order.orderTime}
-                </p>
-
-                {/* Buttons */}
-                <div className="flex gap-3 mt-3">
-                  {/* Cancel */}
-                  <button
-                    disabled={!isPending}
-                    onClick={() => handleCancel(order._id)}
-                    className={`
+                  {/* Buttons */}
+                  <div className="flex gap-3 mt-3">
+                    {/* Cancel */}
+                    <button
+                      disabled={!isPending}
+                      onClick={() => handleCancel(order._id)}
+                      className={`
                       flex items-center gap-2 w-full justify-center px-4 py-2 rounded-lg text-sm font-medium shadow-md transition
                       ${!isPending
-                        ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                        : "bg-red-500 hover:bg-red-600 text-white cursor-pointer"
-                      }`}
-                  >
-                    <FaTimes /> Cancel
-                  </button>
+                          ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                          : "bg-red-500 hover:bg-red-600 text-white cursor-pointer"
+                        }`}
+                    >
+                      <FaTimes /> Cancel
+                    </button>
 
-                  {/* Accept */}
-                  <button
-                    disabled={!isPending}
-                    onClick={() => handleAccept(order._id)}
-                    className={`
+                    {/* Accept */}
+                    <button
+                      disabled={!isPending}
+                      onClick={() => handleAccept(order._id)}
+                      className={`
                       flex items-center gap-2 w-full justify-center px-4 py-2 rounded-lg text-sm font-medium shadow-md transition
                       ${!isPending
-                        ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                        : "bg-green-600 hover:bg-green-700 text-white cursor-pointer"
-                      }`}
-                  >
-                    <FaCheck /> Accept
-                  </button>
+                          ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                          : "bg-green-600 hover:bg-green-700 text-white cursor-pointer"
+                        }`}
+                    >
+                      <FaCheck /> Accept
+                    </button>
 
-                  {/* Deliver */}
-                  <button
-                    disabled={!isAccepted}
-                    onClick={() => handleDeliver(order._id)}
-                    className={`
+                    {/* Deliver */}
+                    <button
+                      disabled={!isAccepted}
+                      onClick={() => handleDeliver(order._id)}
+                      className={`
                       flex items-center gap-2 w-full justify-center px-4 py-2 rounded-lg text-sm font-medium shadow-md transition
                       ${!isAccepted
-                        ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                        : "bg-primary hover:bg-[#4f6a32] text-white cursor-pointer"
-                      }`}
-                  >
-                    <FaTruck /> Deliver
-                  </button>
-                </div>
-              </motion.div>
-            );
-          })}
+                          ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                          : "bg-primary hover:bg-[#4f6a32] text-white cursor-pointer"
+                        }`}
+                    >
+                      <FaTruck /> Deliver
+                    </button>
+                  </div>
+                </motion.div>
+              );
+            })}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 export default OrderRequests;
