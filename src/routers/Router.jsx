@@ -24,6 +24,9 @@ import AuthProvider from "../context/AuthProvider";
 import PrivateRoute from "./PrivateRoute";
 import PaymentSuc from "../payment/PaymentSuc";
 import PaymentCan from "../payment/PaymentCan";
+import AdminRoute from "./AdminRoute";
+import ChefRoute from "./ChefRoute";
+import UserRoute from "./UserRoute";
 
 export const router = createBrowserRouter([
   {
@@ -56,58 +59,79 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: <PrivateRoute>
+      <DashboardLayout />
+    </PrivateRoute>,
     children: [
       {
         index: true,
-        element: <FindProfile />
+        element: <FindProfile />,
       },
       // Admin Panel
       {
         path: "manage-users",
-        element: <ManageUsers />
+        element: <AdminRoute>
+          <ManageUsers />
+        </AdminRoute>
       },
       {
         path: "manage-requests",
-        element: <ManageRequests />
+        element: <AdminRoute>
+          <ManageRequests />
+        </AdminRoute>
       },
       {
         path: "platform-statistics",
-        element: <PlatformStats />
+        element: <AdminRoute>
+          <PlatformStats />
+        </AdminRoute>
       },
       // Chef Panel
       {
         path: "create-meal",
-        element: <CreateMeal />
+        element: <ChefRoute>
+          <CreateMeal />
+        </ChefRoute>
       },
       {
         path: "my-meals",
-        element: <MyMeals />
+        element: <ChefRoute>
+          <MyMeals />
+        </ChefRoute>
       },
       {
         path: "order-requests",
-        element: <OrderRequests />
+        element: <ChefRoute>
+          <OrderRequests />
+        </ChefRoute>
       },
       // User Panel
       {
         path: "my-orders",
-        element: <MyOrders />
+        element: <UserRoute>
+          <MyOrders />
+        </UserRoute>
       },
       {
         path: "my-reviews",
-        element: <MyReviews />
+        element: <UserRoute>
+          <MyReviews />
+        </UserRoute>
       },
       {
         path: "favorite-meals",
-        element: <FavoriteMeal />
+        element: <UserRoute>
+          <FavoriteMeal />
+        </UserRoute>
       },
+      //Payment related route
       {
         path: "payment-success",
-        element: <PaymentSuc />
+        element: <PaymentSuc />,
       },
       {
         path: "payment-cancel",
-        element: <PaymentCan />
+        element: <PaymentCan />,
       }
     ]
   }

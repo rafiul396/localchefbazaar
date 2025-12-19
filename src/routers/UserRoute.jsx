@@ -1,7 +1,7 @@
 import { Navigate, useLocation } from "react-router";
 import useUser from "../hooks/useUser";
 
-const ChefRoute = ({ children }) => {
+const UserRoute = ({ children }) => {
     const { userData, userLoading } = useUser();
     const location = useLocation();
 
@@ -16,7 +16,7 @@ const ChefRoute = ({ children }) => {
     console.log(userData);
     
 
-    if (userData.userRole !== 'chef') {
+    if (userData.userRole !== 'user') {
         return (
             <Navigate
                 to="/login"
@@ -29,4 +29,4 @@ const ChefRoute = ({ children }) => {
     return children;
 };
 
-export default ChefRoute;
+export default UserRoute;
