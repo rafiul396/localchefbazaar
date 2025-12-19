@@ -113,7 +113,7 @@ export default function MealDetails() {
                         <p className="text-gray-700 text-sm">
                             Delivery Area:{" "}
                             <span className="font-semibold text-gray-900">
-                                No
+                                {data?.deliveryArea}
                             </span>
                         </p>
 
