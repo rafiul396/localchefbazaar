@@ -23,6 +23,7 @@ const ReviewModal = ({ setOpen, mealId, user, refetch, mealName }) => {
     },
     onSuccess: () => {
       toast.success("Review submitted successfully ⭐");
+      refetch(); 
       reset();
       setOpen(false);
     },
@@ -106,7 +107,6 @@ const ReviewModal = ({ setOpen, mealId, user, refetch, mealName }) => {
 
           <button
             type="submit"
-            onClick={refetch()}
             disabled={reviewMutation.isLoading}
             className="w-full btn btn-primary border-primary shadow-none py-6 rounded-xl text-lg font-semibold text-white"
           >
