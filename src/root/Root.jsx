@@ -6,6 +6,7 @@ import 'aos/dist/aos.css';
 import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import useAuth from '../hooks/useAuth';
+import Footer from '../components/Footer/Footer';
 
 const Root = () => {
     const { submissionLoader } = useAuth();
@@ -26,6 +27,7 @@ const Root = () => {
             <main>
                 <Outlet />
             </main>
+            <Footer />
             <Toaster />
         </div>
     );

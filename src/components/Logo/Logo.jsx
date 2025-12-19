@@ -2,7 +2,7 @@ import React from 'react';
 import logo from '../../assets/logo.png'
 import { Link } from 'react-router';
 
-const Logo = ({ mainTextSize, subTextSize, logoSize }) => {
+const Logo = ({ mainTextSize, subTextSize, logoSize, textColor }) => {
     return (
         <Link className='flex items-center gap-2 cursor-pointer' to='/' >
                         <img
@@ -11,7 +11,7 @@ const Logo = ({ mainTextSize, subTextSize, logoSize }) => {
                             className={logoSize}
                         />
                         <div>
-                            <h3 className={`berkshire-swash-regular font-semibold ${mainTextSize} text-[#442a00]`}>
+                            <h3 className={`berkshire-swash-regular font-semibold ${mainTextSize} ${textColor ? textColor : "text-[#442a00]"}`}>
                                 GhorerChef
                             </h3>
                             <p className={`${subTextSize} text-yellow-500 oswald`}>
