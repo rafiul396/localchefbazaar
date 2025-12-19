@@ -45,7 +45,11 @@ const PlatformStats = () => {
 
 
     if (isLoading || userLoading || pdOrders) {
-        return <h1>Payment Statistics...</h1>
+        return (
+            <div className="min-h-screen flex justify-center items-center">
+                <span className="loading loading-spinner loading-lg text-primary"></span>
+            </div>
+        );
     }
     
     const { totalAmount } = payment

@@ -24,7 +24,7 @@ function UserDashboard() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
-    const { logout } = useAuth();
+    const { logOut } = useAuth();
 
     const menuItems = [
         { icon: FaHome, name: "Home", active: true, route: "/" },
@@ -103,7 +103,7 @@ function UserDashboard() {
 
                     {/* Logout */}
                     <div className="p-4 border-t border-white border-opacity-20">
-                        <button onClick={logout} className="flex items-center text-[#442a00] hover:text-red-500 duration-300 group cursor-pointer">
+                        <button onClick={logOut} className="flex items-center text-[#442a00] hover:text-red-500 duration-300 group cursor-pointer">
                             <FaSignOutAlt size={22} />
                             <span className={`ml-4 font-medium ${sidebarCollapsed ? 'lg:hidden' : ''}`}>Logout</span>
                             {sidebarCollapsed && (

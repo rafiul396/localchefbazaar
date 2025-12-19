@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import useAuth from '../hooks/useAuth'
 
 const axiosSecure = axios.create({
-    baseURL: 'http://localhost:3000'
+    baseURL: 'https://ghorerchef-server-api.vercel.app'
 })
 
 const useAxiosSecure = () => {

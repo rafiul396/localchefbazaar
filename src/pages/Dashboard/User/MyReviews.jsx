@@ -13,8 +13,8 @@ const MyReviews = () => {
   // SAMPLE DATA
   const [reviews, setReviews] = useState([]);
 
-  const { data, refetch } = useQuery({
-    queryKey: ["revews", userData?.userEmail],
+  const { data, refetch, isLoading } = useQuery({
+    queryKey: ["reviews", userData?.userEmail],
     queryFn: async () => {
       const res = await axiosSecure.get(`/reviews?email=${userData?.userEmail}`)
       setReviews(res.data)
@@ -63,6 +63,14 @@ const MyReviews = () => {
     updateReviewMutation.mutate({ id, updated });
     setEditModal(false)
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <span className="loading loading-spinner loading-lg text-primary"></span>
+      </div>
+    );
+  }
 
   return (
     <div>

@@ -86,7 +86,11 @@ const CreateMeal = () => {
     }
 
     if (loading || isLoading) {
-        return <h1>Meals...</h1>
+        return (
+            <div className="min-h-screen flex justify-center items-center">
+                <span className="loading loading-spinner loading-lg text-primary"></span>
+            </div>
+        );
     }
 
     return (

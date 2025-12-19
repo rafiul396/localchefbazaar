@@ -38,7 +38,11 @@ const ManageUsers = () => {
 
 
   if (isLoading) {
-    return <h1>Users...</h1>
+    return (
+            <div className="min-h-screen flex justify-center items-center">
+                <span className="loading loading-spinner loading-lg text-primary"></span>
+            </div>
+        );
   }
 
   return (

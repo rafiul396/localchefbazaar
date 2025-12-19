@@ -15,7 +15,15 @@ const useUser = () => {
         }
     })
 
-    return {user, userData, loading, userLoading}
+    if (loading, userLoading) {
+        return (
+            <div className="min-h-screen flex justify-center items-center">
+                <span className="loading loading-spinner loading-lg text-primary"></span>
+            </div>
+        );
+    }
+
+    return { user, userData, loading, userLoading }
 };
 
 export default useUser;

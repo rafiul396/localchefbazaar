@@ -21,10 +21,13 @@ import {
     FaHeart
 } from 'react-icons/fa';
 import { FiHeart, FiShoppingBag, FiStar } from 'react-icons/fi';
+import useAuth from '../../../hooks/useAuth';
 
 function UserDashboard() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+
+    const { logOut } = useAuth()
 
     const menuItems = [
         { icon: FaHome, name: "Home", active: true, route: "/" },
@@ -102,7 +105,7 @@ function UserDashboard() {
 
                     {/* Logout */}
                     <div className="p-4 border-t border-white border-opacity-20">
-                        <a href="#" className="flex items-center text-[#442a00] hover:text-red-500 duration-300 group">
+                        <button onClick={logOut} className="flex items-center text-[#442a00] hover:text-red-500 duration-300 group cursor-pointer">
                             <FaSignOutAlt size={22} />
                             <span className={`ml-4 font-medium ${sidebarCollapsed ? 'lg:hidden' : ''}`}>Logout</span>
                             {sidebarCollapsed && (
@@ -110,12 +113,12 @@ function UserDashboard() {
                                     Logout
                                 </span>
                             )}
-                        </a>
+                        </button>
                     </div>
                 </div>
 
                 {/* Main Content */}
-                <div className="flex-1 flex-col flex-1 overflow-hidden">
+                <div className="flex-1 flex-col overflow-hidden">
                     {/* Topbar */}
                     <header className="bg-white shadow-sm h-16 flex items-center justify-between px-6">
                         <button
