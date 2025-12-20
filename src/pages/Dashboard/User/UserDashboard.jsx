@@ -34,8 +34,7 @@ function UserDashboard() {
         { icon: FaUser, name: "My Profile", active: true, route: "/dashboard" },
         { icon: FaShoppingCart, name: "My Orders", route: "my-orders" },
         { icon: FaStar, name: "My Reviews", route: "my-reviews" },
-        { icon: FaHeart, name: "Favorite Meal", route: "favorite-meals" },
-        { icon: FaCog, name: "Settings", route: "settings" },
+        { icon: FaHeart, name: "Favorite Meal", route: "favorite-meals" }
     ];
 
     return (
@@ -74,18 +73,18 @@ function UserDashboard() {
                             {sidebarCollapsed ? <FaAngleRight size={20} /> : <FaAngleLeft size={20} />}
                         </button>
 
-                        <button onClick={() => setSidebarOpen(false)} className="lg:hidden text-white">
+                        <button onClick={() => setSidebarOpen(false)} className="lg:hidden text-white cursor-pointer">
                             <FaTimes size={26} />
                         </button>
                     </div>
 
-                    {/* Menu Items */}
                     <nav className="flex-1 mt-8 px-3">
                         {menuItems.map((item, i) => (
                             <NavLink
                                 key={i}
                                 to={item.route}
                                 end={item.route === "/dashboard"}
+                                onClick={() => setSidebarOpen(false)}
                                 className={`flex items-center px-3 py-3 my-1 rounded-lg text-[#442a00] hover:bg-primary hover:bg-opacity-20 transition-all`}
                             >
                                 <item.icon size={22} />
@@ -93,7 +92,6 @@ function UserDashboard() {
                                     {item.name}
                                 </span>
 
-                                {/* Tooltip when collapsed */}
                                 {sidebarCollapsed && (
                                     <span className="ml-4 hidden group-hover:inline-block absolute left-20 bg-gray-800 text-white text-sm px-3 py-1 rounded">
                                         {item.name}
@@ -103,7 +101,6 @@ function UserDashboard() {
                         ))}
                     </nav>
 
-                    {/* Logout */}
                     <div className="p-4 border-t border-white border-opacity-20">
                         <button onClick={logOut} className="flex items-center text-[#442a00] hover:text-red-500 duration-300 group cursor-pointer">
                             <FaSignOutAlt size={22} />
@@ -117,13 +114,12 @@ function UserDashboard() {
                     </div>
                 </div>
 
-                {/* Main Content */}
                 <div className="flex-1 flex-col overflow-hidden">
-                    {/* Topbar */}
+                 
                     <header className="bg-white shadow-sm h-16 flex items-center justify-between px-6">
                         <button
                             onClick={() => setSidebarOpen(true)}
-                            className="text-gray-600 lg:hidden"
+                            className="text-gray-600 lg:hidden cursor-pointer"
                         >
                             <FaBars size={26} />
                         </button>
@@ -145,7 +141,6 @@ function UserDashboard() {
                         </div>
                     </header>
 
-                    {/* Dashboard Cards */}
                     <main className="h-[calc(100vh-theme('spacing.16'))] flex-1 overflow-y-auto bg-gradient-to-b from-accent to-gray-100">
                         <div className="p-4 md:p-6">
                             <Outlet />

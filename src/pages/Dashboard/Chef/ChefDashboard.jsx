@@ -43,7 +43,6 @@ function UserDashboard() {
 
     return (
         <>
-            {/* Mobile Overlay */}
             {sidebarOpen && (
                 <div
                     className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
@@ -53,7 +52,6 @@ function UserDashboard() {
 
             <div className="flex h-screen bg-gray-100">
 
-                {/* Sidebar */}
                 <div className={`
           ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
           ${sidebarCollapsed ? 'lg:w-20' : 'lg:w-64'} 
@@ -62,7 +60,6 @@ function UserDashboard() {
           lg:translate-x-0 lg:static lg:inset-0 flex flex-col
         `}>
 
-                    {/* Logo + Toggle Button */}
                     <div className="h-16 flex items-center justify-between px-5 bg-primary bg-opacity-20">
                         <div className={`flex items-center text-white ${sidebarCollapsed ? 'lg:justify-center' : ''}`}>
                             {!sidebarCollapsed && <span className="ml-3 text-xl font-bold">
@@ -82,7 +79,6 @@ function UserDashboard() {
                         </button>
                     </div>
 
-                    {/* Menu Items */}
                     <nav className="flex-1 mt-8 px-3">
                         {menuItems.map((item, i) => (
                             <NavLink
@@ -96,7 +92,6 @@ function UserDashboard() {
                                     {item.name}
                                 </span>
 
-                                {/* Tooltip when collapsed */}
                                 {sidebarCollapsed && (
                                     <span className="ml-4 hidden group-hover:inline-block absolute left-20 bg-gray-800 text-white text-sm px-3 py-1 rounded">
                                         {item.name}
@@ -106,7 +101,6 @@ function UserDashboard() {
                         ))}
                     </nav>
 
-                    {/* Logout */}
                     <div className="p-4 border-t border-white border-opacity-20">
                         <button onClick={logOut} className="flex items-center text-[#442a00] hover:text-red-500 duration-300 group cursor-pointer">
                             <FaSignOutAlt size={22} />
@@ -120,13 +114,12 @@ function UserDashboard() {
                     </div>
                 </div>
 
-                {/* Main Content */}
                 <div className="flex-1 flex-col overflow-hidden">
-                    {/* Topbar */}
+                   
                     <header className="bg-white shadow-sm h-16 flex items-center justify-between px-6">
                         <button
                             onClick={() => setSidebarOpen(true)}
-                            className="text-gray-600 lg:hidden"
+                            className="text-gray-600 lg:hidden cursor-pointer"
                         >
                             <FaBars size={26} />
                         </button>
@@ -148,7 +141,6 @@ function UserDashboard() {
                         </div>
                     </header>
 
-                    {/* Dashboard Cards */}
                     <main className="h-[calc(100vh-theme('spacing.16'))] flex-1 overflow-y-auto bg-gradient-to-b from-accent to-gray-100">
                         <div className="p-4 md:p-6">
                             <Outlet />
