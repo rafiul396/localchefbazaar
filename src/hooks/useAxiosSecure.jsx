@@ -4,6 +4,7 @@ import useAuth from '../hooks/useAuth'
 
 const axiosSecure = axios.create({
     baseURL: 'https://ghorerchef-server-api.vercel.app'
+    // baseURL: 'http://localhost:3000/'
 })
 
 const useAxiosSecure = () => {
