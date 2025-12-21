@@ -52,7 +52,7 @@ const Meals = () => {
     }
 
     return (
-        <section>
+        <section className='p-2 lg:p-0'>
             <title>Meals | GhorerChef</title>
             <Container>
                 <section className="bg-base-100 w-full py-20">

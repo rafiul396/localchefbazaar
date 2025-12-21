@@ -21,7 +21,7 @@ const BeAChef = () => {
   }
 
   return (
-    <section className="w-full bg-white py-12 md:py-20 oswald">
+    <section className="w-full bg-white py-12 p-2 md:p-0 md:py-20 oswald">
       <div className="lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* Text column */}

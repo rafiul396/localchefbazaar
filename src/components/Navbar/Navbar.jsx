@@ -1,95 +1,194 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 import Logo from '../Logo/Logo';
 import useAuth from '../../hooks/useAuth';
-import demoProfile from '../../assets/profile.png'
+import demoProfile from '../../assets/profile.png';
+import {
+    FaBars,
+    FaTimes,
+    FaAngleLeft,
+    FaAngleRight,
+    FaSignOutAlt,
+} from 'react-icons/fa';
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
-    const navLinks = <>
-        <li><NavLink to="/" className="border-2 border-primary hover:border-2 hover:border-[#442a00] duration-200">Home</NavLink></li>
-        <li><NavLink to="/meals" className="border-2 border-primary hover:border-2 hover:border-[#442a00] duration-200">Meals</NavLink></li>
-        {
-            user && <li><NavLink to="/dashboard" className="border-2 border-primary hover:border-2 hover:border-[#442a00] duration-200">Dashboard</NavLink></li>
-        }
-    </>
+    const navLinks = (
+        <>
+            <li>
+                <NavLink
+                    to="/"
+                    onClick={() => setSidebarOpen(false)}
+                    className="border-2 border-transparent hover:border-2 hover:border-[#442a00] duration-200 oswald"
+                >
+                    Home
+                </NavLink>
+            </li>
+            <li>
+                <NavLink
+                    to="/meals"
+                    onClick={() => setSidebarOpen(false)}
+                    className="border-2 border-transparent hover:border-2 hover:border-[#442a00] duration-200 oswald"
+                >
+                    Meals
+                </NavLink>
+            </li>
+            {user && (
+                <li>
+                    <NavLink
+                        to="/dashboard"
+                        onClick={() => setSidebarOpen(false)}
+                        className="border-2 border-transparent hover:border-2 hover:border-[#442a00] duration-200 oswald"
+                    >
+                        Dashboard
+                    </NavLink>
+                </li>
+            )}
+        </>
+    );
 
     return (
-        <header className='bg-primary py-1' data-aos="fade-down">
-            <div className="container mx-auto navbar">
-                <div className="navbar-start">
-                    {/* <div className="dropdown">
-                        <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
-                        </div>
-                        <ul
-                            tabIndex="-1"
-                            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                            {navLinks}
-                        </ul>
-                    </div> */}
-                    <Logo logoSize="w-[75px]" mainTextSize="text-2xl" subTextSize="text-lg" />
-                </div>
-                <div className="navbar-center hidden lg:flex">
-                    <ul className="menu menu-horizontal px-1 text-base xl:text-lg font-semibold space-x-10 text-[#442a00] oswald">
-                        {navLinks}
-                    </ul>
-                </div>
+        <>
+            {/* Mobile Overlay */}
+            {sidebarOpen && (
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+                    onClick={() => setSidebarOpen(false)}
+                />
+            )}
 
+            <header className="bg-primary sticky top-0 z-30 shadow-lg py-2">
+                <div className="container mx-auto">
+                    <div className="flex h-16 items-center justify-between px-4">
 
-                {/* dashboard */}
-                {/* <button
-                    onClick={() => setSidebarOpen(true)}
-                    className="text-gray-600 lg:hidden cursor-pointer"
-                >
-                    <FaBars size={26} />
-                </button> */}
+                        {/* Left: Logo + Hamburger (Mobile) */}
+                        <div className="w-full lg:w-fit flex items-center gap-4 justify-between">
 
-                {/* <h1 className="text-2xl font-bold text-gray-800">Dashboard</h1>
+                            <Link to="/">
+                                <Logo logoSize="w-[50px] lg:w-[70px]" mainTextSize="text-xl lg:text-2xl" subTextSize="text-sm lg:text-base" />
+                            </Link>
 
-                <div className="flex items-center gap-4">
-                    <div className="hidden md:flex items-center bg-gray-100 rounded-lg px-4 py-2">
-                        <FaSearch className="text-gray-500" />
-                        <input type="text" placeholder="Search..." className="bg-transparent outline-none ml-2 w-48" />
-                    </div>
-                    <button className="relative">
-                        <FaBell size={24} className="text-gray-600" />
-                        <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full"></span>
-                    </button>
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold">
-                        A
-                    </div>
-                </div> */}
-
-
-
-                {
-                    user ? (
-                        <div className="dropdown dropdown-end ml-2 navbar-end space-x-2 hidden md:flex">
-                            <button className="btn shadow-none text-lg bg-accent-content border-accent-content" onClick={logOut} >
-                                Logout
+                            <button
+                                onClick={() => setSidebarOpen(true)}
+                                className="text-accent-content lg:hidden cursor-pointer"
+                            >
+                                <FaBars size={26} />
                             </button>
-                            <div tabIndex={0} role="button" className="btn btn-ghost w-14 h-14 btn-circle avatar">
-                                <div className="bg-red-400 rounded-full">
-                                    <img
-                                        alt="profile photo"
-                                        src={user.photoURL ? user?.photoURL : demoProfile}
-                                    />
+                        </div>
+
+                        {/* Center: Nav Links (Desktop only) */}
+                        <div className="navbar-center hidden lg:flex">
+                            <ul className="menu menu-horizontal px-1 text-base xl:text-lg font-semibold space-x-10 text-[#442a00] oswald">
+                                {navLinks}
+                            </ul>
+                        </div>
+
+                        {/* Right: Profile / Login */}
+                        <div className="flex items-center gap-4">
+                            {user ? (
+                                <div className="dropdown dropdown-end ml-2 navbar-end space-x-2 hidden md:flex">
+                                    <button className="btn shadow-none text-lg bg-accent-content border-accent-content" onClick={logOut} >
+                                        Logout
+                                    </button>
+                                    <div tabIndex={0} role="button" className="btn btn-ghost w-14 h-14 btn-circle avatar">
+                                        <div className="bg-red-400 rounded-full">
+                                            <img
+                                                alt="profile photo"
+                                                src={user.photoURL ? user?.photoURL : demoProfile}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="hidden lg:block navbar-end">
+                                    <Link className="btn shadow-none text-lg bg-accent-content border-accent-content" to="/login" >Login</Link>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            {/* Sidebar — Dashboard-এর মতোই */}
+            <div
+                className={`
+          ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+          ${sidebarCollapsed ? 'lg:w-20' : 'lg:w-64'}
+          w-64 bg-gradient-to-b from-primary to-accent-content
+          fixed inset-y-0 left-0 z-50 transition-all duration-300
+          lg:translate-x-0 lg:static lg:inset-auto flex flex-col lg:hidden
+        `}
+            >
+                {/* Sidebar Header */}
+                <div className="h-16 flex items-center justify-between px-5 bg-primary bg-opacity-20">
+                    <div className={`flex items-center text-white ${sidebarCollapsed ? 'lg:justify-center' : ''}`}>
+                        {!sidebarCollapsed && user ? (
+                            <div className="flex items-center gap-3">
+                                <div className="avatar">
+                                    <div className="w-10 rounded-full">
+                                        <img src={user.photoURL || demoProfile} alt="Profile" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <p className="font-medium">{user.displayName || 'User'}</p>
+                                    <p className="text-xs opacity-80">{user.email}</p>
                                 </div>
                             </div>
-                        </div>
-                    ) : (
-                        <div className="navbar-end">
-                            <Link className="btn shadow-none text-lg bg-accent-content border-accent-content" to="/login" >Login</Link>
-                        </div>
-                    )
-                }
+                        ) : (
+                            <div className="lg:block">
+                                <Link onClick={() => setSidebarOpen(false)} className="btn shadow-none text-lg bg-accent-content border-accent-content" to="/login" >Login</Link>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Collapse Button (Desktop) */}
+                    <button
+                        onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+                        className="hidden lg:block text-white hover:bg-white hover:bg-opacity-20 p-2 rounded"
+                    >
+                        {sidebarCollapsed ? <FaAngleRight size={20} /> : <FaAngleLeft size={20} />}
+                    </button>
+
+                    {/* Close Button (Mobile) */}
+                    <button
+                        onClick={() => setSidebarOpen(false)}
+                        className="lg:hidden text-accent-content cursor-pointer"
+                    >
+                        <FaTimes size={26} />
+                    </button>
+                </div>
+
+                {/* Sidebar Menu */}
+                <nav className="flex-1 mt-8 px-4 overflow-y-auto">
+                    <ul className="space-y-2">
+                        {navLinks}
+                    </ul>
+                </nav>
+
+                {/* Logout */}
+                {user && (
+                    <div className="p-4 border-t border-white border-opacity-20">
+                        <button
+                            onClick={logOut}
+                            className="flex items-center w-full text-[#442a00] hover:text-red-500 transition group"
+                        >
+                            <FaSignOutAlt size={22} />
+                            <span className={`ml-4 font-medium ${sidebarCollapsed ? 'lg:hidden' : ''}`}>
+                                Logout
+                            </span>
+                            {sidebarCollapsed && (
+                                <span className="ml-4 hidden group-hover:inline-block absolute left-20 bg-gray-800 text-white text-sm px-3 py-1 rounded">
+                                    Logout
+                                </span>
+                            )}
+                        </button>
+                    </div>
+                )}
             </div>
-        </header>
+        </>
     );
 };
 

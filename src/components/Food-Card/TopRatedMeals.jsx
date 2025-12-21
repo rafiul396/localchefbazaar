@@ -12,7 +12,7 @@ const TopRatedMeals = ({ mealsData, isLoading }) => {
     }
 
     return (
-        <section className='bg-base-100 w-full py-20 overflow-y-hidden'>
+        <section className='bg-base-100 w-full p-2 lg:p-0 py-20 overflow-y-hidden'>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
                 {
                     mealsData?.map(meal => <FoodCard key={meal._id} meal={meal} />)
