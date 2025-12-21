@@ -45,7 +45,7 @@ const MealsUpdateModal = ({ meal, onClose, refetch }) => {
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.25 }}
-        className="bg-white w-full max-w-xl rounded-3xl shadow-2xl p-8 relative"
+        className="bg-white w-full max-w-xl rounded-3xl shadow-2xl p-8 relative max-h-[70vh] overflow-y-auto"
       >
 
         <button

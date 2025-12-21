@@ -10,14 +10,13 @@ import MealsUpdateModal from "./MealsUpdateModal";
 
 const MyMeals = () => {
   const [selectedMeal, setSelectedMeal] = useState(null);
-  // Sample meals (replace with MongoDB data)
   const { user, loading } = useAuth();
   const axiosSecure = useAxiosSecure();
   const { data: meals, isLoading, refetch } = useQuery({
     queryKey: ["meals", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/meals?email=${user?.email}`)
-      return res.data
+      return res.data.meals
     }
   })
 

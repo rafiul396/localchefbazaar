@@ -73,7 +73,7 @@ const OrderRequests = () => {
         </motion.h1>
 
         {/* Order Cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-8">
           {orders
             .map((order) => {
               const isCancelled = order.orderStatus === "cancelled";
@@ -89,7 +89,6 @@ const OrderRequests = () => {
                   transition={{ duration: 0.4 }}
                   className="bg-white border border-gray-200 shadow-lg rounded-2xl p-6 space-y-4 hover:shadow-xl transition-all"
                 >
-                  {/* Food Name + Price */}
                   <div className="flex justify-between">
                     <h2 className="text-xl font-semibold text-gray-900">
                       {order.mealName}
@@ -99,13 +98,11 @@ const OrderRequests = () => {
                     </span>
                   </div>
 
-                  {/* Quantity */}
                   <p className="text-sm text-gray-700">
                     Quantity:{" "}
                     <span className="font-semibold">{order.quantity}</span>
                   </p>
 
-                  {/* Order Status */}
                   <p className="text-sm">
                     Status:{" "}
                     <span
@@ -122,7 +119,6 @@ const OrderRequests = () => {
                     </span>
                   </p>
 
-                  {/* Payment */}
                   <p className="text-sm">
                     Payment:{" "}
                     <span
@@ -135,25 +131,21 @@ const OrderRequests = () => {
                     </span>
                   </p>
 
-                  {/* User Email */}
                   <p className="text-sm text-gray-700 break-all">
                     User Email: <span className="font-semibold">{order.userEmail}</span>
                   </p>
 
-                  {/* Address */}
                   <p className="text-sm text-gray-700">
                     Address:{" "}
                     <span className="font-semibold">{order.userAddress}</span>
                   </p>
 
-                  {/* Order Time */}
                   <p className="text-xs text-gray-500">
                     Ordered At: {order.orderTime}
                   </p>
 
-                  {/* Buttons */}
                   <div className="flex gap-3 mt-3">
-                    {/* Cancel */}
+                   
                     <button
                       disabled={!isPending}
                       onClick={() => handleCancel(order._id)}
@@ -167,7 +159,6 @@ const OrderRequests = () => {
                       <FaTimes /> Cancel
                     </button>
 
-                    {/* Accept */}
                     <button
                       disabled={!isPending}
                       onClick={() => handleAccept(order._id)}
@@ -181,7 +172,6 @@ const OrderRequests = () => {
                       <FaCheck /> Accept
                     </button>
 
-                    {/* Deliver */}
                     <button
                       disabled={!isAccepted}
                       onClick={() => handleDeliver(order._id)}
