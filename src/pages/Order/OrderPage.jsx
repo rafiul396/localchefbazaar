@@ -68,17 +68,15 @@ const OrderPage = ({ onClose, meal }) => {
     };
 
     return (
-        <div className="fixed inset-0 backdrop-blur-xl bg-white/60 flex justify-center items-center z-50 px-4">
+        <div className="fixed inset-0 backdrop-blur-xl bg-white/60  flex justify-center items-center z-50 px-4">
             <motion.div
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.3 }}
-                className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-xl"
+                className="bg-white rounded-2xl w-full max-w-lg shadow-xl"
             >
-                <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-2xl font-bold text-primary">
-                        Confirm Your Order
-                    </h2>
+                <div className="flex justify-between items-center p-6 border-b">
+                    <h2 className="text-2xl font-bold text-primary">Confirm Your Order</h2>
                     <button
                         onClick={onClose}
                         className="text-gray-400 hover:text-gray-600 text-xl cursor-pointer"
@@ -87,127 +85,124 @@ const OrderPage = ({ onClose, meal }) => {
                     </button>
                 </div>
 
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                <div className="max-h-[70vh] overflow-y-auto px-6 py-4"> 
+                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pb-8">
 
-                    <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-1">
-                            Food Name
-                        </label>
-                        <input
-                            className="w-full border rounded-lg px-4 py-2 
-                         focus:border-green-600 focus:ring-2 focus:ring-green-200 outline-none"
-                            readOnly
-                            {...register("mealName")}
-                        />
-                    </div>
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-1">
+                                Food Name
+                            </label>
+                            <input
+                                className="w-full border rounded-lg px-4 py-2 focus:border-green-600 focus:ring-2 focus:ring-green-200 outline-none"
+                                readOnly
+                                {...register("mealName")}
+                            />
+                        </div>
 
-                    <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-1">
-                            Price
-                        </label>
-                        <input
-                            className="w-full border rounded-lg px-4 py-2 
-                         focus:border-green-600 focus:ring-2 focus:ring-green-200 outline-none"
-                            readOnly
-                            {...register("foodPrice")}
-                        />
-                    </div>
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-1">
+                                Price
+                            </label>
+                            <input
+                                className="w-full border rounded-lg px-4 py-2 focus:border-green-600 focus:ring-2 focus:ring-green-200 outline-none"
+                                readOnly
+                                {...register("foodPrice")}
+                            />
+                        </div>
 
-                    <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-1">
-                            Quantity
-                        </label>
-                        <input
-                            className="w-full border rounded-lg px-4 py-2 
-                         focus:border-green-600 focus:ring-2 focus:ring-green-200 outline-none"
-                            type="number"
-                            min="1"
-                            placeholder="Enter quantity"
-                            {...register("quantity", {
-                                required: "Quantity is required",
-                                min: { value: 1, message: "Minimum 1 item required" },
-                            })}
-                        />
-                        {errors.quantity && (
-                            <p className="text-red-500 text-sm mt-1">
-                                {errors.quantity.message}
-                            </p>
-                        )}
-                    </div>
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-1">
+                                Quantity
+                            </label>
+                            <input
+                                className="w-full border rounded-lg px-4 py-2 focus:border-green-600 focus:ring-2 focus:ring-green-200 outline-none"
+                                type="number"
+                                min="1"
+                                placeholder="Enter quantity"
+                                {...register("quantity", {
+                                    required: "Quantity is required",
+                                    min: { value: 1, message: "Minimum 1 item required" },
+                                })}
+                            />
+                            {errors.quantity && (
+                                <p className="text-red-500 text-sm mt-1">{errors.quantity.message}</p>
+                            )}
+                        </div>
 
-                    <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-1">
-                            Chef ID
-                        </label>
-                        <input
-                            className="w-full border rounded-lg px-4 py-2 
-                         focus:border-green-600 focus:ring-2 focus:ring-green-200 outline-none"
-                            readOnly
-                            {...register("chefId")}
-                        />
-                    </div>
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-1">
+                                Chef ID
+                            </label>
+                            <input
+                                className="w-full border rounded-lg px-4 py-2 focus:border-green-600 focus:ring-2 focus:ring-green-200 outline-none"
+                                readOnly
+                                {...register("chefId")}
+                            />
+                        </div>
 
-                    <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-1">
-                            Your Email
-                        </label>
-                        <input
-                            className="w-full border rounded-lg px-4 py-2 
-                         focus:border-green-600 focus:ring-2 focus:ring-green-200 outline-none"
-                            readOnly
-                            {...register("userEmail")}
-                        />
-                    </div>
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-1">
+                                Your Email
+                            </label>
+                            <input
+                                className="w-full border rounded-lg px-4 py-2 focus:border-green-600 focus:ring-2 focus:ring-green-200 outline-none"
+                                readOnly
+                                {...register("userEmail")}
+                            />
+                        </div>
 
-                    <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-1">
-                            Delivery Address
-                        </label>
-                        <textarea
-                            className="w-full border rounded-lg px-4 py-2 
-                         focus:border-green-600 focus:ring-2 focus:ring-green-200 outline-none"
-                            placeholder="Enter your delivery address"
-                            {...register("userAddress", {
-                                required: "Address is required",
-                            })}
-                        ></textarea>
-                        {errors.userAddress && (
-                            <p className="text-red-500 text-sm mt-1">
-                                {errors.userAddress.message}
-                            </p>
-                        )}
-                    </div>
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-1">
+                                Delivery Address
+                            </label>
+                            <textarea
+                                className="w-full border rounded-lg px-4 py-2 focus:border-green-600 focus:ring-2 focus:ring-green-200 outline-none"
+                                placeholder="Enter your delivery address"
+                                rows="3"
+                                {...register("userAddress", {
+                                    required: "Address is required",
+                                })}
+                            ></textarea>
+                            {errors.userAddress && (
+                                <p className="text-red-500 text-sm mt-1">{errors.userAddress.message}</p>
+                            )}
+                        </div>
 
-                    <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-1">
-                            Order Status
-                        </label>
-                        <input
-                            className="w-full border rounded-lg px-4 py-2 bg-gray-100"
-                            readOnly
-                            {...register("orderStatus")}
-                        />
-                    </div>
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-1">
+                                Order Status
+                            </label>
+                            <input
+                                className="w-full border rounded-lg px-4 py-2 bg-gray-100"
+                                readOnly
+                                {...register("orderStatus")}
+                            />
+                        </div>
 
-                    <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-1">
-                            Order Time
-                        </label>
-                        <input
-                            className="w-full border rounded-lg px-4 py-2 bg-gray-100"
-                            readOnly
-                            {...register("orderTime")}
-                        />
-                    </div>
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-1">
+                                Order Time
+                            </label>
+                            <input
+                                className="w-full border rounded-lg px-4 py-2 bg-gray-100"
+                                readOnly
+                                {...register("orderTime")}
+                            />
+                        </div>
 
+                    </form>
+                </div>
+
+                <div className="p-6 border-t bg-white">
                     <button
                         type="submit"
+                        onClick={handleSubmit(onSubmit)}
                         className="w-full py-3 rounded-lg text-white font-semibold text-lg hover:opacity-90 cursor-pointer"
                         style={{ backgroundColor: "#ff8400" }}
                     >
                         Confirm Order
                     </button>
-                </form>
+                </div>
             </motion.div>
         </div>
     );
