@@ -64,7 +64,7 @@ const MyMeals = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="text-3xl md:text-4xl font-bold text-gray-900 mb-8"
+        className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 dark:text-[#628141]"
       >
         My Meals
       </motion.h1>
@@ -78,7 +78,7 @@ const MyMeals = () => {
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-200 hover:shadow-2xl transition-all group"
+            className="bg-white dark:bg-primary shadow-xl rounded-2xl overflow-hidden border border-gray-200 hover:shadow-2xl transition-all group"
           >
             {/* Image */}
             <div className="w-full h-60 overflow-hidden">
@@ -90,27 +90,27 @@ const MyMeals = () => {
             </div>
 
             {/* Content */}
-            <div className="p-5 space-y-3">
-              <h2 className="text-xl font-semibold text-gray-900">
+            <div className="p-5 space-y-3 ">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
                 {meal.foodName}
               </h2>
 
               {/* Price + Rating */}
-              <div className="flex justify-between text-sm font-medium text-gray-700">
+              <div className="flex justify-between text-sm font-medium text-gray-700 dark:text-white">
                 <p>৳{meal.price}</p>
                 <p className="text-yellow-500">⭐ {meal.rating}</p>
               </div>
 
               {/* Ingredients */}
               <div>
-                <p className="text-xs text-gray-500 mb-1">Ingredients:</p>
-                <p className="text-sm text-gray-700 truncate">
+                <p className="text-xs text-gray-500 mb-1 dark:text-white">Ingredients:</p>
+                <p className="text-sm text-gray-700 truncate dark:text-white">
                   {meal.ingredients.join(", ")}
                 </p>
               </div>
 
               {/* Delivery time */}
-              <p className="text-sm text-gray-700">
+              <p className="text-sm text-gray-700 dark:text-white">
                 Delivery:{" "}
                 <span className="font-semibold">
                   {meal.estimatedDeliveryTime}
@@ -118,12 +118,12 @@ const MyMeals = () => {
               </p>
 
               {/* Chef information */}
-              <div className="text-xs text-gray-500">
+              <div className="text-xs text-gray-500 dark:text-white">
                 <p>
-                  Chef: <span className="font-semibold">{meal.chefName}</span>
+                  Chef : <span className="font-semibold dark:text-white">{meal.chefName}</span>
                 </p>
                 <p>
-                  ID: <span className="font-semibold">{meal.chefId}</span>
+                  ID : <span className="font-semibold dark:text-white">{meal.chefId}</span>
                 </p>
               </div>
 
@@ -135,7 +135,7 @@ const MyMeals = () => {
 
                 <button
                 onClick={() => setSelectedMeal(meal)}
-                className="flex items-center gap-2 bg-primary text-info-content px-4 py-2 rounded-lg text-sm shadow-md transition cursor-pointer">
+                className="flex items-center gap-2 bg-primary dark:bg-[#628141] text-info-content px-4 py-2 rounded-lg text-sm shadow-md transition cursor-pointer">
                   <FaEdit /> Update
                 </button>
               </div>
