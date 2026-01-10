@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router';
 import Logo from '../Logo/Logo';
 import useAuth from '../../hooks/useAuth';
@@ -10,11 +10,23 @@ import {
     FaAngleRight,
     FaSignOutAlt,
 } from 'react-icons/fa';
+import Switch from '../theme-change-btn/Switch';
+import { FiUser } from 'react-icons/fi';
 
 const Navbar = () => {
-    const { user, logOut } = useAuth();
+    const [isOpen, setIsOpen] = useState(false);
+    const [open, setOpen] = useState(false);
+    const { user, logOut, setThemeController } = useAuth();
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+
+    
+
+    
+
+    const profileClicker = () => {
+        setOpen(!open)
+    }
 
     const navLinks = (
         <>
@@ -22,7 +34,7 @@ const Navbar = () => {
                 <NavLink
                     to="/"
                     onClick={() => setSidebarOpen(false)}
-                    className="border-2 border-transparent hover:border-2 hover:border-[#442a00] duration-200 oswald"
+                    className="border-2 border-transparent hover:border-[#442a00] dark:text-[#628141] duration-200 oswald"
                 >
                     Home
                 </NavLink>
@@ -31,7 +43,7 @@ const Navbar = () => {
                 <NavLink
                     to="/meals"
                     onClick={() => setSidebarOpen(false)}
-                    className="border-2 border-transparent hover:border-2 hover:border-[#442a00] duration-200 oswald"
+                    className="border-2 border-transparent hover:border-2 hover:border-[#442a00] dark:text-[#628141] duration-200 oswald"
                 >
                     Meals
                 </NavLink>
@@ -41,7 +53,7 @@ const Navbar = () => {
                     <NavLink
                         to="/dashboard"
                         onClick={() => setSidebarOpen(false)}
-                        className="border-2 border-transparent hover:border-2 hover:border-[#442a00] duration-200 oswald"
+                        className="border-2 border-transparent hover:border-2 hover:border-[#442a00] dark:text-[#628141] duration-200 oswald"
                     >
                         Dashboard
                     </NavLink>
@@ -90,16 +102,48 @@ const Navbar = () => {
                         <div className="flex items-center gap-4">
                             {user ? (
                                 <div className="dropdown dropdown-end ml-2 navbar-end space-x-2 hidden md:flex">
-                                    <button className="btn shadow-none text-lg bg-accent-content border-accent-content" onClick={logOut} >
-                                        Logout
-                                    </button>
-                                    <div tabIndex={0} role="button" className="btn btn-ghost w-14 h-14 btn-circle avatar">
-                                        <div className="bg-red-400 rounded-full">
-                                            <img
-                                                alt="profile photo"
-                                                src={user.photoURL ? user?.photoURL : demoProfile}
-                                            />
+
+                                    {/* Dropdown profile */}
+                                    {/* <div className="dropdown dropdown-end">
+                                        <div tabIndex={0} role="button" className="btn btn-ghost w-14 h-14 btn-circle avatar">
+                                            <div className="bg-red-400 rounded-full">
+                                                <img
+                                                    alt="profile photo"
+                                                    src={user.photoURL ? user?.photoURL : demoProfile}
+                                                />
+                                            </div>
                                         </div>
+                                        <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm border-2 border-primary space-y-2 font-semibold">
+                                            <li className='rounded-lg hover:bg-accent'><Link to="/dashboard">My Profile</Link></li>
+                                            <li className='rounded-lg hover:bg-accent'><Link to="/dashboard">Dashboard</Link></li>
+                                            <Switch handleTheme={handleTheme} theme={theme} />
+                                            <button className="btn shadow-none text-lg bg-accent-content border-accent-content" onClick={logOut} >
+                                                Logout
+                                            </button>
+                                        </ul>
+                                    </div> */}
+
+                                    <div onClick={() => setIsOpen(false)} className="drop-menu dropdown dropdown-end">
+                                        <div tabIndex={0} role="button" className="btn btn-ghost w-14 h-14 btn-circle avatar">
+                                            <div className="bg-red-400 rounded-full">
+                                                <img
+                                                    alt="profile photo"
+                                                    src={user.photoURL ? user?.photoURL : demoProfile}
+                                                />
+                                            </div>
+                                        </div>
+                                        {/* <img tabIndex={0} role="button" onClick={profileClicker} title={user?.displayName} className='btn btn-ghost w-14 h-14 btn-circle avatar' src={user.photoURL ? user?.photoURL : demoProfile} alt="Profile Picture" /> */}
+                                        <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm space-y-2 ">
+                                            <div className='p-2 text-secondary'>
+                                                <p className="font-semibold text-base dark:text-white">{user.displayName}</p>
+                                                <p className=" text-sm dark:text-white">{user.email}</p>
+                                            </div>
+                                            <NavLink to="/dashboard" onClick={() => setOpen(false)} className=" border border-accent-content w-full flex justify-center items-center text-secondary text-left px-4 py-2 space-x-2 dark:text-white"> <FiUser className="text-lg text-primary dark:text-white" /> <span>My Profile</span></NavLink>
+                                            <Switch />
+                                            <button className='bg-orange-500 w-full cursor-pointer text-white text-sm px-5 py-2 rounded-full hover:bg-primary transition' onClick={logOut}>
+                                                Log out
+                                            </button>
+                                        </ul>
                                     </div>
                                 </div>
                             ) : (
@@ -110,10 +154,10 @@ const Navbar = () => {
                         </div>
                     </div>
                 </div>
-            </header>
+            </header >
 
             {/* Sidebar — Dashboard-এর মতোই */}
-            <div
+            < div
                 className={`
           ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
           ${sidebarCollapsed ? 'lg:w-20' : 'lg:w-64'}
@@ -123,7 +167,7 @@ const Navbar = () => {
         `}
             >
                 {/* Sidebar Header */}
-                <div className="h-16 flex items-center justify-between px-5 bg-primary bg-opacity-20">
+                < div className="h-16 flex items-center justify-between px-5 bg-primary bg-opacity-20" >
                     <div className={`flex items-center text-white ${sidebarCollapsed ? 'lg:justify-center' : ''}`}>
                         {!sidebarCollapsed && user ? (
                             <div className="flex items-center gap-3">
@@ -159,35 +203,37 @@ const Navbar = () => {
                     >
                         <FaTimes size={26} />
                     </button>
-                </div>
+                </div >
 
                 {/* Sidebar Menu */}
-                <nav className="flex-1 mt-8 px-4 overflow-y-auto">
+                < nav className="flex-1 mt-8 px-4 overflow-y-auto" >
                     <ul className="space-y-2">
                         {navLinks}
                     </ul>
-                </nav>
+                </nav >
 
                 {/* Logout */}
-                {user && (
-                    <div className="p-4 border-t border-white border-opacity-20">
-                        <button
-                            onClick={logOut}
-                            className="flex items-center w-full text-[#442a00] hover:text-red-500 transition group"
-                        >
-                            <FaSignOutAlt size={22} />
-                            <span className={`ml-4 font-medium ${sidebarCollapsed ? 'lg:hidden' : ''}`}>
-                                Logout
-                            </span>
-                            {sidebarCollapsed && (
-                                <span className="ml-4 hidden group-hover:inline-block absolute left-20 bg-gray-800 text-white text-sm px-3 py-1 rounded">
+                {
+                    user && (
+                        <div className="p-4 border-t border-white border-opacity-20">
+                            <button
+                                onClick={logOut}
+                                className="flex items-center w-full text-[#442a00] hover:text-red-500 transition group"
+                            >
+                                <FaSignOutAlt size={22} />
+                                <span className={`ml-4 font-medium ${sidebarCollapsed ? 'lg:hidden' : ''}`}>
                                     Logout
                                 </span>
-                            )}
-                        </button>
-                    </div>
-                )}
-            </div>
+                                {sidebarCollapsed && (
+                                    <span className="ml-4 hidden group-hover:inline-block absolute left-20 bg-gray-800 text-white text-sm px-3 py-1 rounded">
+                                        Logout
+                                    </span>
+                                )}
+                            </button>
+                        </div>
+                    )
+                }
+            </div >
         </>
     );
 };

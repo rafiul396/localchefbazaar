@@ -10,7 +10,7 @@ const MealCard = ({ meal }) => {
     return (
         <div
             className="card bg-base-100 shadow-sm stalinist-one-regula text-black 
-             overflow-hidden group transition-all duration-300"
+             overflow-hidden group transition-all duration-300 dark:text-white"
             data-aos="zoom-in"
         >
             <figure className="overflow-hidden">

@@ -101,16 +101,16 @@ const CreateMeal = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
-                className="text-3xl md:text-4xl font-bold text-primary text-center mb-10"
+                className="text-3xl md:text-4xl font-bold text-primary dark:text-[#628141] text-center mb-10"
             >
                 Create a New Meal
             </motion.h1>
 
-            <div className="max-w-4xl mx-auto bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
+            <div className="max-w-4xl mx-auto p-8 rounded-3xl shadow-xl border border-gray-100">
                 <form onSubmit={handleSubmit(handleMeal)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                     <div>
-                        <label className="block text-gray-700 font-semibold mb-1">
+                        <label className="block text-gray-700 font-semibold mb-1 dark:text-primary">
                             Food Name
                         </label>
                         <input
@@ -129,7 +129,7 @@ const CreateMeal = () => {
                     </div>
 
                     <div>
-                        <label className="block text-gray-700 font-semibold mb-1">
+                        <label className="block text-gray-700 font-semibold mb-1 dark:text-primary">
                             Chef Name
                         </label>
                         <input
@@ -148,7 +148,7 @@ const CreateMeal = () => {
                     </div>
 
                     <div className="col-span-1 md:col-span-2">
-                        <label className="block text-gray-700 font-semibold mb-1">
+                        <label className="block text-gray-700 font-semibold mb-1 dark:text-primary">
                             Upload Food Image
                         </label>
 
@@ -162,7 +162,7 @@ const CreateMeal = () => {
                                 />
                                 <div className="flex flex-col items-center text-primary">
                                     <FiUpload size={30} />
-                                    <p className="text-sm mt-1">Upload Image</p>
+                                    <p className="text-sm mt-1 dark:text-primary">Upload Image</p>
                                 </div>
                             </label>
 
@@ -182,7 +182,7 @@ const CreateMeal = () => {
                     </div>
 
                     <div>
-                        <label className="block text-gray-700 font-semibold mb-1">
+                        <label className="block text-gray-700 font-semibold mb-1 dark:text-primary">
                             Price (৳)
                         </label>
                         <input
@@ -201,7 +201,7 @@ const CreateMeal = () => {
                     </div>
 
                     <div>
-                        <label className="block text-gray-700 font-semibold mb-1">
+                        <label className="block text-gray-700 font-semibold mb-1 dark:text-primary">
                             Rating
                         </label>
                         <input
@@ -225,7 +225,7 @@ const CreateMeal = () => {
                     </div>
 
                     <div>
-                        <label className="block text-gray-700 font-semibold mb-1">
+                        <label className="block text-gray-700 font-semibold mb-1 dark:text-primary">
                             Estimated Delivery Time
                         </label>
                         <input
@@ -244,7 +244,7 @@ const CreateMeal = () => {
                     </div>
 
                     <div>
-                        <label className="block text-gray-700 font-semibold mb-1">
+                        <label className="block text-gray-700 font-semibold mb-1 dark:text-primary">
                             Chef Experience
                         </label>
                         <input
@@ -263,7 +263,7 @@ const CreateMeal = () => {
                     </div>
 
                     <div className="col-span-1 md:col-span-2">
-                        <label className="block text-gray-700 font-semibold mb-1">
+                        <label className="block text-gray-700 font-semibold mb-1 dark:text-primary">
                             Delivery Area
                         </label>
                         <input
@@ -282,7 +282,7 @@ const CreateMeal = () => {
                     </div>
 
                     <div className="col-span-1 md:col-span-2">
-                        <label className="block text-gray-700 font-semibold mb-1">
+                        <label className="block text-gray-700 font-semibold mb-1 dark:text-primary">
                             Ingredients
                         </label>
                         <textarea
@@ -301,27 +301,27 @@ const CreateMeal = () => {
                     </div>
 
                     <div>
-                        <label className="block text-gray-700 font-semibold mb-1">
+                        <label className="block text-gray-700 font-semibold mb-1 dark:text-primary">
                             Chef ID
                         </label>
                         <input
                             type="text"
                             readOnly
                             value={customer?.chefId}
-                            className="w-full px-4 py-3 rounded-xl bg-gray-100 border border-gray-300 outline-none"
+                            className="w-full px-4 py-3 rounded-xl bg-gray-100 border border-gray-300 outline-none dark:text-primary"
                             {...register("chefId")}
                         />
                     </div>
 
                     <div>
-                        <label className="block text-gray-700 font-semibold mb-1">
+                        <label className="block text-gray-700 font-semibold mb-1 dark:text-primary">
                             User Email
                         </label>
                         <input
                             type="email"
                             readOnly
                             value={user?.email}
-                            className="w-full px-4 py-3 rounded-xl bg-gray-100 border border-gray-300 outline-none"
+                            className="w-full px-4 py-3 rounded-xl bg-gray-100 border border-gray-300 outline-none dark:text-primary"
                             {...register("userEmail")}
                         />
                     </div>

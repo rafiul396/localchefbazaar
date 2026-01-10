@@ -51,12 +51,12 @@ const ChefProfile = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-accent to-gray-100 py-12 px-4">
+        <div className="min-h-screen bg-gradient-to-b from-accent to-gray-100 dark:from-primary dark:to-[#363636] py-12 px-4">
             <motion.div
                 initial={{ opacity: 0, y: 25 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.55 }}
-                className="w-full mx-auto bg-white rounded-3xl shadow-xl border border-gray-100 p-8"
+                className="w-full mx-auto bg-white rounded-3xl shadow-xl border border-gray-100 p-8 dark:bg-[#363636]"
             >
                 {/* Header */}
                 <div className="flex items-center gap-6 border-b pb-6">
@@ -67,7 +67,7 @@ const ChefProfile = () => {
                     />
 
                     <div>
-                        <h1 className="text-2xl font-semibold text-gray-900">
+                        <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">
                             {data.userName}
                         </h1>
                         <p className="text-gray-500">{data.userEmail}</p>
@@ -116,9 +116,9 @@ const ChefProfile = () => {
 
 function InfoCard({ label, value }) {
     return (
-        <div className="bg-gray-50 p-5 rounded-2xl border border-gray-200 shadow-sm">
-            <p className="text-xs font-semibold text-gray-500 mb-1">{label}</p>
-            <p className="text-[15px] font-medium text-gray-800">{value}</p>
+        <div className="bg-gray-50 p-5 rounded-2xl border border-gray-200 shadow-sm dark:bg-primary">
+            <p className="text-xs font-semibold text-gray-500 mb-1 dark:text-white">{label}</p>
+            <p className="text-[15px] font-medium text-gray-800 dark:text-white">{value}</p>
         </div>
     );
 }

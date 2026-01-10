@@ -10,7 +10,7 @@ const FoodCard = ({ meal }) => {
     return (
         <div
             className="card bg-base-100 shadow-sm stalinist-one-regula text-black 
-                     overflow-hidden group transition-all duration-300"
+                     overflow-hidden group transition-all duration-300 dark:text-white"
             data-aos="zoom-in"
         >
             <figure className="overflow-hidden">
@@ -25,7 +25,7 @@ const FoodCard = ({ meal }) => {
 
             <div className="p-4 space-y-4">
                 <div>
-                    <div className="w-full flex justify-between items-center">
+                    <div className="w-full flex justify-between items-center dark:text-white">
                         <h2 className="card-title">{foodName}</h2>
                         <p className="font-semibold">৳{price}</p>
                     </div>

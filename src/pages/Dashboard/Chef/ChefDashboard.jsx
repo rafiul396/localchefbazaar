@@ -25,6 +25,7 @@ import {
 } from 'react-icons/fa';
 import { FiHeart, FiShoppingBag, FiStar } from 'react-icons/fi';
 import useAuth from '../../../hooks/useAuth';
+import Switch from '../../../components/theme-change-btn/Switch';
 
 function UserDashboard() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -85,7 +86,7 @@ function UserDashboard() {
                                 key={i}
                                 to={item.route}
                                 end={item.route === "/dashboard"}
-                                className={`flex items-center px-3 py-3 my-1 rounded-lg text-[#442a00] hover:bg-primary hover:bg-opacity-20 transition-all`}
+                                className={`flex items-center px-3 py-3 my-1 rounded-lg text-[#442a00] dark:text-[#628141] hover:bg-primary hover:bg-opacity-20 transition-all`}
                             >
                                 <item.icon size={22} />
                                 <span className={`ml-4 font-medium ${sidebarCollapsed ? 'lg:hidden' : ''}`}>
@@ -102,7 +103,7 @@ function UserDashboard() {
                     </nav>
 
                     <div className="p-4 border-t border-white border-opacity-20">
-                        <button onClick={logOut} className="flex items-center text-[#442a00] hover:text-red-500 duration-300 group cursor-pointer">
+                        <button onClick={logOut} className="flex items-center text-[#442a00] dark:text-[#628141] hover:text-red-500 duration-300 group cursor-pointer">
                             <FaSignOutAlt size={22} />
                             <span className={`ml-4 font-medium ${sidebarCollapsed ? 'lg:hidden' : ''}`}>Logout</span>
                             {sidebarCollapsed && (
@@ -116,7 +117,7 @@ function UserDashboard() {
 
                 <div className="flex-1 flex-col overflow-hidden">
                    
-                    <header className="bg-white shadow-sm h-16 flex items-center justify-between px-6">
+                    <header className="bg-primary shadow-sm h-16 flex items-center justify-between px-6">
                         <button
                             onClick={() => setSidebarOpen(true)}
                             className="text-gray-600 lg:hidden cursor-pointer"
@@ -124,13 +125,14 @@ function UserDashboard() {
                             <FaBars size={26} />
                         </button>
 
-                        <h1 className="text-2xl font-bold text-gray-800">Dashboard</h1>
+                        <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Dashboard</h1>
 
                         <div className="flex items-center gap-4">
                             <div className="hidden md:flex items-center bg-gray-100 rounded-lg px-4 py-2">
                                 <FaSearch className="text-gray-500" />
-                                <input type="text" placeholder="Search..." className="bg-transparent outline-none ml-2 w-48" />
+                                <input type="text" placeholder="Search..." className="bg-transparent outline-none ml-2 w-48 dark:text-gray-700" />
                             </div>
+                            <Switch />
                             <button className="relative">
                                 <FaBell size={24} className="text-gray-600" />
                                 <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full"></span>
@@ -141,7 +143,8 @@ function UserDashboard() {
                         </div>
                     </header>
 
-                    <main className="h-[calc(100vh-theme('spacing.16'))] flex-1 overflow-y-auto bg-gradient-to-b from-accent to-gray-100">
+{/* bg-gradient-to-b from-accent to-gray-100 */}
+                    <main className="h-[calc(100vh-theme('spacing.16'))] flex-1 overflow-y-auto  dark:bg-[#363636]">
                         <div className="p-4 md:p-6">
                             <Outlet />
                         </div>

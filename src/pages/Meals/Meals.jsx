@@ -56,7 +56,7 @@ const Meals = () => {
             <title>Meals | GhorerChef</title>
             <Container>
                 <section className="bg-base-100 w-full py-20">
-                    <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary">
+                    <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary dark:text-[#628141]">
                         All Meals
                     </h2>
 

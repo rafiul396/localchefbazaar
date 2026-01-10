@@ -21,7 +21,7 @@ const BeAChef = () => {
   }
 
   return (
-    <section className="w-full bg-white py-12 p-2 md:p-0 md:py-20 oswald">
+    <section className="w-full bg-base-100 py-12 p-2 md:p-0 md:py-20 oswald bg-red">
       <div className="lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* Text column */}
@@ -29,7 +29,7 @@ const BeAChef = () => {
            data-aos="fade-right"
           >
             <h3 className="text-sm font-semibold text-accent-content uppercase mb-3">Join Our Team</h3>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-primary leading-tight mb-4 berkshire-swash-regular">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-primary leading-tight mb-4 berkshire-swash-regular dark:text-[#628141]">
               Be a chef — share your homemade meals with our community
             </h2>
 

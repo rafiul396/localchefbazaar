@@ -45,7 +45,7 @@ const Hero = () => {
                     Delicious home made <br /> food For today
                 </h1> */}
                 <motion.h1
-                    className="text-center text-3xl md:text-7xl xl:text-9xl font-bold text-black "
+                    className="text-center text-3xl md:text-7xl xl:text-9xl font-bold text-black dark:text-[#628141]"
                     variants={sentence}
                     initial="hidden"
                     animate="visible"

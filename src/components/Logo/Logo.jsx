@@ -11,7 +11,7 @@ const Logo = ({ mainTextSize, subTextSize, logoSize, textColor }) => {
                             className={logoSize}
                         />
                         <div>
-                            <h3 className={`berkshire-swash-regular font-semibold ${mainTextSize} ${textColor ? textColor : "text-[#442a00]"}`}>
+                            <h3 className={`berkshire-swash-regular font-semibold ${mainTextSize} ${textColor ? textColor : "text-[#442a00] dark:text-[#628141]"}`}>
                                 GhorerChef
                             </h3>
                             <p className={`${subTextSize} text-yellow-500 oswald`}>
