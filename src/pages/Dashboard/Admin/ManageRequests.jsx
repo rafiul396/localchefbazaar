@@ -50,16 +50,16 @@ const ManageRequests = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4 }}
-                    className="text-2xl md:text-4xl font-bold text-gray-900 mb-8 text-center md:text-left"
+                    className="text-2xl md:text-4xl font-bold mb-8 text-center md:text-left text-[#628141]"
                 >
                     Manage Requests
                 </motion.h1>
 
                 {/* Table Card */}
-                <div className="bg-white shadow-xl rounded-2xl border border-gray-100 overflow-hidden">
+                <div className="bg-white shadow-xl rounded-2xl border border-gray-500 p-6 overflow-hidden dark:bg-primary">
 
                     {/* Desktop Header */}
-                    <div className="hidden md:grid grid-cols-6 bg-gray-100 py-4 px-6 text-sm font-semibold text-gray-700 uppercase tracking-wider text-center">
+                    <div className="hidden md:grid grid-cols-6 bg-gray-100 dark:bg-primary dark:text-[#628141] text-xl py-4 px-6 font-semibold text-gray-700 uppercase tracking-wider text-center">
                         <p>Name</p>
                         <p>Email</p>
                         <p>Type</p>
@@ -77,21 +77,21 @@ const ManageRequests = () => {
                                 return (
                                     <div
                                         key={req.id}
-                                        className="grid grid-cols-1 md:grid-cols-6 gap-6 py-6 px-6 hover:bg-gray-50 transition-all"
+                                        className="grid grid-cols-1 md:grid-cols-6 gap-6 py-6 px-6 hover:bg-gray-500 transition-all group"
                                     >
                                         {/* User */}
                                         <div className="md:hidden">
                                             <p className="text-xs font-semibold text-gray-500">Name</p>
-                                            <p className="font-medium text-gray-900 mt-1">{req.userName}</p>
+                                            <p className="font-medium text-gray-900 mt-1 dark:text-white">{req.userName}</p>
                                         </div>
-                                        <p className="hidden md:block font-medium text-gray-900 text-center">{req.userName}</p>
+                                        <p className="hidden md:block font-medium text-gray-900 text-center dark:text-white group-hover:text-white">{req.userName}</p>
 
                                         {/* Email */}
                                         <div className="md:hidden">
                                             <p className="text-xs font-semibold text-gray-500">Email</p>
-                                            <p className="text-gray-600 break-all text-sm mt-1">{req.userEmail}</p>
+                                            <p className="text-gray-600 break-all text-sm mt-1 dark:text-white">{req.userEmail}</p>
                                         </div>
-                                        <p className="hidden md:block text-gray-600 break-all text-center">{req.userEmail}</p>
+                                        <p className="hidden md:block text-gray-600 break-all text-center dark:text-white group-hover:text-white">{req.userEmail}</p>
 
                                         {/* Type */}
                                         <div className="md:hidden">
@@ -100,7 +100,7 @@ const ManageRequests = () => {
                                                 {req.requestType}
                                             </p>
                                         </div>
-                                        <p className={`hidden md:block capitalize font-bold ${req.requestType === "chef" ? "text-green-600" : "text-indigo-600"} text-center`}>
+                                        <p className={`hidden md:block capitalize font-bold ${req.requestType === "chef" ? "text-green-600" : "text-indigo-600"} text-center dark:text-white`}>
                                             {req.requestType}
                                         </p>
 
@@ -109,7 +109,7 @@ const ManageRequests = () => {
                                             <p className="text-xs font-semibold text-gray-500">Status</p>
                                             <p className={`capitalize font-bold mt-1 ${req.requestStatus === "pending" ? "text-yellow-600" :
                                                 req.requestStatus === "approved" ? "text-green-600" : "text-red-600"
-                                                }`}>
+                                                } `}>
                                                 {req.requestStatus}
                                             </p>
                                         </div>
@@ -122,9 +122,9 @@ const ManageRequests = () => {
                                         {/* Time */}
                                         <div className="md:hidden">
                                             <p className="text-xs font-semibold text-gray-500">Time</p>
-                                            <p className="text-gray-500 text-sm mt-1">{new Date(req.requestTime).toDateString()}</p>
+                                            <p className="text-gray-500 text-sm mt-1 dark:text-white">{new Date(req.requestTime).toDateString()}</p>
                                         </div>
-                                        <p className="hidden md:block text-gray-500 text-center">{new Date(req.requestTime).toDateString()}</p>
+                                        <p className="hidden md:block text-gray-500 text-center dark:text-white group-hover:text-white">{new Date(req.requestTime).toDateString()}</p>
 
                                         {/* Actions */}
                                         <div className="flex gap-3 md:justify-center mt-4 md:mt-0">

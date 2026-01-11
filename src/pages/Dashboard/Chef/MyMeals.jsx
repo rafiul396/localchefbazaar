@@ -64,7 +64,7 @@ const MyMeals = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 dark:text-[#628141]"
+        className="text-3xl md:text-4xl font-bold mb-8 text-[#628141]"
       >
         My Meals
       </motion.h1>
@@ -78,7 +78,7 @@ const MyMeals = () => {
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="bg-white dark:bg-primary shadow-xl rounded-2xl overflow-hidden border border-gray-200 hover:shadow-2xl transition-all group"
+            className="bg-white dark:bg-primary shadow-xl rounded-2xl overflow-hidden border border-gray-500 hover:shadow-2xl transition-all group"
           >
             {/* Image */}
             <div className="w-full h-60 overflow-hidden">

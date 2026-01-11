@@ -67,13 +67,13 @@ const ReviewDetails = ({ mealId, user, mealName, data }) => {
 
     return (
         <div className="max-w-4xl mx-auto px-5 py-14">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-[#628141] mb-6">
                 Customer Reviews
             </h2>
 
             {
                 reviews.length === 0 ? (
-                    <div className='flex justify-center items-center p-4 bg-gray-200 rounded-2xl'>
+                    <div className='flex justify-center items-center p-4 bg-gray-200 rounded-2xl dark:bg-primary'>
                         <h3 className='text-2xl'>No reviews yet.</h3>
                     </div>
                 ) : (
@@ -81,7 +81,7 @@ const ReviewDetails = ({ mealId, user, mealName, data }) => {
                         {reviews.map((review, index) => (
                             <div
                                 key={index}
-                                className="bg-white p-5 rounded-2xl shadow-md border border-gray-100"
+                                className="bg-white p-5 rounded-2xl shadow-md border border-gray-500 dark:bg-primary"
                             >
                                 <div className="flex gap-4 items-start">
                                     <img
@@ -92,10 +92,10 @@ const ReviewDetails = ({ mealId, user, mealName, data }) => {
 
                                     <div className="flex-1">
                                         <div className="flex justify-between">
-                                            <h3 className="text-lg font-semibold text-gray-900">
+                                            <h3 className="text-lg font-semibold text-[#628141]">
                                                 {review.reviewerName}
                                             </h3>
-                                            <p className="text-sm text-gray-500">{new Date(review.createdAt).toDateString()}</p>
+                                            <p className="text-sm text-gray-700 dark:text-[#ff8400]">{new Date(review.createdAt).toDateString()}</p>
                                         </div>
 
                                         <div className="flex items-center mt-1">
@@ -104,7 +104,7 @@ const ReviewDetails = ({ mealId, user, mealName, data }) => {
                                             ))}
                                         </div>
 
-                                        <p className="text-gray-700 mt-2 text-sm leading-relaxed">
+                                        <p className="text-gray-700 dark:text-[#ff8400] mt-2 text-sm leading-relaxed">
                                             {review.comment}
                                         </p>
                                     </div>
@@ -119,7 +119,7 @@ const ReviewDetails = ({ mealId, user, mealName, data }) => {
             <div className="mt-8 flex justify-between">
                 <button
                     onClick={() => setOpen(true)}
-                    className="btn btn-primary border-primary shadow-none py-8 px-8 rounded-xl text-lg font-semibold text-white"
+                    className="btn bg-[#628141] border-[#628141] shadow-none py-8 px-8 rounded-xl text-lg font-semibold text-white"
                 >
                     Give Review
                 </button>
@@ -128,7 +128,7 @@ const ReviewDetails = ({ mealId, user, mealName, data }) => {
                     onClick={() => {
                         handleFavorite()
                     }}
-                    className="btn btn-primary border-primary shadow-none py-8 px-8 rounded-xl text-lg font-semibold text-white"
+                    className="btn bg-[#628141] border-[#628141] shadow-none py-8 px-8 rounded-xl text-lg font-semibold text-white"
                 >
                     <FaHeart />
                     Add to Favorite ({favorites.count ? favorites.count : "0"})

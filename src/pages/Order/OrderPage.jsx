@@ -73,10 +73,10 @@ const OrderPage = ({ onClose, meal }) => {
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.3 }}
-                className="bg-white rounded-2xl w-full max-w-lg shadow-xl"
+                className="bg-white rounded-2xl w-full max-w-lg shadow-xl dark:bg-primary"
             >
                 <div className="flex justify-between items-center p-6 border-b">
-                    <h2 className="text-2xl font-bold text-primary">Confirm Your Order</h2>
+                    <h2 className="text-2xl font-bold text-[#628141]">Confirm Your Order</h2>
                     <button
                         onClick={onClose}
                         className="text-gray-400 hover:text-gray-600 text-xl cursor-pointer"
@@ -173,7 +173,7 @@ const OrderPage = ({ onClose, meal }) => {
                                 Order Status
                             </label>
                             <input
-                                className="w-full border rounded-lg px-4 py-2 bg-gray-100"
+                                className="w-full border rounded-lg px-4 py-2 bg-gray-500"
                                 readOnly
                                 {...register("orderStatus")}
                             />
@@ -184,7 +184,7 @@ const OrderPage = ({ onClose, meal }) => {
                                 Order Time
                             </label>
                             <input
-                                className="w-full border rounded-lg px-4 py-2 bg-gray-100"
+                                className="w-full border rounded-lg px-4 py-2 bg-gray-500"
                                 readOnly
                                 {...register("orderTime")}
                             />
@@ -193,7 +193,7 @@ const OrderPage = ({ onClose, meal }) => {
                     </form>
                 </div>
 
-                <div className="p-6 border-t bg-white">
+                <div className="p-6 border-t bg-white dark:bg-primary">
                     <button
                         type="submit"
                         onClick={handleSubmit(onSubmit)}

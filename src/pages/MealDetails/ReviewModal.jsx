@@ -48,7 +48,7 @@ const ReviewModal = ({ setOpen, mealId, user, refetch, mealName }) => {
 
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 px-4">
-      <div className="bg-white w-full max-w-lg rounded-2xl shadow-xl p-6">
+      <div className="bg-white w-full max-w-lg rounded-2xl shadow-xl p-6 dark:bg-primary">
 
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-xl font-semibold text-primary">Write a Review</h3>
@@ -108,7 +108,7 @@ const ReviewModal = ({ setOpen, mealId, user, refetch, mealName }) => {
           <button
             type="submit"
             disabled={reviewMutation.isLoading}
-            className="w-full btn btn-primary border-primary shadow-none py-6 rounded-xl text-lg font-semibold text-white"
+            className="w-full btn bg-[#628141] border-primary shadow-none py-6 rounded-xl text-lg font-semibold text-white"
           >
             Submit Review
           </button>

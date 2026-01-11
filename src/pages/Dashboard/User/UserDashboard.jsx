@@ -86,7 +86,7 @@ function UserDashboard() {
                                 to={item.route}
                                 end={item.route === "/dashboard"}
                                 onClick={() => setSidebarOpen(false)}
-                                className={`flex items-center px-3 py-3 my-1 rounded-lg text-[#442a00] dark:text-[#628141] hover:bg-primary hover:bg-opacity-20 transition-all`}
+                                className={`flex items-center px-3 py-3 my-1 rounded-lg text-[#442a00] dark:text-[#628141] hover:bg-primary hover:bg-opacity-20 transition-all border-2 border-transparent`}
                             >
                                 <item.icon size={22} />
                                 <span className={`ml-4 font-medium ${sidebarCollapsed ? 'lg:hidden' : ''}`}>
@@ -116,7 +116,7 @@ function UserDashboard() {
                 </div>
 
                 <div className="flex-1 flex-col overflow-hidden">
-                 
+
                     <header className="bg-primary shadow-sm h-16 flex items-center justify-between px-6">
                         <button
                             onClick={() => setSidebarOpen(true)}
@@ -130,7 +130,7 @@ function UserDashboard() {
                         <div className="flex items-center gap-4">
                             <div className="hidden md:flex items-center bg-gray-100 rounded-lg px-4 py-2">
                                 <FaSearch className="text-gray-500" />
-                                <input type="text" placeholder="Search..." className="bg-transparent outline-none ml-2 w-48" />
+                                <input type="text" placeholder="Search..." className="bg-transparent outline-none ml-2 w-48 dark:text-gray-700" />
                             </div>
                             <Switch />
                             <button className="relative">
@@ -143,7 +143,7 @@ function UserDashboard() {
                         </div>
                     </header>
 
-                    <main className="h-[calc(100vh-theme('spacing.16'))] flex-1 overflow-y-auto bg-gradient-to-b from-accent to-gray-100">
+                    <main className="h-[calc(100vh-theme('spacing.16'))] flex-1 overflow-y-auto bg-gradient-to-b from-accent to-gray-100 dark:to-[#363636]">
                         <div className="p-4 md:p-6">
                             <Outlet />
                         </div>

@@ -73,5 +73,5 @@
 }
 
 .active {
-  @apply bg-primary
+  @apply bg-primary border-2 border-[#628141]
 }

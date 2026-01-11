@@ -50,7 +50,7 @@ const ManageUsers = () => {
       <title>Manage Users | GhorerChef</title>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Manage Users</h1>
+        <h1 className="text-3xl font-bold text-[#628141]">Manage Users</h1>
         <p className="text-gray-500 mt-1">
           View and manage all registered users on the platform.
         </p>
@@ -61,13 +61,14 @@ const ManageUsers = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="w-full mx-auto bg-white rounded-2xl shadow-lg border border-gray-100 p-6"
+        className="w-full mx-auto bg-white rounded-2xl shadow-lg border border-gray-500 p-6 dark:bg-primary"
       >
         <div className="overflow-x-auto">
-          <table className="table w-full">
-            <thead className="bg-gray-100 text-gray-700 text-sm">
-              <tr>
-                <th className="py-4">User Name</th>
+          <table className="table w-full dark:bg-primary">
+            <thead className="bg-gray-100 text-gray-700 dark:bg-primary dark:text-[#628141] text-xl">
+              <tr className="text-center">
+                <th>Serial</th>
+                <th>User Name</th>
                 <th>Email</th>
                 <th>Role</th>
                 <th>Status</th>
@@ -78,7 +79,10 @@ const ManageUsers = () => {
             <tbody className="text-gray-700">
 
               {users.map((user, index) => (
-                <tr key={index} className="hover:bg-gray-50">
+                <tr key={index} className="hover:bg-gray-500 dark:text-white text-center">
+
+                  {/* Serial */}
+                  <td className="py-4 font-medium">{index + 1}</td>
 
                   {/* Name */}
                   <td className="py-4 font-medium">{user.userName}</td>

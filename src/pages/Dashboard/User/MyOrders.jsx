@@ -63,7 +63,7 @@ const MyOrders = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
-                className="text-3xl md:text-4xl font-bold text-gray-900 mb-8"
+                className="text-3xl md:text-4xl font-bold text-[#628141] mb-8"
             >
                 My Orders
             </motion.h1>
@@ -75,9 +75,9 @@ const MyOrders = () => {
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition"
+                        className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition dark:bg-primary"
                     >
-                        <h2 className="text-xl font-semibold text-gray-900 mb-2">
+                        <h2 className="text-xl font-semibold text-gray-900 mb-2 dark:text-white">
                             {order?.mealName}
                         </h2>
 
@@ -93,7 +93,7 @@ const MyOrders = () => {
 
                         </div>
 
-                        <div className="space-y-2 text-sm text-gray-700">
+                        <div className="space-y-2 text-sm text-gray-700 dark:text-white">
                             <p>
                                 <strong>Price:</strong> ৳{order?.price}
                             </p>
@@ -101,7 +101,7 @@ const MyOrders = () => {
                                 <strong>Quantity:</strong> {order?.quantity}
                             </p>
                             <p className="flex items-center gap-2">
-                                <FaClock className="text-primary" />{" "}
+                                <FaClock className="text-[#628141]" />{" "}
                                 <span>
                                     <strong>Delivery Time:</strong> {order?.orderTime}
                                 </span>

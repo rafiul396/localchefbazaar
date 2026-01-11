@@ -61,7 +61,7 @@ const OrderRequests = () => {
   return (
     <>
       <title>Order Requests | GhorerChef</title>
-      <div className="min-h-screen bg-gradient-to-b from-accent to-gray-100 px-4 md:px-6 py-12 inter">
+      <div className="min-h-screen bg-gradient-to-b from-accent to-gray-100 px-4 md:px-6 py-12 inter dark:to-[#363636]">
         {/* Page Title */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
@@ -87,23 +87,23 @@ const OrderRequests = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4 }}
-                  className="bg-white border border-gray-200 shadow-lg rounded-2xl p-6 space-y-4 hover:shadow-xl transition-all"
+                  className="bg-white border border-gray-500 shadow-lg rounded-2xl p-6 space-y-4 hover:shadow-xl transition-all dark:bg-primary"
                 >
                   <div className="flex justify-between">
-                    <h2 className="text-xl font-semibold text-gray-900">
+                    <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
                       {order.mealName}
                     </h2>
-                    <span className="text-lg font-bold text-primary">
+                    <span className="text-lg font-bold text-primary dark:text-[#628141]">
                       ৳{order.price}
                     </span>
                   </div>
 
-                  <p className="text-sm text-gray-700">
+                  <p className="text-sm text-gray-700 dark:text-white">
                     Quantity:{" "}
                     <span className="font-semibold">{order.quantity}</span>
                   </p>
 
-                  <p className="text-sm">
+                  <p className="text-sm dark:text-white">
                     Status:{" "}
                     <span
                       className={`font-semibold ${isCancelled
@@ -131,17 +131,17 @@ const OrderRequests = () => {
                     </span>
                   </p>
 
-                  <p className="text-sm text-gray-700 break-all">
-                    User Email: <span className="font-semibold">{order.userEmail}</span>
+                  <p className="text-sm text-gray-700 break-all dark:text-white">
+                    User Email : <span className="font-semibold">{order.userEmail}</span>
                   </p>
 
-                  <p className="text-sm text-gray-700">
-                    Address:{" "}
+                  <p className="text-sm text-gray-700 dark:text-white">
+                    Address :{" "}
                     <span className="font-semibold">{order.userAddress}</span>
                   </p>
 
-                  <p className="text-xs text-gray-500">
-                    Ordered At: {order.orderTime}
+                  <p className="text-xs text-gray-500 dark:text-white">
+                    Ordered At : {order.orderTime}
                   </p>
 
                   <div className="flex gap-3 mt-3">
@@ -150,7 +150,7 @@ const OrderRequests = () => {
                       disabled={!isPending}
                       onClick={() => handleCancel(order._id)}
                       className={`
-                      flex items-center gap-2 w-full justify-center px-4 py-2 rounded-lg text-sm font-medium shadow-md transition
+                      flex items-center gap-2 w-full justify-center px-4 py-2 rounded-lg text-sm font-medium shadow-md transition border border-primary
                       ${!isPending
                           ? "bg-gray-200 text-gray-500 cursor-not-allowed"
                           : "bg-red-500 hover:bg-red-600 text-white cursor-pointer"
@@ -163,7 +163,7 @@ const OrderRequests = () => {
                       disabled={!isPending}
                       onClick={() => handleAccept(order._id)}
                       className={`
-                      flex items-center gap-2 w-full justify-center px-4 py-2 rounded-lg text-sm font-medium shadow-md transition
+                      flex items-center gap-2 w-full justify-center px-4 py-2 rounded-lg text-sm font-medium shadow-md transition border border-primary
                       ${!isPending
                           ? "bg-gray-200 text-gray-500 cursor-not-allowed"
                           : "bg-green-600 hover:bg-green-700 text-white cursor-pointer"
@@ -176,7 +176,7 @@ const OrderRequests = () => {
                       disabled={!isAccepted}
                       onClick={() => handleDeliver(order._id)}
                       className={`
-                      flex items-center gap-2 w-full justify-center px-4 py-2 rounded-lg text-sm font-medium shadow-md transition
+                      flex items-center gap-2 w-full justify-center px-4 py-2 rounded-lg text-sm font-medium shadow-md transition border border-primary
                       ${!isAccepted
                           ? "bg-gray-200 text-gray-500 cursor-not-allowed"
                           : "bg-primary hover:bg-[#4f6a32] text-white cursor-pointer"

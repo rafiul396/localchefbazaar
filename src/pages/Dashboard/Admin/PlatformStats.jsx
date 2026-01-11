@@ -81,32 +81,32 @@ const PlatformStats = () => {
             <div className="px-4 md:px-8 py-12 pb-32">
 
                 {/* Title */}
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-10 text-center md:text-left">
+                <h1 className="text-3xl md:text-4xl font-bold mb-10 text-center md:text-left text-[#628141]">
                     Platform Overview & Performance
                 </h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                    <div className="bg-white rounded-2xl shadow-lg p-6 border border-accent-content">
+                    <div className="bg-white rounded-2xl shadow-lg p-6 border border-[#ff8400] dark:bg-primary">
                         <p className="text-sm text-gray-500">Total Payment Amount</p>
-                        <p className="text-3xl font-bold text-primary mt-2">৳{totalPayments}</p>
+                        <p className="text-3xl font-bold text-[#628141] mt-2">৳{totalPayments}</p>
                     </div>
-                    <div className="bg-white rounded-2xl shadow-lg p-6 border border-accent-content">
+                    <div className="bg-white rounded-2xl shadow-lg p-6 border border-[#ff8400] dark:bg-primary">
                         <p className="text-sm text-gray-500">Total Users</p>
-                        <p className="text-3xl font-bold text-primary mt-2">{totalUsers}</p>
+                        <p className="text-3xl font-bold text-[#628141] mt-2">{totalUsers}</p>
                     </div>
-                    <div className="bg-white rounded-2xl shadow-lg p-6 border border-accent-content">
+                    <div className="bg-white rounded-2xl shadow-lg p-6 border border-[#ff8400] dark:bg-primary">
                         <p className="text-sm text-gray-500">Orders Pending</p>
                         <p className="text-3xl font-bold text-yellow-600 mt-2">{ordersPending}</p>
                     </div>
-                    <div className="bg-white rounded-2xl shadow-lg p-6 border border-accent-content">
+                    <div className="bg-white rounded-2xl shadow-lg p-6 border border-[#ff8400] dark:bg-primary">
                         <p className="text-sm text-gray-500">Orders Delivered</p>
-                        <p className="text-3xl font-bold text-green-600 mt-2">{ordersDelivered}</p>
+                        <p className="text-3xl font-bold text-[#628141] mt-2">{ordersDelivered}</p>
                     </div>
                 </div>
                  {/* className="grid grid-cols-1 lg:grid-cols-2 gap-8" */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
                     {/* Bar Chart */}
-                    <div className="bg-white rounded-2xl shadow-lg p-6 border border-accent-content">
+                    <div className="bg-white rounded-2xl shadow-lg p-6 border border-[#ff8400] dark:bg-primary">
                         <h2 className="text-xl font-semibold mb-6">Orders – Pending vs Delivered</h2>
                         <div className="w-full h-80">
                             <ResponsiveContainer width="100%" height="100%">
@@ -121,7 +121,7 @@ const PlatformStats = () => {
                     </div>
 
                     {/* Pie Chart */}
-                    <div className="bg-white rounded-2xl shadow-lg p-6 border border-accent-content">
+                    <div className="bg-white rounded-2xl shadow-lg p-6 border border-[#ff8400] dark:bg-primary">
                         <h2 className="text-xl font-semibold mb-6">Platform Composition</h2>
                         <div className="w-full h-80">
                             <ResponsiveContainer width="100%" height="100%">

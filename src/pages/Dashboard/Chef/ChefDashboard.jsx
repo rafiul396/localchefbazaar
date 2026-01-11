@@ -86,7 +86,7 @@ function UserDashboard() {
                                 key={i}
                                 to={item.route}
                                 end={item.route === "/dashboard"}
-                                className={`flex items-center px-3 py-3 my-1 rounded-lg text-[#442a00] dark:text-[#628141] hover:bg-primary hover:bg-opacity-20 transition-all`}
+                                className={`flex items-center px-3 py-3 my-1 rounded-lg text-[#442a00] dark:text-[#628141] hover:bg-primary hover:bg-opacity-20 transition-all border-2 border-transparent`}
                             >
                                 <item.icon size={22} />
                                 <span className={`ml-4 font-medium ${sidebarCollapsed ? 'lg:hidden' : ''}`}>

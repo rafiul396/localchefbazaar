@@ -44,7 +44,7 @@ export default function MealDetails() {
     return (
         <>
         <title>Meal's Details | GhorerChef</title>
-            <div className="min-h-screen bg-gray-50 pb-16">
+            <div className="min-h-screen bg-gray-50 pb-16 dark:bg-[#1d232a]">
 
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -64,10 +64,10 @@ export default function MealDetails() {
 
 
                     <div className="flex justify-between items-center">
-                        <h1 className="text-3xl md:text-4xl font-bold text-primary berkshire-swash-regular">
+                        <h1 className="text-3xl md:text-4xl font-bold text-[#628141] berkshire-swash-regular">
                             {data?.foodName}
                         </h1>
-                        <span className="text-2xl font-semibold text-accent-content">
+                        <span className="text-2xl font-semibold text-[#ff8400]">
                             ৳{data?.price}
                         </span>
                     </div>
@@ -75,51 +75,51 @@ export default function MealDetails() {
 
                     <div className="flex items-center gap-2 mt-2">
                         <span className="text-yellow-500 text-xl">★</span>
-                        <p className="text-gray-700 text-sm font-medium">
+                        <p className="text-gray-700 text-sm font-medium dark:text-white">
                             {data?.rating} / 5
                         </p>
                     </div>
 
 
-                    <div className="mt-6 bg-white p-5 rounded-2xl shadow-md border border-gray-100">
-                        <h2 className="text-lg font-semibold mb-2">Prepared by</h2>
-                        <p className="text-xl font-bold text-gray-800">{data?.chefName}</p>
+                    <div className="mt-6 bg-white p-5 rounded-2xl shadow-md border border-gray-500 dark:bg-primary">
+                        <h2 className="text-lg font-semibold mb-2 dark:text-white">Prepared by</h2>
+                        <p className="text-xl font-bold text-gray-800 dark:text-white">{data?.chefName}</p>
 
-                        <p className="mt-1 text-gray-600 text-sm">
-                            Experience:{" "}
-                            <span className="font-semibold">{data?.chefExperience}</span>
+                        <p className="mt-1 text-gray-600 text-sm dark:text-white">
+                            Experience :{" "}
+                            <span className="font-semibold dark:text-white">{data?.chefExperience}</span>
                         </p>
 
-                        <p className="text-gray-600 text-sm">
-                            Chef ID: <span className="font-semibold">{data?.chefId}</span>
+                        <p className="text-gray-600 text-sm dark:text-white">
+                            Chef ID : <span className="font-semibold">{data?.chefId}</span>
                         </p>
                     </div>
 
-                    <div className="mt-6 bg-white p-5 rounded-2xl shadow-md border border-gray-100">
+                    <div className="mt-6 bg-white p-5 rounded-2xl shadow-md border border-gray-500 dark:bg-primary">
                         <h2 className="text-lg font-semibold mb-3">Ingredients</h2>
 
                         <ul className="list-disc list-inside text-gray-700 space-y-1">
                             {data?.ingredients.map((item, index) => (
-                                <li key={index} className="text-sm">
+                                <li key={index} className="text-sm text-[#628141]">
                                     {item}
                                 </li>
                             ))}
                         </ul>
                     </div>
 
-                    <div className="mt-6 bg-white p-5 rounded-2xl shadow-md border border-gray-100">
+                    <div className="mt-6 bg-white p-5 rounded-2xl shadow-md border border-gray-100 dark:bg-primary">
                         <h2 className="text-lg font-semibold mb-3">Delivery Information</h2>
 
-                        <p className="text-gray-700 text-sm">
-                            Delivery Area:{" "}
-                            <span className="font-semibold text-gray-900">
+                        <p className="text-gray-700 text-sm dark:text-white">
+                            Delivery Area :{" "}
+                            <span className="font-semibold dark:text-white">
                                 {data?.deliveryArea}
                             </span>
                         </p>
 
-                        <p className="text-gray-700 text-sm mt-1">
+                        <p className="text-gray-700 text-sm mt-1 dark:text-white">
                             Estimated Delivery Time:{" "}
-                            <span className="font-semibold text-green-600">
+                            <span className="font-semibold text-[#628141]">
                                 {data?.estimatedDeliveryTime}
                             </span>
                         </p>
@@ -130,7 +130,7 @@ export default function MealDetails() {
                             disabled={customer?.userStatus === "fraud"}
                             onClick={() => setOpenOrder(data)}
                             whileTap={{ scale: 0.95 }}
-                            className={`w-full py-5 rounded-xl text-lg font-semibold text-white ${customer?.userStatus === "fraud" ? "bg-gray-300 text-gray-600 cursor-no-drop" : "bg-primary text-white cursor-pointer"}`}
+                            className={`w-full py-5 rounded-xl text-lg font-semibold text-white ${customer?.userStatus === "fraud" ? "bg-gray-300 text-gray-600 cursor-no-drop" : "bg-[#628141] text-white cursor-pointer"}`}
                         >
                             Order Now
                         </motion.button>

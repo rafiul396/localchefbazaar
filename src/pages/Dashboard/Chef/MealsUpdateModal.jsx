@@ -45,7 +45,7 @@ const MealsUpdateModal = ({ meal, onClose, refetch }) => {
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.25 }}
-        className="bg-white w-full max-w-xl rounded-3xl shadow-2xl p-8 relative max-h-[70vh] overflow-y-auto"
+        className="bg-white w-full max-w-xl rounded-3xl shadow-2xl p-8 relative max-h-[70vh] overflow-y-auto dark:bg-primary"
       >
 
         <button
@@ -55,7 +55,7 @@ const MealsUpdateModal = ({ meal, onClose, refetch }) => {
           ✕
         </button>
 
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">
+        <h2 className="text-2xl font-bold text-[#628141] mb-6">
           Update Meal
         </h2>
 
@@ -114,7 +114,7 @@ const MealsUpdateModal = ({ meal, onClose, refetch }) => {
             <button
               type="button"
               onClick={onClose}
-              className="px-6 py-2 rounded-xl bg-gray-100"
+              className="px-6 py-2 rounded-xl bg-gray-500"
             >
               Cancel
             </button>

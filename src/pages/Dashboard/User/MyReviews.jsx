@@ -76,7 +76,7 @@ const MyReviews = () => {
     <div>
       <title>My Reviews | GhorerChef</title>
       <div className="mb-4">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+        <h1 className="text-3xl md:text-4xl font-bold text-[#628141] mb-8">
           My Reviews
         </h1>
         <p className="text-xl font-semibold">Total Reviews: {reviews.length}</p>
@@ -89,11 +89,11 @@ const MyReviews = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="bg-white rounded-2xl shadow-md border border-gray-100 p-6"
+            className="bg-white rounded-2xl shadow-md border border-gray-500 p-6  dark:bg-primary"
           >
             {/* Meal Name + Date */}
             <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold text-gray-900">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
                 {review.mealName}
               </h2>
               <p className="text-gray-500 text-sm">
@@ -111,7 +111,7 @@ const MyReviews = () => {
             </div>
 
             {/* Comment */}
-            <p className="text-gray-700 mt-3 text-sm leading-relaxed">
+            <p className="text-gray-700 mt-3 text-sm leading-relaxed dark:text-white">
               {review.comment}
             </p>
 
@@ -125,7 +125,7 @@ const MyReviews = () => {
                   });
                   setEditModal(review._id);
                 }}
-                className="flex items-center gap-2 bg-primary text-info-content px-4 py-2 rounded-lg text-sm shadow cursor-pointer"
+                className="flex items-center gap-2 bg-[#628141] text-info-content px-4 py-2 rounded-lg text-sm shadow cursor-pointer "
               >
                 <FaEdit /> Update
               </button>
@@ -154,7 +154,7 @@ const MyReviews = () => {
               initial={{ scale: 0.9 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.9 }}
-              className="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6"
+              className="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 dark:bg-primary"
             >
               <h3 className="text-xl font-semibold mb-4">Update Review</h3>
 
@@ -191,7 +191,7 @@ const MyReviews = () => {
                 </button>
                 <button
                   onClick={() => handleUpdate(editModal, updatedData)}
-                  className="px-4 py-2 bg-primary text-white rounded-lg cursor-pointer"
+                  className="px-4 py-2 bg-[#628141] text-white rounded-lg cursor-pointer"
                 >
                   Save Changes
                 </button>
