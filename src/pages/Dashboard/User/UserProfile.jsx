@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { FaUserShield, FaUserTie, FaUserEdit } from "react-icons/fa";
+import { FaUserShield, FaUserTie, FaUserEdit, FaEdit } from "react-icons/fa";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import InfoCard from "../../../components/shared/InfoCard";
+import EditProfileModal from "../../../modals/EditProfileModal";
 
 const UserProfile = () => {
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const axiosSecure = useAxiosSecure()
     const { user, loading } = useAuth();
 
@@ -41,7 +43,7 @@ const UserProfile = () => {
         },
     });
 
-    const { data, isLoading } = useQuery({
+    const { data, isLoading, refetch } = useQuery({
         queryKey: ['user', user?.email],
         enabled: !!user?.email,
         queryFn: async () => {
@@ -91,11 +93,22 @@ const UserProfile = () => {
                         className="w-24 h-24 rounded-2xl shadow-md object-cover"
                     />
 
-                    <div>
+                    {/* <div>
                         <h1 className="text-2xl font-semibold text-[#628141]">
                             {data.userName}
                         </h1>
                         <p className="text-[#ff8400]">{data.userEmail}</p>
+                    </div> */}
+
+                    <div className="flex justify-between w-full items-center">
+                        <div>
+                            <h1 className="text-2xl font-semibold text-[#628141]">
+                                {data.userName}
+                            </h1>
+                            <p className="text-[#ff8400]">{data.userEmail}</p>
+                        </div>
+                        <FaEdit className="text-2xl mr-5 cursor-pointer" onClick={() => setIsEditModalOpen(true)} />
+
                     </div>
                 </div>
 
@@ -135,7 +148,7 @@ const UserProfile = () => {
                     </motion.button>
 
                     <motion.button
-                    onClick={handleAdminRequest}
+                        onClick={handleAdminRequest}
                         whileTap={{ scale: 0.95 }}
                         className="flex items-center justify-center gap-2 w-full bg-gray-800 hover:bg-gray-900 text-white py-3 rounded-xl shadow-md cursor-pointer"
                     >
@@ -144,6 +157,14 @@ const UserProfile = () => {
                     </motion.button>
                 </div>
             </motion.div>
+
+            {isEditModalOpen && (
+                <EditProfileModal
+                    onClose={() => setIsEditModalOpen(false)}
+                    address={data.userAddress}
+                refetchProfile={refetch} // যদি তোমার প্রোফাইল ডেটা refetch করতে চাও
+                />
+            )}
         </div>
     );
 }

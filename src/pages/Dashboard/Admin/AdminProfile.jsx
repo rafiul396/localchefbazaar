@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { FaUserShield, FaUserTie, FaUserEdit } from "react-icons/fa";
+import { FaUserShield, FaUserTie, FaUserEdit, FaEdit } from "react-icons/fa";
 import useUser from "../../../hooks/useUser";
 import InfoCard from "../../../components/shared/InfoCard";
+import EditProfileModal from "../../../modals/EditProfileModal";
 
 const AdminProfile = () => {
-    const {userData: user} = useUser();
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const { userData: user, refetch } = useUser();
     // const user = {
     //     name: "Md. Arif Hasan",
     //     email: "arif@example.com",
@@ -32,11 +34,15 @@ const AdminProfile = () => {
                         className="w-24 h-24 rounded-2xl shadow-md object-cover"
                     />
 
-                    <div>
-                        <h1 className="text-2xl font-semibold text-[#628141]">
-                            {user.userName}
-                        </h1>
-                        <p className="text-[#ff8400]">{user.userEmail}</p>
+                    <div className="flex justify-between w-full items-center">
+                        <div>
+                            <h1 className="text-2xl font-semibold text-[#628141]">
+                                {user.userName}
+                            </h1>
+                            <p className="text-[#ff8400]">{user.userEmail}</p>
+                        </div>
+                        <FaEdit className="text-2xl mr-5 cursor-pointer" onClick={() => setIsEditModalOpen(true)} />
+
                     </div>
                 </div>
 
@@ -50,8 +56,8 @@ const AdminProfile = () => {
                         value={
                             <span
                                 className={`font-semibold ${user.userStatus === "active"
-                                        ? "text-green-600"
-                                        : "text-red-600"
+                                    ? "text-green-600"
+                                    : "text-red-600"
                                     }`}
                             >
                                 {user.userStatus}
@@ -64,6 +70,14 @@ const AdminProfile = () => {
                     )}
                 </div>
             </motion.div>
+
+            {isEditModalOpen && (
+                <EditProfileModal
+                    onClose={() => setIsEditModalOpen(false)}
+                    address={user.userAddress}
+                    refetchProfile={refetch} // যদি তোমার প্রোফাইল ডেটা refetch করতে চাও
+                />
+            )}
         </div>
     );
 }
