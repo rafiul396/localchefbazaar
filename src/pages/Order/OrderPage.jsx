@@ -37,7 +37,7 @@ const OrderPage = ({ onClose, meal }) => {
             onClose();
         },
         onError: () => {
-            toast.error("Failed to place order ❌");
+            toast.error("Failed to place order ❌. Please Log in");
         },
     });
 
