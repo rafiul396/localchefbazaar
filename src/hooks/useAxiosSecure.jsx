@@ -28,8 +28,8 @@ import useAuth from '../hooks/useAuth';
 
 // axios instance একবারই তৈরি হবে (outside hook)
 const axiosSecure = axios.create({
-    // baseURL: 'https://ghorerchef-server-api.vercel.app',
-    baseURL: 'http://localhost:3000/',
+    baseURL: 'https://ghorerchef-server-api.vercel.app',
+    // baseURL: 'http://localhost:3000/',
 });
 
 const useAxiosSecure = () => {
