@@ -33,9 +33,60 @@ const Login = () => {
         }
     }
 
+    const handleAdmin = async () => {
+        try {
+            setSubmissionLoader(true)
+
+            // login function
+            await login('adminul@gamil.com', '87654321')
+            navigate("/")
+            toast.success("Login seccessful")
+            setSubmissionLoader(false)
+        } catch (err) {
+            setSubmissionLoader(false)
+            if (err?.message === "Firebase: Error (auth/invalid-credential).") {
+                toast.error("Email or password is invalid")
+            }
+        }
+    }
+
+    const handleChef = async () => {
+        try {
+            setSubmissionLoader(true)
+
+            // login function
+            await login('niharika@gmail.com', '87654321')
+            navigate("/")
+            toast.success("Login seccessful")
+            setSubmissionLoader(false)
+        } catch (err) {
+            setSubmissionLoader(false)
+            if (err?.message === "Firebase: Error (auth/invalid-credential).") {
+                toast.error("Email or password is invalid")
+            }
+        }
+    }
+
+    const handleCustomer = async () => {
+        try {
+            setSubmissionLoader(true)
+
+            // login function
+            await login('rafiul@gmail.com', '87654321')
+            navigate("/")
+            toast.success("Login seccessful")
+            setSubmissionLoader(false)
+        } catch (err) {
+            setSubmissionLoader(false)
+            if (err?.message === "Firebase: Error (auth/invalid-credential).") {
+                toast.error("Email or password is invalid")
+            }
+        }
+    }
+
     return (
         <>
-        <title>Login | GhorerChef</title>
+            <title>Login | GhorerChef</title>
             <div className="w-full min-h-screen bg-[#FCFCFC] dark:bg-[#1C1C1C]">
 
 
@@ -113,6 +164,51 @@ const Login = () => {
                         <button className="w-full btn shadow-none border-none bg-primary text-white py-3 rounded-lg text-lg font-semibold transition">
                             Login
                         </button>
+
+                        <div className="flex gap-2">
+                            <button
+                                className="
+                                        flex-1
+                                        bg-primary text-white 
+                                        py-3 rounded-lg 
+                                        text-lg font-semibold 
+                                        transition hover:bg-primary/90
+                                        shadow-none border-none cursor-pointer
+                                        "
+                                onClick={handleAdmin}
+                            >
+                                Admin
+                            </button>
+
+                            <button
+                                className="
+                                        flex-1
+                                        bg-primary text-white 
+                                        py-3 rounded-lg 
+                                        text-lg font-semibold 
+                                        transition hover:bg-primary/90
+                                        shadow-none border-none cursor-pointer
+                                        "
+                                onClick={handleChef}
+                            >
+                                Chef
+                            </button>
+
+                            <button
+                                className="
+                                        flex-1
+                                        bg-primary text-white 
+                                        py-3 rounded-lg 
+                                        text-lg font-semibold 
+                                        transition hover:bg-primary/90
+                                        shadow-none border-none cursor-pointer
+                                        "
+                                onClick={handleCustomer}
+                            >
+                                Customer
+                            </button>
+                        </div>
+
 
                     </form>
 
