@@ -217,7 +217,7 @@ const Navbar = () => {
 
                 {/* Sidebar Menu */}
                 < nav className="flex-1 mt-8 px-4 overflow-y-auto" >
-                    <ul className="space-y-2">
+                    <ul className="space-y-2 mt-2">
                         {navLinks}
                     </ul>
                     <div className='mt-4'>
