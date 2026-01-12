@@ -95,7 +95,7 @@ const Navbar = () => {
 
                             <button
                                 onClick={() => setSidebarOpen(true)}
-                                className="text-accent-content lg:hidden cursor-pointer"
+                                className="text-[#ff8400] lg:hidden cursor-pointer"
                             >
                                 <FaBars size={26} />
                             </button>
@@ -158,7 +158,7 @@ const Navbar = () => {
                                 </div>
                             ) : (
                                 <div className="hidden lg:block navbar-end">
-                                    <Link className="btn shadow-none text-lg bg-accent-content border-accent-content" to="/login" >Login</Link>
+                                    <Link className="btn shadow-none text-lg bg-[#ff8400] border-accent-content" to="/login" >Login</Link>
                                 </div>
                             )}
                         </div>
@@ -209,7 +209,7 @@ const Navbar = () => {
                     {/* Close Button (Mobile) */}
                     <button
                         onClick={() => setSidebarOpen(false)}
-                        className="lg:hidden text-accent-content cursor-pointer"
+                        className="lg:hidden text-[#ff8400] cursor-pointer"
                     >
                         <FaTimes size={26} />
                     </button>
@@ -220,6 +220,9 @@ const Navbar = () => {
                     <ul className="space-y-2">
                         {navLinks}
                     </ul>
+                    <div className='mt-4'>
+                        <Switch />
+                    </div>
                 </nav >
 
                 {/* Logout */}
