@@ -28,6 +28,8 @@ import AdminRoute from "./AdminRoute";
 import ChefRoute from "./ChefRoute";
 import UserRoute from "./UserRoute";
 import Errorpage from "../components/ErrorPage/ErrorPage";
+import About from "../pages/About/About";
+import Contact from "../pages/Contact/Contact";
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +44,14 @@ export const router = createBrowserRouter([
       {
         path: "/meals",
         element: <Meals />
+      },
+      {
+        path: "/about",
+        element: <About />
+      },
+      {
+        path: "/contact",
+        element: <Contact />
       },
       {
         path: "/meals/:mealId",

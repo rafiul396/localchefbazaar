@@ -40,6 +40,24 @@ const Navbar = () => {
                     Meals
                 </NavLink>
             </li>
+            <li>
+                <NavLink
+                    to="/about"
+                    onClick={() => setSidebarOpen(false)}
+                    className="border-2 border-transparent hover:border-2 hover:border-[#442a00] dark:text-[#628141] duration-200 oswald"
+                >
+                    About Us
+                </NavLink>
+            </li>
+            <li>
+                <NavLink
+                    to="/contact"
+                    onClick={() => setSidebarOpen(false)}
+                    className="border-2 border-transparent hover:border-2 hover:border-[#442a00] dark:text-[#628141] duration-200 oswald"
+                >
+                    Contact
+                </NavLink>
+            </li>
             {user && (
                 <li>
                     <NavLink
