@@ -26,14 +26,16 @@ const Root = () => {
     }
 
     return (
-        <div className='overflow-x-hidden'>
+        <>
             <Navbar />
-            <main>
-                <Outlet />
-            </main>
-            <Footer />
-            <Toaster />
-        </div>
+            <div className='overflow-x-hidden'>
+                <main>
+                    <Outlet />
+                </main>
+                <Footer />
+                <Toaster />
+            </div>
+        </>
     );
 };
 
