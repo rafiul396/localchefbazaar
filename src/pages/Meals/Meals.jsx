@@ -3,12 +3,13 @@ import Container from '../../components/Layout/Container';
 import MealCard from '../../components/Cards/MealCard';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import MealCardSkeleton from '../../components/Loaders/MealCardSkeleton';
 
 const Meals = () => {
     const axiosSecure = useAxiosSecure();
 
     const [page, setPage] = useState(1);
-    const limit = 10; 
+    const limit = 10;
 
     const {
         data: mealsResponse = {},
@@ -16,14 +17,14 @@ const Meals = () => {
         isError,
         refetch,
     } = useQuery({
-        queryKey: ["meals", page], 
+        queryKey: ["meals", page],
         queryFn: async () => {
             const res = await axiosSecure.get("/meals", {
                 params: { page, limit },
             });
             return res.data;
         },
-        keepPreviousData: true, 
+        keepPreviousData: true,
     });
 
     const meals = mealsResponse.meals || [];
@@ -35,13 +36,19 @@ const Meals = () => {
         hasPrevPage: false,
     };
 
-    if (isLoading) {
-        return (
-            <div className="min-h-screen flex justify-center items-center">
-                <span className="loading loading-spinner loading-lg text-primary"></span>
-            </div>
-        );
-    }
+    // if (isLoading) {
+    //     return (
+    //         <div className="min-h-screen flex justify-center items-center">
+    //             <span className="loading loading-spinner loading-lg text-primary"></span>
+    //         </div>
+    //         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    //             <MealCardSkeleton />
+    //             <MealCardSkeleton />
+    //             <MealCardSkeleton />
+    //             <MealCardSkeleton />
+    //         </div>
+    //     );
+    // }
 
     if (isError) {
         return (
@@ -60,7 +67,18 @@ const Meals = () => {
                         All Meals
                     </h2>
 
-                    {meals.length === 0 ? (
+                    {/* {
+                        isLoading ? (
+                            <>
+                                <MealCardSkeleton />
+                                <MealCardSkeleton />
+                                <MealCardSkeleton />
+                                <MealCardSkeleton />
+                            </>
+                        ) : 
+                    } */}
+
+                    {/* {meals.length === 0 ? (
                         <div className="text-center py-20">
                             <p className="text-xl text-gray-600">No meals found.</p>
                         </div>
@@ -70,7 +88,35 @@ const Meals = () => {
                                 <MealCard key={meal._id} meal={meal} />
                             ))}
                         </div>
+                    )} */}
+                    {isLoading ? (
+                        <>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                                <MealCardSkeleton />
+                                <MealCardSkeleton />
+                                <MealCardSkeleton />
+                                <MealCardSkeleton />
+                                <MealCardSkeleton />
+                                <MealCardSkeleton />
+                                <MealCardSkeleton />
+                                <MealCardSkeleton />
+                            </div>
+                        </>
+                    ) : (
+                        meals.length === 0 ? (
+                            <div className="text-center py-20">
+                                <p className="text-xl text-gray-600">No meals found.</p>
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                                {meals.map((meal) => (
+                                    <MealCard key={meal._id} meal={meal} />
+                                ))}
+                            </div>
+                        )
                     )}
+
+                    {/* <MealCardSkeleton /> */}
 
                     {pagination.totalPages > 1 && (
                         <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-16">
