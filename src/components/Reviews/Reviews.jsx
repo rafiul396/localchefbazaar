@@ -45,7 +45,7 @@ export default function PremiumReviewSlider({ reviews = [], reviewsLoading }) {
                 <h3 className="text-3xl md:text-4xl xl:text-7xl font-semibold text-center mb-2 berkshire-swash-regular text-primary dark:text-[#628141]">
                     Food That Touches Hearts
                 </h3>
-                <p className="lg:w-1/2 text-center font-light text-lg xl:text-xl text-accent-content oswald">
+                <p className="lg:w-1/2 text-center font-light text-lg xl:text-xl text-[#ff8400] oswald">
                     Discover how every homemade meal brings comfort, freshness, and real satisfaction.
                     Experience the taste that turns ordinary days into something truly special.
                 </p>

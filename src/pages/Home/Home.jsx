@@ -9,6 +9,12 @@ import BeAChef from '../../components/Be-A-Chef/BeAChef';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import TopRatedMeals from '../../components/Food-Card/TopRatedMeals';
+import Featured from '../../components/Featured/FeaturedSec';
+import PromotionsSection from '../../components/Promotion/PromotionsSection';
+import WhyChooseUs from '../../components/WhyChooseUs/WhyChooseUs';
+import DownloadApp from '../../components/DownloadApp/DownloadApp';
+import LocationInput from '../../components/LocationInput/LocationInput';
+import OurStory from '../../components/OurStory/OurStory';
 
 
 const Home = () => {
@@ -30,13 +36,31 @@ const Home = () => {
       return res.data;
     },
   });
-  
+
   return (
     <>
-    <title>Home | GhorerChef</title>
+      <title>Home | GhorerChef</title>
       <Hero />
       <Container>
         <TopRatedMeals mealsData={mealsData} isLoading={isLoading} />
+      </Container>
+      <section className='py-20 bg-accent'>
+        <Featured />
+      </section>
+      <Container>
+        <PromotionsSection />
+      </Container>
+      <section className='py-20 bg-accent'>
+        <WhyChooseUs />
+      </section>
+      <Container>
+        <DownloadApp />
+      </Container>
+      <section className='py-20 bg-accent'>
+        <LocationInput />
+      </section>
+      <Container>
+        <OurStory />
       </Container>
       <section className='py-20 bg-accent'>
         <Reviews reviews={reviews} reviewsLoading={reviewsLoading} />

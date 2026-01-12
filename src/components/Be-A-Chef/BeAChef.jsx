@@ -28,12 +28,12 @@ const BeAChef = () => {
           <div
            data-aos="fade-right"
           >
-            <h3 className="text-sm font-semibold text-accent-content uppercase mb-3">Join Our Team</h3>
+            <h3 className="text-sm font-semibold text-[#ff8400] uppercase mb-3">Join Our Team</h3>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-primary leading-tight mb-4 berkshire-swash-regular dark:text-[#628141]">
               Be a chef — share your homemade meals with our community
             </h2>
 
-            <p className="text-base sm:text-lg mb-6 max-w-xl text-accent-content">
+            <p className="text-base sm:text-lg mb-6 max-w-xl text-[#ff8400]">
               Cook for thousands of customers who want home-cooked flavors. We handle delivery,
               order management and payments — you focus on what you do best: cooking.
             </p>
@@ -41,38 +41,38 @@ const BeAChef = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
               <div className="flex items-start gap-3">
                 <div className="p-3 bg-accent  rounded-lg">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-accent-content" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#ff8400]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
                 <div>
-                  <h4 className="text-sm font-semibold text-primary">Easy onboarding</h4>
-                  <p className="text-xs text-accent-content">Sign up and list your dishes in minutes.</p>
+                  <h4 className="text-sm font-semibold text-[#628141]">Easy onboarding</h4>
+                  <p className="text-xs text-[#ff8400]">Sign up and list your dishes in minutes.</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
                 <div className="p-3 bg-accent  rounded-lg">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-accent-content" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#ff8400]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h4l3 6 4-12 3 6h4" />
                   </svg>
                 </div>
                 <div>
-                  <h4 className="text-sm font-semibold text-primary">Reliable payouts</h4>
-                  <p className="text-xs text-accent-content">Weekly settlements directly to your account.</p>
+                  <h4 className="text-sm font-semibold text-[#628141]">Reliable payouts</h4>
+                  <p className="text-xs text-[#ff8400]">Weekly settlements directly to your account.</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
                 <div className="p-3 bg-accent rounded-lg">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-accent-content" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#ff8400]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 1.343-3 3v1h6v-1c0-1.657-1.343-3-3-3z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14v6" />
                   </svg>
                 </div>
                 <div>
-                  <h4 className="text-sm font-semibold text-primary">Support & training</h4>
-                  <p className="text-xs text-accent-content">Get listed and get tips to grow orders.</p>
+                  <h4 className="text-sm font-semibold text-[#628141]">Support & training</h4>
+                  <p className="text-xs text-[#ff8400]">Get listed and get tips to grow orders.</p>
                 </div>
               </div>
             </div>
@@ -80,14 +80,14 @@ const BeAChef = () => {
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
                 to="/dashboard"
-                className="inline-flex items-center justify-center rounded-full bg-accent-content hover:bg-accent duration-200 text-primary px-6 py-3 text-sm font-semibold shadow-md focus:outline-none cursor-pointer"
+                className="inline-flex items-center justify-center rounded-full bg-[#ff8400] hover:bg-accent duration-200 text-[#628141] px-6 py-3 text-sm font-semibold shadow-md focus:outline-none cursor-pointer"
               >
                 Apply as a Chef
               </Link>
 
               <a
                 href="#"
-                className="inline-flex items-center justify-center rounded-full border border-accent-content text-accent-content px-5 py-3 text-sm font-medium shadow-sm"
+                className="inline-flex items-center justify-center rounded-full border border-[#ff8400] text-[#ff8400] px-5 py-3 text-sm font-medium shadow-sm"
               >
                 How it works
               </a>
