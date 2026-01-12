@@ -30,6 +30,8 @@ import UserRoute from "./UserRoute";
 import Errorpage from "../components/ErrorPage/ErrorPage";
 import About from "../pages/About/About";
 import Contact from "../pages/Contact/Contact";
+import MealsPge from "../pages/Meals/MealsPage";
+import MealsPage from "../pages/Meals/MealsPage";
 
 export const router = createBrowserRouter([
   {
@@ -43,7 +45,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/meals",
-        element: <Meals />
+        element: <MealsPage />
       },
       {
         path: "/about",

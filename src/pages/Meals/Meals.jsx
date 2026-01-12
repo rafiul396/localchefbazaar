@@ -123,21 +123,21 @@ const Meals = () => {
                             <button
                                 onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
                                 disabled={!pagination.hasPrevPage || isLoading}
-                                className="px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 disabled:bg-gray-300 disabled:cursor-not-allowed transition cursor-pointer"
+                                className="px-6 py-3 bg-[#628141] text-white font-medium rounded-lg hover:bg-primary/90 disabled:bg-gray-300 disabled:cursor-not-allowed transition cursor-pointer"
                             >
                                 ← Previous
                             </button>
 
-                            <span className="text-lg font-medium text-gray-700">
-                                Page <span className="text-primary font-bold">{pagination.currentPage}</span> of{" "}
-                                <span className="text-primary font-bold">{pagination.totalPages}</span>{" "}
+                            <span className="text-lg font-medium text-gray-700 dark:text-gray-300">
+                                Page <span className="text-[#ff8400] font-bold">{pagination.currentPage}</span> of{" "}
+                                <span className="text-[#ff8400] font-bold">{pagination.totalPages}</span>{" "}
                                 ({pagination.totalMeals} meals total)
                             </span>
 
                             <button
                                 onClick={() => setPage((prev) => prev + 1)}
                                 disabled={!pagination.hasNextPage || isLoading}
-                                className="px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 disabled:bg-gray-300 disabled:cursor-not-allowed transition cursor-pointer"
+                                className="px-6 py-3 bg-[#628141] text-white font-medium rounded-lg hover:bg-primary/90 disabled:bg-gray-300 disabled:cursor-not-allowed transition cursor-pointer"
                             >
                                 Next →
                             </button>
